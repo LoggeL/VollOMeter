@@ -6,6 +6,20 @@ let history = localStorage.getItem('history')
   ? JSON.parse(localStorage.getItem('history'))
   : []
 
+const drunkEmojis = [
+  // BAC in ‰
+  {bac: 0, emoji: '🤔'},
+  {bac: 0.3, emoji: '😄'},
+  {bac: 0.5, emoji: '🥳'},
+  {bac: 0.8, emoji: '🤪'},
+  {bac: 1, emoji: '😵'},
+  {bac: 1.5, emoji: '🤢'},
+  {bac: 2, emoji: '🤮'},
+  {bac: 3, emoji: '💀'},
+  {bac: 4, emoji: '👻'},
+  {bac: 5, emoji: '👽'},
+]
+
 const drinks = {
   bier: {
     name: 'Bier',
@@ -24,7 +38,7 @@ const drinks = {
   },
   longdrink: {
     name: 'Longdrink / Cocktail',
-    volume: 0.5,
+    volume: 0.2,
     alcohol: 0.15,
   },
   shot: {
@@ -42,7 +56,7 @@ if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
   if (localStorage.getItem('history')) work()
 }
 
-inputWeight.addEventListener('change', (e) => {
+inputWeight.addEventListener('keyup', (e) => {
   localStorage.setItem('weight', e.target.value)
   if (inputGender.value !== '') inputGrid.parentElement.classList.add('active')
   work()
@@ -62,7 +76,9 @@ if (localStorage.getItem('history')) {
     // Time, Name, Delete Button
     row.innerHTML = `
       <td>${new Date(entry.time).toLocaleTimeString()}</td>
-      <td>${drinks[entry.drink].name}</td>
+      <td>${drinks[entry.drink].name} (${drinks[entry.drink].volume}l, ${
+      drinks[entry.drink].alcohol * 100
+    }%)</td>
     `
     const td = document.createElement('td')
     td.classList.add('right-align')
@@ -87,7 +103,6 @@ if (localStorage.getItem('history')) {
 }
 
 document.querySelectorAll('#inputGrid button').forEach((button) => {
-  console.log(button)
   button.addEventListener('click', (e) => {
     const drink = button.getAttribute('name')
 
@@ -106,8 +121,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
     // Time, Name, Delete Button
     row.innerHTML = `
       <td>${new Date().toLocaleTimeString()}</td>
-      <td>${drinks[drink].name}</td>
-    `
+      <td>${drink.name} (${drink.volume}l, ${drink.alcohol * 100}%)</td>    `
     const td = document.createElement('td')
     td.classList.add('right-align')
     const a = document.createElement('a')
@@ -159,10 +173,11 @@ function work() {
   let time = history[0]?.time
   for (const drink of history) {
     promille +=
-      drinks[drink.drink].volume *
-      drinks[drink.drink].alcohol *
-      gramsFactor *
-      10
+      ((drinks[drink.drink].volume *
+        drinks[drink.drink].alcohol *
+        gramsFactor) /
+        (alcoholDistributionRatio * weight)) *
+      1000
     promille -= (time - drink.time) / 1000 / 60 / 60 / 10 // 1 promille per hour
     time = drink.time
     promille = Math.max(0, promille)
@@ -170,8 +185,16 @@ function work() {
   promille -= (new Date().getTime() - time) / 1000 / 60 / 60 / 10 // 1 promille per hour
   promille = Math.max(0, promille)
 
+  if (!promille) promille = 0
+
+  let emoji = ''
+  for (const e of drunkEmojis) {
+    if (promille >= e.bac) emoji = e.emoji
+    else break
+  }
+
   // Output
-  document.getElementById('output').innerText = `Promille: ${promille.toFixed(
+  document.getElementById('output').innerHTML = `Promille: ${promille.toFixed(
     2
-  )}‰`
+  )}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
 }
