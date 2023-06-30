@@ -199,6 +199,10 @@ function work() {
   document.getElementById('output').innerHTML = `Promille: ${promille.toFixed(
     2
   )}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
+  document.getElementById('output').style.filter = `blur(${Math.min(
+    promille,
+    2
+  )}px)`
 }
 
 setInterval(work, 60 * 1000)

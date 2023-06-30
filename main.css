@@ -28,6 +28,10 @@
   animation: spin 20s linear infinite;
 }
 
+.spin.reverse {
+  animation-direction: reverse;
+}
+
 .pulse {
   animation: pulse 1s ease-in-out infinite;
 }
