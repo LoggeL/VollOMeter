@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JP Voll-O-Meter</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/beercss@3.2.10/dist/cdn/beer.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="circle transparent">
+        <img class="responsive spin"
+          src="https://cdn.discordapp.com/attachments/366999514038534144/1124330014389837895/VOM-removebg-preview.png">
+      </div>
+      <h5 class="max center-align">JP Voll-O-Meter</h5>
+      <div class="circle transparent">
+        <img class="responsive spin"
+          src="https://cdn.discordapp.com/attachments/366999514038534144/1124330014389837895/VOM-removebg-preview.png">
+      </div>
+    </nav>
+  </header>
+
+  <main class="responsive">
+    <div class="space"></div>
+
+    <div class="page">
+      <div class="grid" id="inputGrid">
+        <div class="s6">
+          <button class="responsive extra large-elevate orange" name="longdrink">Cocktail / Longdrink</button>
+        </div>
+        <div class="s6">
+          <button class="responsive extra large-elevate pink" name="weinschorle">Weinschorle</button>
+        </div>
+        <div class="s6">
+          <button class="responsive extra large-elevate pink" name="bier">Bier</button>
+        </div>
+        <div class="s6">
+          <button class="responsive extra large-elevate orange" name="mischbier">Mischbier</button>
+        </div>
+        <div class="s6">
+          <button class="responsive extra large-elevate orange" name="shot">Shot</button>
+        </div>
+        <div class="s6">
+          <button class="responsive extra large-elevate pink" name="other">Sonstiges</button>
+        </div>
+        <div class="large-space s12"></div>
+        <h2 class="s12 center-align" id="output">Promille: 0.00‰</h2>
+        <div class="large-space s12"></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="s12">Person</div>
+      <div class="field border s6">
+        <input type="number" id="inputWeight">
+        <span class="helper">Gewicht (kg)</span>
+      </div>
+
+      <div class="field suffix border s6">
+        <select id="inputGender">
+          <option value="" disabled selected>Bitte wählen</option>
+          <option value="w">Weiblich</option>
+          <option value="m">Männlich</option>
+          <option value="d">Divers</option>
+        </select>
+        <i>arrow_drop_down</i>
+        <span class="helper">Geschlecht</span>
+      </div>
+    </div>
+
+    <table class="border">
+      <thead>
+        <tr>
+          <th>Zeit</th>
+          <th>Drink</th>
+          <th class="right-align">Delete</th>
+        </tr>
+      </thead>
+      <tbody id="drinkTable">
+      </tbody>
+    </table>
+
+  </main>
+
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.2.10/dist/cdn/beer.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>
