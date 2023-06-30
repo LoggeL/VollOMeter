@@ -34,7 +34,7 @@ const drinks = {
   weinschorle: {
     name: 'Weinschorle',
     volume: 0.5,
-    alcohol: 0.08,
+    alcohol: 0.065,
   },
   longdrink: {
     name: 'Longdrink / Cocktail',
@@ -168,21 +168,24 @@ function work() {
     alcoholDistributionRatio = 0.615
   }
 
-  const gramsFactor = 0.789 //g, 1 ml of ethanol weights 0.789g
+  const gramsFactor = 789 //g, 1 l of ethanol weights 789g
 
   // Calculate
   let promille = 0
   let time = history[0]?.time
   for (const drink of history) {
-    promille +=
-      ((drinks[drink.drink].volume *
-        drinks[drink.drink].alcohol *
-        gramsFactor) /
-        (alcoholDistributionRatio * weight)) *
-      1000
-    promille -= (time - drink.time) / 1000 / 60 / 60 / 10 // 1 promille per hour
-    time = drink.time
+    const drinkTime = drink.time
+    const drinkVolume = drinks[drink.drink].volume
+    const drinkAlcohol = drinks[drink.drink].alcohol
+    const drinkGrams = drinkVolume * drinkAlcohol * gramsFactor
+    const drinkPromille = drinkGrams / (weight * alcoholDistributionRatio)
+    promille += drinkPromille
+
+    // Handle time decay
+    promille -= (drinkTime - time) / 1000 / 60 / 60 / 10 // 1 promille per hour
     promille = Math.max(0, promille)
+
+    time = drinkTime
   }
   promille -= (new Date().getTime() - time) / 1000 / 60 / 60 / 10 // 1 promille per hour
   promille = Math.max(0, promille)
