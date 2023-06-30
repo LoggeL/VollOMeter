@@ -163,10 +163,12 @@ function work() {
       drinks[drink.drink].alcohol *
       gramsFactor *
       10
-    promille -= (time - drink.time) / 1000 / 60 / 60 // 1 promille per hour
+    promille -= (time - drink.time) / 1000 / 60 / 60 / 10 // 1 promille per hour
     time = drink.time
     promille = Math.max(0, promille)
   }
+  promille -= (new Date().getTime() - time) / 1000 / 60 / 60 / 10 // 1 promille per hour
+  promille = Math.max(0, promille)
 
   // Output
   document.getElementById('output').innerText = `Promille: ${promille.toFixed(
