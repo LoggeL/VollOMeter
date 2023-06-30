@@ -121,7 +121,9 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
     // Time, Name, Delete Button
     row.innerHTML = `
       <td>${new Date().toLocaleTimeString()}</td>
-      <td>${drink.name} (${drink.volume}l, ${drink.alcohol * 100}%)</td>    `
+      <td>${drinks[drink].name} (${drinks[drink].volume}l, ${
+      drinks[drink].alcohol * 100
+    }%)</td>    `
     const td = document.createElement('td')
     td.classList.add('right-align')
     const a = document.createElement('a')
@@ -198,3 +200,5 @@ function work() {
     2
   )}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
 }
+
+setInterval(work, 60 * 1000)

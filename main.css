@@ -1,22 +1,4 @@
 /* Spin logo very slowly */
-@-webkit-keyframes spin {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-@-moz-keyframes spin {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-  to {
-    -moz-transform: rotate(360deg);
-  }
-}
-
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -26,21 +8,28 @@
   }
 }
 
+/* Pulse */
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
 .spin {
-  -webkit-animation-name: spin;
-  -webkit-animation-duration: 20000ms;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
+  animation: spin 20s linear infinite;
+}
 
-  -moz-animation-name: spin;
-  -moz-animation-duration: 20000ms;
-  -moz-animation-iteration-count: infinite;
-  -moz-animation-timing-function: linear;
-
-  animation-name: spin;
-  animation-duration: 20000ms;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+.pulse {
+  animation: pulse 1s ease-in-out infinite;
 }
 
 .pink {
