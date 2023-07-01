@@ -46,6 +46,31 @@ const drinks = {
     volume: 0.04,
     alcohol: 0.4,
   },
+  mojito: {
+    name: 'Mojito',
+    volume: 0.24,
+    alcohol: 0.125,
+  },
+  sob: {
+    name: 'Sex on the Beach',
+    volume: 0.27,
+    alcohol: 0.13,
+  },
+  caip: {
+    name: 'Caipi',
+    volume: 0.22,
+    alcohol: 0.175,
+  },
+  liit: {
+    name: 'Long Island Iced Tea',
+    volume: 0.2,
+    alcohol: 0.35,
+  },
+  blhawaii: {
+    name: 'Blue Hawaiian',
+    volume: 0.24,
+    alcohol: 0.155,
+  },
 }
 
 // Load values from localStorage
