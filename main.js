@@ -209,3 +209,28 @@ function work() {
 }
 
 setInterval(work, 60 * 1000)
+
+// beforeinstallprompt
+let deferredPrompt
+const addBtn = document.getElementById('installPWA')
+const logoRight = document.getElementById('logoRight')
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault()
+  deferredPrompt = e
+  addBtn.style.display = 'flex'
+
+  logoRight.style.display = 'none'
+
+  addBtn.addEventListener('click', (e) => {
+    addBtn.style.display = 'none'
+    logoRight.style.display = 'block'
+    deferredPrompt.prompt()
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+      } else {
+      }
+      deferredPrompt = null
+    })
+  })
+})

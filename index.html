@@ -4,22 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JP Voll-O-Meter</title>
+  <title>Voll-O-Meter</title>
 
   <!-- Favicon -->
   <link rel="icon" href="logo.png">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-    content="Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem JP Voll-O-Meter. Prost!">
+    content="Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem Voll-O-Meter. Prost!">
   <meta name="keywords" content="Promille, Alkohol, Trinkverlauf, lustig, Berechnung">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="JP Voll-O-Meter - Dein lustiger Abend-Tracker!">
+  <meta property="og:title" content="Voll-O-Meter - Dein lustiger Abend-Tracker!">
   <meta property="og:description"
-    content="Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem JP Voll-O-Meter. Prost!">
-  <meta property="og:image" content="https://loggel.github.io/JPVollOMeter/logo.png">
+    content="Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem Voll-O-Meter. Prost!">
+  <meta property="og:image" content="https://loggel.github.io/VollOMeter/logo.png">
+
+  <!-- Manifest -->
+  <link rel="manifest" href="webmanifest.json">
 
   <link href="https://cdn.jsdelivr.net/npm/beercss@3.2.10/dist/cdn/beer.min.css" rel="stylesheet">
   <link rel="stylesheet" href="main.css">
@@ -37,9 +40,13 @@
       </div>
       <h5 class="max center-align">
         <img src="logo.png" class="circle">
-        JP Voll-O-Meter
+        Voll-O-Meter
       </h5>
-      <div class="circle transparent spin reverse">
+      <button class="extend square" id="installPWA" style="display:none;">
+        <i>download</i>
+        <span>Install</span>
+      </button>
+      <div class="circle transparent spin reverse" id="logoRight">
         <img class="responsive pulse"
           src="https://cdn.discordapp.com/attachments/366999514038534144/1124330014389837895/VOM-removebg-preview.png">
       </div>

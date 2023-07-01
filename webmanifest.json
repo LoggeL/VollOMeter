@@ -1,0 +1,16 @@
+{
+  "name": "Voll-O-Meter",
+  "short_name": "Voll-O-Meter",
+  "description": "Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem Voll-O-Meter. Prost!",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "index.html",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "500x500",
+      "type": "image/png"
+    }
+  ]
+}
