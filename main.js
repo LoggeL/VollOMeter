@@ -2,11 +2,13 @@ const inputGrid = document.getElementById('inputGrid')
 const inputWeight = document.getElementById('inputWeight')
 const inputGender = document.getElementById('inputGender')
 const drinkTable = document.getElementById('drinkTable')
+const dialogDrink = document.getElementById('dialogDrink')
+
 let history = localStorage.getItem('history')
   ? JSON.parse(localStorage.getItem('history'))
   : []
 
-const drunkEmojis = [
+  const drunkEmojis = [
   // BAC in ‰
   {bac: 0, emoji: '🤔'},
   {bac: 0.3, emoji: '😄'},
@@ -21,55 +23,59 @@ const drunkEmojis = [
 ]
 
 const drinks = {
-  bier: {
-    name: 'Bier',
-    volume: 0.33,
-    alcohol: 0.05,
-  },
-  mischbier: {
-    name: 'Mischbier',
-    volume: 0.33,
-    alcohol: 0.025,
-  },
-  weinschorle: {
-    name: 'Weinschorle',
-    volume: 0.5,
-    alcohol: 0.065,
-  },
-  longdrink: {
-    name: 'Longdrink / Cocktail',
-    volume: 0.2,
-    alcohol: 0.15,
-  },
+  // bier: {
+  //   name: 'Bier',
+  //   volume: 0.33,
+  //   alcohol: 0.05,
+  // },
+  // mischbier: {
+  //   name: 'Mischbier',
+  //   volume: 0.33,
+  //   alcohol: 0.025,
+  // },
+  // weinschorle: {
+  //   name: 'Weinschorle',
+  //   volume: 0.5,
+  //   alcohol: 0.065,
+  // },
+  // longdrink: {
+  //   name: 'Longdrink / Cocktail',
+  //   volume: 0.2,
+  //   alcohol: 0.15,
+  // },
   shot: {
-    name: 'Shot',
-    volume: 0.04,
-    alcohol: 0.4,
+    pffefi: {
+      name: 'Shot',
+      volume: 0.04,
+      alcohol: 0.4,
+    },
   },
-  mojito: {
-    name: 'Mojito',
-    volume: 0.24,
-    alcohol: 0.125,
-  },
-  sob: {
-    name: 'Sex on the Beach',
-    volume: 0.27,
-    alcohol: 0.13,
-  },
-  caip: {
-    name: 'Caipi',
-    volume: 0.22,
-    alcohol: 0.175,
-  },
-  liit: {
-    name: 'Long Island Iced Tea',
-    volume: 0.2,
-    alcohol: 0.35,
-  },
-  blhawaii: {
-    name: 'Blue Hawaiian',
-    volume: 0.24,
-    alcohol: 0.155,
+  cocktails: {
+    mojito: {
+      name: 'Mojito',
+      volume: 0.24,
+      alcohol: 0.125,
+    },
+    sob: {
+      name: 'Sex on the Beach',
+      volume: 0.27,
+      alcohol: 0.13,
+    },
+    caip: {
+      name: 'Caipi',
+      volume: 0.22,
+      alcohol: 0.175,
+    },
+    liit: {
+      name: 'Long Island Iced Tea',
+      volume: 0.2,
+      alcohol: 0.35,
+    },
+    blhawaii: {
+      name: 'Blue Hawaiian',
+      volume: 0.24,
+      alcohol: 0.155,
+    },
   },
 }
 
@@ -128,49 +134,62 @@ if (localStorage.getItem('history')) {
 }
 
 document.querySelectorAll('#inputGrid button').forEach((button) => {
-  button.addEventListener('click', (e) => {
-    const drink = button.getAttribute('name')
+  button.addEventListener('click', (e) =>{
+    dialogDrink.classList.add('active')
 
-    if (!drinks[drink]) return
-
-    const time = new Date().getTime()
-    history.push({
-      drink,
-      time,
-    })
-
-    localStorage.setItem('history', JSON.stringify(history))
-
-    // Add to table
-    const row = document.createElement('tr')
-    // Time, Name, Delete Button
-    row.innerHTML = `
-      <td>${new Date().toLocaleTimeString()}</td>
-      <td>${drinks[drink].name} (${drinks[drink].volume}l, ${
-      drinks[drink].alcohol * 100
-    }%)</td>    `
-    const td = document.createElement('td')
-    td.classList.add('right-align')
-    const a = document.createElement('a')
-    const i = document.createElement('i')
-    i.innerText = 'delete'
-    a.appendChild(i)
-    a.addEventListener('click', (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      history = history.filter((e) => e.time !== time)
-      localStorage.setItem('history', JSON.stringify(history))
-      row.remove()
-      work()
-    })
-    td.appendChild(a)
-    row.appendChild(td)
-    // Prepend to table
-    drinkTable.prepend(row)
-
-    work()
   })
-})
+
+
+
+
+
+
+
+
+
+//   button.addEventListener('click', (e) => {
+//     const drink = button.getAttribute('name')
+
+//     if (!drinks[drink]) return
+
+//     const time = new Date().getTime()
+//     history.push({
+//       drink,
+//       time,
+//     })
+
+//     localStorage.setItem('history', JSON.stringify(history))
+
+//     // Add to table
+//     const row = document.createElement('tr')
+//     // Time, Name, Delete Button
+//     row.innerHTML = `
+//       <td>${new Date().toLocaleTimeString()}</td>
+//       <td>${drinks[drink].name} (${drinks[drink].volume}l, ${
+//       drinks[drink].alcohol * 100
+//     }%)</td>    `
+//     const td = document.createElement('td')
+//     td.classList.add('right-align')
+//     const a = document.createElement('a')
+//     const i = document.createElement('i')
+//     i.innerText = 'delete'
+//     a.appendChild(i)
+//     a.addEventListener('click', (e) => {
+//       e.preventDefault()
+//       e.stopPropagation()
+//       history = history.filter((e) => e.time !== time)
+//       localStorage.setItem('history', JSON.stringify(history))
+//       row.remove()
+//       work()
+//     })
+//     td.appendChild(a)
+//     row.appendChild(td)
+//     // Prepend to table
+//     drinkTable.prepend(row)
+
+//     work()
+//   })
+ })
 
 function work() {
   // Get weight and gender
