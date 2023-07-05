@@ -25,26 +25,101 @@ const drunkEmojis = [
 ]
 
 const drinks = {
-  // bier: {
-  //   name: 'Bier',
-  //   volume: 0.33,
-  //   alcohol: 0.05,
-  // },
-  // mischbier: {
-  //   name: 'Mischbier',
-  //   volume: 0.33,
-  //   alcohol: 0.025,
-  // },
-  // weinschorle: {
-  //   name: 'Weinschorle',
-  //   volume: 0.5,
-  //   alcohol: 0.065,
-  // },
-  // longdrink: {
-  //   name: 'Longdrink / Cocktail',
-  //   volume: 0.2,
-  //   alcohol: 0.15,
-  // },
+  bier: {
+    name: 'Bier',
+    "pils": {
+      "name": "Pils",
+      "volume": 0.33,
+      "alcohol": 0.05
+    },
+    "weizen": {
+      "name": "Weizen",
+      "volume": 0.5,
+      "alcohol": 0.05
+    },
+    "radler": {
+      "name": "Radler",
+      "volume": 0.5,
+      "alcohol": 0.02
+    },
+    "desperados": {
+      "name": "Desperados",
+      "volume": 0.33,
+      "alcohol": 0.057
+    },
+    "colabier": {
+      "name": "Colabier",
+      "volume": 0.33,
+      "alcohol": 0.04
+    },
+    "astrarakete": {
+      "name": "AstraRakete",
+      "volume": 0.33,
+      "alcohol": 0.05
+    },
+    "mixery": {
+      "name": "Mixery",
+      "volume": 0.33,
+      "alcohol": 0.05
+    },
+    "weiteres_bier": {
+      "name": "Sonstiges",
+      "volume": 0.5,
+      "alcohol": 0.05
+    }
+  },
+  mischbier: {
+    name: 'Mischbier',
+    volume: 0.33,
+    alcohol: 0.025,
+  },
+  weinschorle: {
+    "weisherbstschorle": {
+      "name": "Weißherbstschorle",
+      "volume": 0.25,
+      "alcohol": 0.06,
+    },
+    "rieslingschorle": {
+      "name": "Rieslingschorle",
+      "volume": 0.25,
+      "alcohol": 0.07,
+    },
+    "persching": {
+      "name": "Persching",
+      "volume": 0.2,
+      "alcohol": 0.05,
+    },
+    "colarot": {
+      "name": "Cola Rot",
+      "volume": 0.3,
+      "alcohol": 0.05,
+    },
+    "hugo": {
+      "name": "Hugo",
+      "volume": 0.25,
+      "alcohol": 0.08,
+    },
+    "sangria": {
+      "name": "Sangria",
+      "volume": 0.25,
+      "alcohol": 0.1,
+    },
+    "aperolspritz": {
+      "name": "Aperol Spritz",
+      "volume": 0.3,
+      "alcohol": 0.12,
+    },
+    "traubensaftschorle": {
+      "name": "Traubensaftschorle",
+      "volume": 0.2,
+      "alcohol": 0.0,
+    }
+  },
+  longdrink: {
+    name: 'Longdrink / Cocktail',
+    volume: 0.2,
+    alcohol: 0.15,
+  },
 
   shot: {
     name: 'Shot',
