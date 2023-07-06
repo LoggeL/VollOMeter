@@ -184,7 +184,7 @@ const drinks = {
       volume: 0.27,
       alcohol: 0.13,
     },
-    caip: {
+    caipi: {
       name: 'Caipi',
       volume: 0.22,
       alcohol: 0.175,
@@ -284,7 +284,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       if (drink === 'name') return
       const button = document.createElement('button')
       button.setAttribute('name', drink)
-      button.className = 'responsive s6 ' + ((index) % 4 <= 1 ? 'orange' : 'pink')
+      button.className = 'responsive s12 m6 ' + ((index) % 4 <= 1 ? 'orange' : 'pink')
       button.addEventListener('click', (e) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
