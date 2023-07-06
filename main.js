@@ -37,6 +37,29 @@ const drinks = {
       "volume": 0.5,
       "alcohol": 0.05
     },
+    "bockbier": {
+      "name": "Bockbier",
+      "volume": 0.5,
+      "alcohol": 0.07
+    },
+    "kellerbier": {
+      "name": "Kellerbier",
+      "volume": 0.5,
+      "alcohol": 0.05
+    },
+    "helles": {
+      "name": "Helles",
+      "volume": 0.5,
+      "alcohol": 0.05
+    },
+    "dunkles": {
+      "name": "Dunkles",
+      "volume": 0.5,
+      "alcohol": 0.05
+    },
+  },
+  mischbier: {
+    name: 'Mischbier',
     "radler": {
       "name": "Radler",
       "volume": 0.5,
@@ -68,12 +91,8 @@ const drinks = {
       "alcohol": 0.05
     }
   },
-  mischbier: {
-    name: 'Mischbier',
-    volume: 0.33,
-    alcohol: 0.025,
-  },
   weinschorle: {
+    name: 'Weinschorle',
     "weisherbstschorle": {
       "name": "Weißherbstschorle",
       "volume": 0.25,
@@ -104,7 +123,7 @@ const drinks = {
       "volume": 0.25,
       "alcohol": 0.1,
     },
-    "aperolspritz": {
+    "aperol": {
       "name": "Aperol Spritz",
       "volume": 0.3,
       "alcohol": 0.12,
@@ -113,25 +132,44 @@ const drinks = {
       "name": "Traubensaftschorle",
       "volume": 0.2,
       "alcohol": 0.0,
-    }
+    },
   },
-  longdrink: {
-    name: 'Longdrink / Cocktail',
-    volume: 0.2,
-    alcohol: 0.15,
-  },
-
   shot: {
     name: 'Shot',
+    luft: {
+      name: 'Berliner Luft',
+      volume: 0.02,
+      alcohol: 0.4,
+    },
     pffefi: {
       name: 'Pfeffi',
-      volume: 0.04,
+      volume: 0.02,
       alcohol: 0.4,
     },
     luft: {
       name: 'Berliner Luft',
-      volume: 0.04,
+      volume: 0.02,
       alcohol: 0.4,
+    },
+    jäger: {
+      name: 'Jägermeister',
+      volume: 0.02,
+      alcohol: 0.35,
+    },
+    sauer: {
+      name: 'Saurer Apfel',
+      volume: 0.02,
+      alcohol: 0.16,
+    },
+    hut: {
+      name: 'Hütchen',
+      volume: 0.02,
+      alcohol: 0.4,
+    },
+    nuss: {
+      name: 'Nussler',
+      volume: 0.02,
+      alcohol: 0.25,
     },
   },
   cocktails: {
@@ -161,7 +199,15 @@ const drinks = {
       volume: 0.24,
       alcohol: 0.155,
     },
+    Cuba: {
+      name: 'Cuba Libre',
+      volume: 0.16,
+      alcohol: 0.4,
+    },
   },
+  other: {
+    name: 'Sonstiges',
+  }
 }
 
 // Load values from localStorage
@@ -234,12 +280,11 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
     dialogCaption.innerText = drinks[category].name
     // fill dialog with buttons for the sub drinks
     dialogGrid.innerHTML = ''
-    Object.keys(drinks[category]).forEach((drink) => {
+    Object.keys(drinks[category]).forEach((drink, index) => {
       if (drink === 'name') return
       const button = document.createElement('button')
-      button.innerText = drinks[category][drink].name
       button.setAttribute('name', drink)
-      button.className = 'responsive s6'
+      button.className = 'responsive s6 ' + ((index) % 4 <= 1 ? 'orange' : 'pink')
       button.addEventListener('click', (e) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
@@ -291,6 +336,20 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
         work()
       })
+
+      // <button>
+      //   <img class="responsive" src="/favicon.png">
+      //   <span>Button</span>
+      // </button>
+      const img = document.createElement('img')
+      img.className = 'responsive'
+      img.src = `img/${category}/${drink}.png`
+      button.prepend(img)
+
+      const span = document.createElement('span')
+      span.innerText = drinks[category][drink].name
+      button.appendChild(span)
+
       dialogGrid.appendChild(button)
     })
   })
@@ -332,12 +391,12 @@ function work() {
     promille += drinkPromille
 
     // Handle time decay
-    promille -= (drinkTime - time) / 1000 / 60 / 60 / 10 // 1 promille per hour
+    promille -= (drinkTime - time) / 1000 / 60 / 60 / 10 // 0.1 promille per hour
     promille = Math.max(0, promille)
 
     time = drinkTime
   }
-  promille -= (new Date().getTime() - time) / 1000 / 60 / 60 / 10 // 1 promille per hour
+  promille -= (new Date().getTime() - time) / 1000 / 60 / 60 / 10 // 0.1 promille per hour
   promille = Math.max(0, promille)
 
   if (!promille) promille = 0
