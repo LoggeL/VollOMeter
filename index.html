@@ -59,7 +59,7 @@
     <div class="page">
       <div class="grid" id="inputGrid">
         <div class="s6">
-          <button class="responsive extra large-elevate orange" name="longdrink">Cocktail / Longdrink</button>
+          <button class="responsive extra large-elevate orange" name="cocktails">Cocktails</button>
         </div>
         <div class="s6">
           <button class="responsive extra large-elevate pink" name="weinschorle">Weinschorle</button>
@@ -115,19 +115,45 @@
 
   </main>
 
-  <dialog>
-    <h5>Default</h5>
-    <div>Some text here</div>
+  <dialog class=" responsive" id="dialogDrink">
+    <h5>Drink auswählen</h5>
+    <div class="grid">
+      <button class="responsive s6">
+        <img src="logo.png">
+        <span>Button</span>
+      </button>
+      <button class="responsive s6">
+        <img src="logo.png">
+        <span>Button</span>
+      </button>
+      <button class="responsive s6">
+        <img src="logo.png">
+        <span>Button</span>
+      </button>
+      <button class="responsive s6">
+        <img src="logo.png">
+        <span>Button</span>
+      </button>
+      <button class="responsive s6">
+        <img src="logo.png">
+        <span>Button</span>
+      </button>
+      <button class="responsive s6">
+        <img src="logo.png">
+        <span>Button</span>
+      </button>
+    </div>
     <nav class="right-align">
-      <button class="border">Cancel</button>
-      <button>Confirm</button>
+      <button class="border" onclick="document.getElementById('dialogDrink').classList.remove('active')">Cancel</button>
     </nav>
   </dialog>
 
   <footer>
     <div class="row center-align">
-      <p>Made by <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
-          target="_blank">Logge</a></p>
+      <p>
+        Made by <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
+          target="_blank">Logge</a> & <a href="https://github.com/Hairocketfire" target="_blank">Jonas</a>
+      </p>
     </div>
   </footer>
 
