@@ -199,7 +199,7 @@ const drinks = {
       volume: 0.24,
       alcohol: 0.155,
     },
-    Cuba: {
+    cuba: {
       name: 'Cuba Libre',
       volume: 0.16,
       alcohol: 0.4,
