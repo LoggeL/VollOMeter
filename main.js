@@ -12,126 +12,126 @@ let drinkHistory = localStorage.getItem('drinkHistory')
 
 const drunkEmojis = [
   // BAC in ‰
-  { bac: 0, emoji: '🤔' },
-  { bac: 0.3, emoji: '😄' },
-  { bac: 0.5, emoji: '🥳' },
-  { bac: 0.8, emoji: '🤪' },
-  { bac: 1, emoji: '😵' },
-  { bac: 1.5, emoji: '🤢' },
-  { bac: 2, emoji: '🤮' },
-  { bac: 3, emoji: '💀' },
-  { bac: 4, emoji: '👻' },
-  { bac: 5, emoji: '👽' },
+  {bac: 0, emoji: '🤔'},
+  {bac: 0.3, emoji: '😄'},
+  {bac: 0.5, emoji: '🥳'},
+  {bac: 0.8, emoji: '🤪'},
+  {bac: 1, emoji: '😵'},
+  {bac: 1.5, emoji: '🤢'},
+  {bac: 2, emoji: '🤮'},
+  {bac: 3, emoji: '💀'},
+  {bac: 4, emoji: '👻'},
+  {bac: 5, emoji: '👽'},
 ]
 
 const drinks = {
   bier: {
     name: 'Bier',
-    "pils": {
-      "name": "Pils",
-      "volume": 0.33,
-      "alcohol": 0.05
+    pils: {
+      name: 'Pils',
+      volume: 0.33,
+      alcohol: 0.05,
     },
-    "weizen": {
-      "name": "Weizen",
-      "volume": 0.5,
-      "alcohol": 0.05
+    weizen: {
+      name: 'Weizen',
+      volume: 0.5,
+      alcohol: 0.05,
     },
-    "bockbier": {
-      "name": "Bockbier",
-      "volume": 0.5,
-      "alcohol": 0.07
+    bockbier: {
+      name: 'Bockbier',
+      volume: 0.5,
+      alcohol: 0.07,
     },
-    "kellerbier": {
-      "name": "Kellerbier",
-      "volume": 0.5,
-      "alcohol": 0.05
+    kellerbier: {
+      name: 'Kellerbier',
+      volume: 0.5,
+      alcohol: 0.05,
     },
-    "helles": {
-      "name": "Helles",
-      "volume": 0.5,
-      "alcohol": 0.05
+    helles: {
+      name: 'Helles',
+      volume: 0.5,
+      alcohol: 0.05,
     },
-    "dunkles": {
-      "name": "Dunkles",
-      "volume": 0.5,
-      "alcohol": 0.05
+    dunkles: {
+      name: 'Dunkles',
+      volume: 0.5,
+      alcohol: 0.05,
     },
   },
   mischbier: {
     name: 'Mischbier',
-    "radler": {
-      "name": "Radler",
-      "volume": 0.5,
-      "alcohol": 0.02
+    radler: {
+      name: 'Radler',
+      volume: 0.5,
+      alcohol: 0.02,
     },
-    "desperados": {
-      "name": "Desperados",
-      "volume": 0.33,
-      "alcohol": 0.057
+    desperados: {
+      name: 'Desperados',
+      volume: 0.33,
+      alcohol: 0.057,
     },
-    "colabier": {
-      "name": "Colabier",
-      "volume": 0.33,
-      "alcohol": 0.04
+    colabier: {
+      name: 'Colabier',
+      volume: 0.33,
+      alcohol: 0.04,
     },
-    "astrarakete": {
-      "name": "AstraRakete",
-      "volume": 0.33,
-      "alcohol": 0.05
+    astrarakete: {
+      name: 'AstraRakete',
+      volume: 0.33,
+      alcohol: 0.05,
     },
-    "mixery": {
-      "name": "Mixery",
-      "volume": 0.33,
-      "alcohol": 0.05
+    mixery: {
+      name: 'Mixery',
+      volume: 0.33,
+      alcohol: 0.05,
     },
-    "weiteres_bier": {
-      "name": "Sonstiges",
-      "volume": 0.5,
-      "alcohol": 0.05
-    }
+    weiteres_bier: {
+      name: 'Sonstiges',
+      volume: 0.5,
+      alcohol: 0.05,
+    },
   },
   weinschorle: {
     name: 'Weinschorle',
-    "weisherbstschorle": {
-      "name": "Weißherbstschorle",
-      "volume": 0.25,
-      "alcohol": 0.06,
+    weisherbstschorle: {
+      name: 'Weißherbstschorle',
+      volume: 0.25,
+      alcohol: 0.06,
     },
-    "rieslingschorle": {
-      "name": "Rieslingschorle",
-      "volume": 0.25,
-      "alcohol": 0.07,
+    rieslingschorle: {
+      name: 'Rieslingschorle',
+      volume: 0.25,
+      alcohol: 0.07,
     },
-    "persching": {
-      "name": "Persching",
-      "volume": 0.2,
-      "alcohol": 0.05,
+    persching: {
+      name: 'Persching',
+      volume: 0.2,
+      alcohol: 0.05,
     },
-    "colarot": {
-      "name": "Cola Rot",
-      "volume": 0.3,
-      "alcohol": 0.05,
+    colarot: {
+      name: 'Cola Rot',
+      volume: 0.3,
+      alcohol: 0.05,
     },
-    "hugo": {
-      "name": "Hugo",
-      "volume": 0.25,
-      "alcohol": 0.08,
+    hugo: {
+      name: 'Hugo',
+      volume: 0.25,
+      alcohol: 0.08,
     },
-    "sangria": {
-      "name": "Sangria",
-      "volume": 0.25,
-      "alcohol": 0.1,
+    sangria: {
+      name: 'Sangria',
+      volume: 0.25,
+      alcohol: 0.1,
     },
-    "aperol": {
-      "name": "Aperol Spritz",
-      "volume": 0.3,
-      "alcohol": 0.12,
+    aperol: {
+      name: 'Aperol Spritz',
+      volume: 0.3,
+      alcohol: 0.12,
     },
-    "traubensaftschorle": {
-      "name": "Traubensaftschorle",
-      "volume": 0.2,
-      "alcohol": 0.0,
+    traubensaftschorle: {
+      name: 'Traubensaftschorle',
+      volume: 0.2,
+      alcohol: 0.0,
     },
   },
   shot: {
@@ -207,7 +207,7 @@ const drinks = {
   },
   other: {
     name: 'Sonstiges',
-  }
+  },
 }
 
 // Load values from localStorage
@@ -234,7 +234,7 @@ if (localStorage.getItem('drinkHistory')) {
   drinkHistory = JSON.parse(localStorage.getItem('drinkHistory'))
 
   drinkHistory.forEach((entry) => {
-    const { category, drink, time } = entry
+    const {category, drink, time} = entry
     // Add to table
     const row = document.createElement('tr')
 
@@ -245,8 +245,11 @@ if (localStorage.getItem('drinkHistory')) {
 
     // Name block
     const tdName = document.createElement('td')
-    tdName.innerText = `${drinks[category][drink].name} (${drinks[category][drink].volume}l, ${drinks[category][drink].alcohol * 100
-      }%)`
+    tdName.innerText = `${drinks[category][drink].name} (${drinks[category][
+      drink
+    ].volume.toFixed(2)}l, ${(drinks[category][drink].alcohol * 100).toFixed(
+      1
+    )}%)`
     row.appendChild(tdName)
 
     // delete block
@@ -276,7 +279,6 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
     dialogDrink.classList.add('active')
     const category = button.getAttribute('name')
 
-
     dialogCaption.innerText = drinks[category].name
     // fill dialog with buttons for the sub drinks
     dialogGrid.innerHTML = ''
@@ -284,7 +286,8 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       if (drink === 'name') return
       const button = document.createElement('button')
       button.setAttribute('name', drink)
-      button.className = 'responsive s12 m6 ' + ((index) % 4 <= 1 ? 'orange' : 'pink')
+      button.className =
+        'responsive s12 m6 ' + (index % 4 <= 1 ? 'orange' : 'pink')
       button.addEventListener('click', (e) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
@@ -310,8 +313,11 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
         // Name block
         const tdName = document.createElement('td')
-        tdName.innerText = `${drinks[category][drink].name} (${drinks[category][drink].volume}l, ${drinks[category][drink].alcohol * 100
-          }%)`
+        tdName.innerText = `${drinks[category][drink].name} (${drinks[category][
+          drink
+        ].volume.toFixed(2)}l, ${(
+          drinks[category][drink].alcohol * 100
+        ).toFixed(1)}%)`
         row.appendChild(tdName)
 
         // delete block
@@ -354,7 +360,6 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
     })
   })
 })
-
 
 function work() {
   // Get weight and gender
