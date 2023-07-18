@@ -12,16 +12,16 @@ let drinkHistory = localStorage.getItem('drinkHistory')
 
 const drunkEmojis = [
   // BAC in ‰
-  {bac: 0, emoji: '🤔'},
-  {bac: 0.3, emoji: '😄'},
-  {bac: 0.5, emoji: '🥳'},
-  {bac: 0.8, emoji: '🤪'},
-  {bac: 1, emoji: '😵'},
-  {bac: 1.5, emoji: '🤢'},
-  {bac: 2, emoji: '🤮'},
-  {bac: 3, emoji: '💀'},
-  {bac: 4, emoji: '👻'},
-  {bac: 5, emoji: '👽'},
+  { bac: 0, emoji: '🤔' },
+  { bac: 0.3, emoji: '😄' },
+  { bac: 0.5, emoji: '🥳' },
+  { bac: 0.8, emoji: '🤪' },
+  { bac: 1, emoji: '😵' },
+  { bac: 1.5, emoji: '🤢' },
+  { bac: 2, emoji: '🤮' },
+  { bac: 3, emoji: '💀' },
+  { bac: 4, emoji: '👻' },
+  { bac: 5, emoji: '👽' },
 ]
 
 const drinks = {
@@ -205,15 +205,15 @@ const drinks = {
       alcohol: 0.4,
     },
     pina: {
-        name: 'Pina Colada',
-        volume: 0.2,
-        alcohol: 0.1,
+      name: 'Pina Colada',
+      volume: 0.2,
+      alcohol: 0.1,
     },
     penis: {
       name: 'Penis',
       volume: 0.27,
       alcohol: 0.13,
-      
+
     },
   },
   other: {
@@ -245,7 +245,7 @@ if (localStorage.getItem('drinkHistory')) {
   drinkHistory = JSON.parse(localStorage.getItem('drinkHistory'))
 
   drinkHistory.forEach((entry) => {
-    const {category, drink, time} = entry
+    const { category, drink, time } = entry
     // Add to table
     const row = document.createElement('tr')
 
@@ -285,6 +285,10 @@ if (localStorage.getItem('drinkHistory')) {
   })
 }
 
+
+
+
+
 document.querySelectorAll('#inputGrid button').forEach((button) => {
   button.addEventListener('click', (e) => {
     dialogDrink.classList.add('active')
@@ -303,6 +307,20 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
 
+        // when wich get pressed is called penis play the sound penis.wav on the browser in form of browser audio in 50% volumen
+        if (drink === 'penis') {
+          const audio = new Audio('PENIS.wav')
+          audio.volume = 0.5
+          audio.play()
+        }
+        
+
+
+
+
+
+
+
         if (!drinks[category][drink]) return
 
         const time = new Date().getTime()
@@ -311,6 +329,12 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           time,
           drink,
         })
+
+
+
+
+
+
 
         localStorage.setItem('drinkHistory', JSON.stringify(drinkHistory))
 
