@@ -285,10 +285,6 @@ if (localStorage.getItem('drinkHistory')) {
   })
 }
 
-
-
-
-
 document.querySelectorAll('#inputGrid button').forEach((button) => {
   button.addEventListener('click', (e) => {
     dialogDrink.classList.add('active')
@@ -314,13 +310,6 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           audio.play()
         }
         
-
-
-
-
-
-
-
         if (!drinks[category][drink]) return
 
         const time = new Date().getTime()
@@ -329,12 +318,6 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           time,
           drink,
         })
-
-
-
-
-
-
 
         localStorage.setItem('drinkHistory', JSON.stringify(drinkHistory))
 
