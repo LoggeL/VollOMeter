@@ -307,7 +307,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
 
-        // when wich get pressed is called penis play the sound penis.wav on the browser in form of browser audio in 50% volumen
+        // play PENIS
         if (drink === 'penis') {
           const audio = new Audio('PENIS.wav')
           audio.volume = 0.5
