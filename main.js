@@ -204,6 +204,17 @@ const drinks = {
       volume: 0.16,
       alcohol: 0.4,
     },
+    pina: {
+        name: 'Pina Colada',
+        volume: 0.2,
+        alcohol: 0.1,
+    },
+    penis: {
+      name: 'Penis',
+      volume: 0.27,
+      alcohol: 0.13,
+      
+    },
   },
   other: {
     name: 'Sonstiges',
