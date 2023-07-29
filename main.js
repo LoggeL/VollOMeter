@@ -31,31 +31,37 @@ const drinks = {
       name: 'Pils',
       volume: 0.33,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
     weizen: {
       name: 'Weizen',
       volume: 0.5,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
     bockbier: {
       name: 'Bockbier',
       volume: 0.5,
       alcohol: 0.07,
+      sound: 'beer.webm',
     },
     kellerbier: {
       name: 'Kellerbier',
       volume: 0.5,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
     helles: {
       name: 'Helles',
       volume: 0.5,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
     dunkles: {
       name: 'Dunkles',
       volume: 0.5,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
   },
   mischbier: {
@@ -64,31 +70,37 @@ const drinks = {
       name: 'Radler',
       volume: 0.5,
       alcohol: 0.02,
+      sound: 'beer.webm',
     },
     desperados: {
       name: 'Desperados',
       volume: 0.33,
       alcohol: 0.057,
+      sound: 'beer.webm',
     },
     colabier: {
       name: 'Colabier',
       volume: 0.33,
       alcohol: 0.04,
+      sound: 'beer.webm',
     },
     astrarakete: {
       name: 'AstraRakete',
       volume: 0.33,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
     mixery: {
       name: 'Mixery',
       volume: 0.33,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
     weiteres_bier: {
       name: 'Sonstiges',
       volume: 0.5,
       alcohol: 0.05,
+      sound: 'beer.webm',
     },
   },
   weinschorle: {
@@ -97,41 +109,49 @@ const drinks = {
       name: 'Weißherbstschorle',
       volume: 0.25,
       alcohol: 0.06,
+      sound: 'schorle.webm',
     },
     rieslingschorle: {
       name: 'Rieslingschorle',
       volume: 0.25,
       alcohol: 0.07,
+      sound: 'schorle.webm',
     },
     persching: {
       name: 'Persching',
       volume: 0.2,
       alcohol: 0.05,
+      sound: 'schorle.webm',
     },
     colarot: {
       name: 'Cola Rot',
       volume: 0.3,
       alcohol: 0.05,
+      sound: 'schorle.webm',
     },
     hugo: {
       name: 'Hugo',
       volume: 0.25,
       alcohol: 0.08,
+      sound: 'schorle.webm',
     },
     sangria: {
       name: 'Sangria',
       volume: 0.25,
       alcohol: 0.1,
+      sound: 'schorle.webm',
     },
     aperol: {
       name: 'Aperol Spritz',
       volume: 0.3,
       alcohol: 0.12,
+      sound: 'schorle.webm',
     },
     traubensaftschorle: {
       name: 'Traubensaftschorle',
       volume: 0.2,
       alcohol: 0.0,
+      sound: 'schorle.webm',
     },
   },
   shot: {
@@ -140,36 +160,43 @@ const drinks = {
       name: 'Berliner Luft',
       volume: 0.02,
       alcohol: 0.4,
+      sound: 'shot.webm',
     },
     pffefi: {
       name: 'Pfeffi',
       volume: 0.02,
       alcohol: 0.4,
+      sound: 'shot.webm',
     },
     luft: {
       name: 'Berliner Luft',
       volume: 0.02,
       alcohol: 0.4,
+      sound: 'shot.webm',
     },
     jäger: {
       name: 'Jägermeister',
       volume: 0.02,
       alcohol: 0.35,
+      sound: 'shot.webm',
     },
     sauer: {
       name: 'Saurer Apfel',
       volume: 0.02,
       alcohol: 0.16,
+      sound: 'shot.webm',
     },
     hut: {
       name: 'Hütchen',
       volume: 0.02,
       alcohol: 0.4,
+      sound: 'shot.webm',
     },
     nuss: {
       name: 'Nussler',
       volume: 0.02,
       alcohol: 0.25,
+      sound: 'shot.webm',
     },
   },
   cocktails: {
@@ -178,42 +205,49 @@ const drinks = {
       name: 'Mojito',
       volume: 0.24,
       alcohol: 0.125,
+      sound: 'cocktail.webm',
     },
     sob: {
       name: 'Sex on the Beach',
       volume: 0.27,
       alcohol: 0.13,
+      sound: 'cocktail.webm',
     },
     caipi: {
       name: 'Caipi',
       volume: 0.22,
       alcohol: 0.175,
+      sound: 'cocktail.webm',
     },
     liit: {
       name: 'Long Island Iced Tea',
       volume: 0.2,
       alcohol: 0.35,
+      sound: 'cocktail.webm',
     },
     blhawaii: {
       name: 'Blue Hawaiian',
       volume: 0.24,
       alcohol: 0.155,
+      sound: 'cocktail.webm',
     },
     cuba: {
       name: 'Cuba Libre',
       volume: 0.16,
       alcohol: 0.4,
+      sound: 'cocktail.webm',
     },
     pina: {
       name: 'Pina Colada',
       volume: 0.2,
       alcohol: 0.1,
+      sound: 'cocktail.webm',
     },
     penis: {
       name: 'Penis',
       volume: 0.27,
       alcohol: 0.13,
-
+      sound: 'penis.webm',
     },
   },
   other: {
@@ -303,14 +337,15 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
 
-        // play PENIS
-        if (drink === 'penis') {
-          const audio = new Audio('PENIS.wav')
-          audio.volume = 0.5
+        if (!drinks[category][drink]) return
+
+        // If sound
+        if (drinks[category][drink].sound) {
+          const audio = new Audio(
+            `audio/${drinks[category][drink].sound}?${new Date().getTime()}`
+          )
           audio.play()
         }
-        
-        if (!drinks[category][drink]) return
 
         const time = new Date().getTime()
         drinkHistory.push({
