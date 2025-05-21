@@ -508,7 +508,6 @@ function work() {
 
   // Output
   outputElement.innerHTML = `Promille: ${promille.toFixed(
-  outputElement.innerHTML = `Promille: ${promille.toFixed(
     2
   )}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
   outputElement.style.filter = `blur(${Math.min(
