@@ -40,3 +40,39 @@
   background-color: #df36ff !important;
 }
 
+/* Shake animation */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.effect-shake {
+  animation: shake 1s ease-in-out infinite;
+}
+
+/* Tilt effect */
+.effect-tilt {
+  transform: rotate(-5deg);
+}
+
+/* Wavy text animation */
+@keyframes wavy-text {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.effect-wavy-text {
+  animation: wavy-text 1s ease-in-out infinite;
+  display: inline-block; /* Ensures the animation applies correctly to text elements */
+}

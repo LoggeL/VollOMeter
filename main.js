@@ -424,40 +424,57 @@ function work() {
     return
   }
 
-  // Factor
-  let factor = 0
+  // Constants for BAC calculation
+  const ETHANOL_DENSITY_G_PER_L = 789; // g/L, density of ethanol
+  const MS_PER_HOUR = 1000 * 60 * 60;
+  const BAC_DECAY_RATE_PER_HOUR = 0.1; // ‰ per hour
+
+  // Determine alcohol distribution ratio (Widmark r factor)
+  let alcoholDistributionRatio;
   if (gender === 'm') {
-    alcoholDistributionRatio = 0.68 //average for males
+    alcoholDistributionRatio = 0.68; // average for males
   } else if (gender === 'w') {
-    alcoholDistributionRatio = 0.55 //average for females
-  } else if (gender === 'd') {
-    // Average
-    alcoholDistributionRatio = 0.615
+    alcoholDistributionRatio = 0.55; // average for females
+  } else { // 'd' or any other value
+    alcoholDistributionRatio = 0.615; // average
   }
 
-  const gramsFactor = 789 //g, 1 l of ethanol weights 789g
+  let totalPromille = 0;
+  const currentTime = new Date().getTime();
 
-  // Calculate
-  let promille = 0
-  let time = drinkHistory[0]?.time
-  for (const entry of drinkHistory) {
-    const drinkTime = entry.time
-    const drinkVolume = drinks[entry.category][entry.drink].volume
-    const drinkAlcohol = drinks[entry.category][entry.drink].alcohol
-    const drinkGrams = drinkVolume * drinkAlcohol * gramsFactor
-    const drinkPromille = drinkGrams / (weight * alcoholDistributionRatio)
-    promille += drinkPromille
+  if (drinkHistory.length === 0) {
+    promille = 0;
+  } else {
+    for (const entry of drinkHistory) {
+      const drinkData = drinks[entry.category][entry.drink];
+      const drinkVolumeL = drinkData.volume; // in Liters
+      const alcoholPercentage = drinkData.alcohol; // e.g., 0.05 for 5%
 
-    // Handle time decay
-    promille -= (drinkTime - time) / 1000 / 60 / 60 / 10 // 0.1 promille per hour
-    promille = Math.max(0, promille)
+      // Amount of alcohol in grams
+      const alcoholGrams = drinkVolumeL * alcoholPercentage * ETHANOL_DENSITY_G_PER_L;
 
-    time = drinkTime
+      // Initial promille contribution from this drink (Widmark formula)
+      // BAC (‰) = (Alcohol Mass (g) / (Body Weight (kg) * Distribution Ratio)) * 1 (since we use ‰ directly)
+      // Note: Original formula is often *100 for %, but here it's for ‰ so direct ratio is fine.
+      // The formula implicitly uses density of blood similar to water (1 kg/L)
+      // and result is per mille (g alcohol / kg body water), effectively g/kg or ‰.
+      const initialDrinkPromille = alcoholGrams / (weight * alcoholDistributionRatio);
+
+      // Time elapsed since this drink was consumed, in hours
+      const hoursElapsed = (currentTime - entry.time) / MS_PER_HOUR;
+
+      // Calculate decay for this drink
+      const decay = hoursElapsed * BAC_DECAY_RATE_PER_HOUR;
+
+      // Current promille contribution from this drink (cannot be negative)
+      const currentDrinkPromille = Math.max(0, initialDrinkPromille - decay);
+      totalPromille += currentDrinkPromille;
+    }
   }
-  promille -= (new Date().getTime() - time) / 1000 / 60 / 60 / 10 // 0.1 promille per hour
-  promille = Math.max(0, promille)
+  // Assign to the variable name used by subsequent logic
+  let promille = totalPromille;
 
-  if (!promille) promille = 0
+  if (!promille) promille = 0; // Ensure NaN or undefined becomes 0, though Math.max should prevent NaN.
 
   let emoji = ''
   for (const e of drunkEmojis) {
@@ -465,17 +482,42 @@ function work() {
     else break
   }
 
+  // Apply/remove CSS effects based on promille
+  const outputElement = document.getElementById('output');
+
+  // Shaking Effect
+  if (promille > 1.0) {
+    document.body.classList.add('effect-shake');
+  } else {
+    document.body.classList.remove('effect-shake');
+  }
+
+  // Tilting Effect
+  if (promille > 1.5) {
+    document.body.classList.add('effect-tilt');
+  } else {
+    document.body.classList.remove('effect-tilt');
+  }
+
+  // Wavy Text Effect
+  if (promille > 2.0) {
+    outputElement.classList.add('effect-wavy-text');
+  } else {
+    outputElement.classList.remove('effect-wavy-text');
+  }
+
   // Output
-  document.getElementById('output').innerHTML = `Promille: ${promille.toFixed(
+  outputElement.innerHTML = `Promille: ${promille.toFixed(
+  outputElement.innerHTML = `Promille: ${promille.toFixed(
     2
   )}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
-  document.getElementById('output').style.filter = `blur(${Math.min(
+  outputElement.style.filter = `blur(${Math.min(
     promille,
     2
   )}px)`
 }
 
-setInterval(work, 60 * 1000)
+setInterval(work, 60 * 1000) // Recalculate every minute to update decay
 
 // beforeinstallprompt
 let deferredPrompt
