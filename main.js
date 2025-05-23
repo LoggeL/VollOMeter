@@ -1,6 +1,9 @@
 const inputGrid = document.getElementById('inputGrid')
 const inputWeight = document.getElementById('inputWeight')
 const inputGender = document.getElementById('inputGender')
+const inputFood = document.getElementById('inputFood')
+const inputBodyType = document.getElementById('inputBodyType')
+const inputDecayRate = document.getElementById('inputDecayRate')
 const drinkTable = document.getElementById('drinkTable')
 const dialogDrink = document.getElementById('dialogDrink')
 const dialogGrid = dialogDrink.querySelector('.grid')
@@ -23,6 +26,12 @@ const drunkEmojis = [
   { bac: 4, emoji: '👻' },
   { bac: 5, emoji: '👽' },
 ]
+
+const rFactors = {
+  male: { slim: 0.73, average: 0.68, aboveaverage: 0.60 },
+  female: { slim: 0.60, average: 0.55, aboveaverage: 0.50 },
+  diverse: { slim: 0.665, average: 0.615, aboveaverage: 0.55 } // Averages
+};
 
 const drinks = {
   bier: {
@@ -259,9 +268,33 @@ const drinks = {
 if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
   inputWeight.value = localStorage.getItem('weight')
   inputGender.value = localStorage.getItem('gender')
-  inputGrid.parentElement.classList.add('active')
-  if (localStorage.getItem('drinkHistory')) work()
+  if (localStorage.getItem('hasEaten')) {
+    inputFood.checked = localStorage.getItem('hasEaten') === 'true';
+  }
+  if (localStorage.getItem('bodyType')) {
+    inputBodyType.value = localStorage.getItem('bodyType');
+  }
+  if (localStorage.getItem('decayRate')) {
+    inputDecayRate.value = localStorage.getItem('decayRate');
+  }
+  inputGrid.parentElement.classList.add('active');
+  work(); // Call work if personal data is loaded and section is active
 }
+
+inputFood.addEventListener('change', (e) => {
+  localStorage.setItem('hasEaten', e.target.checked);
+  work(); // Recalculate if food status changes
+});
+
+inputBodyType.addEventListener('change', (e) => {
+  localStorage.setItem('bodyType', e.target.value);
+  work(); // Recalculate
+});
+
+inputDecayRate.addEventListener('change', (e) => {
+  localStorage.setItem('decayRate', e.target.value);
+  work(); // Recalculate
+});
 
 inputWeight.addEventListener('keyup', (e) => {
   localStorage.setItem('weight', e.target.value)
@@ -418,25 +451,26 @@ function work() {
   // Get weight and gender
   const weight = inputWeight.value
   const gender = inputGender.value
+  const bodyType = inputBodyType.value;
+  const hasEaten = inputFood.checked;
+  const currentAbsorptionTimeMs = hasEaten ? ABSORPTION_TIME_WITH_FOOD_MS : ABSORPTION_TIME_EMPTY_STOMACH_MS;
 
   // Validate
-  if (!weight || !gender || weight <= 0) {
+  if (!weight || !gender || weight <= 0 || !bodyType || !inputDecayRate.value) { // Added check for decay rate value
     return
   }
 
-  // Constants for BAC calculation
-  const ETHANOL_DENSITY_G_PER_L = 789; // g/L, density of ethanol
-  const MS_PER_HOUR = 1000 * 60 * 60;
-  const BAC_DECAY_RATE_PER_HOUR = 0.1; // ‰ per hour
-
   // Determine alcohol distribution ratio (Widmark r factor)
   let alcoholDistributionRatio;
-  if (gender === 'm') {
-    alcoholDistributionRatio = 0.68; // average for males
-  } else if (gender === 'w') {
-    alcoholDistributionRatio = 0.55; // average for females
-  } else { // 'd' or any other value
-    alcoholDistributionRatio = 0.615; // average
+  if (gender === 'm' && rFactors.male[bodyType]) {
+    alcoholDistributionRatio = rFactors.male[bodyType];
+  } else if (gender === 'w' && rFactors.female[bodyType]) {
+    alcoholDistributionRatio = rFactors.female[bodyType];
+  } else if (gender === 'd' && rFactors.diverse[bodyType]) { // 'd' for diverse
+    alcoholDistributionRatio = rFactors.diverse[bodyType];
+  } else {
+    // Fallback to a general average if inputs are somehow invalid
+    alcoholDistributionRatio = rFactors.diverse.average; // A sensible default
   }
 
   let totalPromille = 0;
@@ -460,14 +494,20 @@ function work() {
       // and result is per mille (g alcohol / kg body water), effectively g/kg or ‰.
       const initialDrinkPromille = alcoholGrams / (weight * alcoholDistributionRatio);
 
-      // Time elapsed since this drink was consumed, in hours
-      const hoursElapsed = (currentTime - entry.time) / MS_PER_HOUR;
+      const timeSinceConsumption = currentTime - entry.time;
+      let currentDrinkPromille;
+      const selectedDecayRate = parseFloat(inputDecayRate.value);
 
-      // Calculate decay for this drink
-      const decay = hoursElapsed * BAC_DECAY_RATE_PER_HOUR;
-
-      // Current promille contribution from this drink (cannot be negative)
-      const currentDrinkPromille = Math.max(0, initialDrinkPromille - decay);
+      if (timeSinceConsumption < currentAbsorptionTimeMs) {
+        // Drink is in absorption phase
+        currentDrinkPromille = initialDrinkPromille * (timeSinceConsumption / currentAbsorptionTimeMs);
+      } else {
+        // Drink is past absorption phase, decay applies
+        const timeAfterAbsorptionPeak = timeSinceConsumption - currentAbsorptionTimeMs;
+        const hoursAfterAbsorptionPeak = timeAfterAbsorptionPeak / MS_PER_HOUR;
+        const decay = hoursAfterAbsorptionPeak * selectedDecayRate;
+        currentDrinkPromille = Math.max(0, initialDrinkPromille - decay);
+      }
       totalPromille += currentDrinkPromille;
     }
   }
