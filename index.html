@@ -99,6 +99,31 @@
         <i>arrow_drop_down</i>
         <span class="helper">Geschlecht</span>
       </div>
+      <div class="s12">
+        <label>
+          <input type="checkbox" id="inputFood" />
+          <span>Drinking with food (slower absorption)?</span>
+        </label>
+      </div>
+      <div class="field suffix border s12 m6"> <!-- Adjust s12 m6 as needed for layout -->
+        <select id="inputBodyType">
+          <option value="average" selected>Average</option>
+          <option value="slim">Slim</option>
+          <option value="aboveaverage">Above Average</option>
+        </select>
+        <i>arrow_drop_down</i>
+        <span class="helper">Body Type</span>
+      </div>
+      <div class="field suffix border s12 m6">
+        <select id="inputDecayRate">
+          <option value="0.08">Slow (0.08‰/h)</option>
+          <option value="0.10" selected>Average (0.10‰/h)</option>
+          <option value="0.12">Fast (0.12‰/h)</option>
+          <option value="0.15">Very Fast (0.15‰/h)</option>
+        </select>
+        <i>arrow_drop_down</i>
+        <span class="helper">Alcohol Decay Rate</span>
+      </div>
     </div>
 
     <table class="border">
