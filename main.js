@@ -1,3 +1,9 @@
+// Constants
+const ABSORPTION_TIME_EMPTY_STOMACH_MS = 30 * 60 * 1000; // 30 minutes in milliseconds
+const ABSORPTION_TIME_WITH_FOOD_MS = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+const ETHANOL_DENSITY_G_PER_L = 789.0; // g/L
+const MS_PER_HOUR = 3600000; // milliseconds per hour
+
 const inputGrid = document.getElementById('inputGrid')
 const inputWeight = document.getElementById('inputWeight')
 const inputGender = document.getElementById('inputGender')
@@ -164,7 +170,7 @@ const drinks = {
     },
   },
   shot: {
-    name: 'Shot',
+    name: 'Kurze',
     luft: {
       name: 'Berliner Luft',
       volume: 0.02,
@@ -325,9 +331,9 @@ if (localStorage.getItem('drinkHistory')) {
     const tdName = document.createElement('td')
     tdName.innerText = `${drinks[category][drink].name} (${drinks[category][
       drink
-    ].volume.toFixed(2)}l, ${(drinks[category][drink].alcohol * 100).toFixed(
+    ].volume.toFixed(2).replace('.', ',')}l, ${(drinks[category][drink].alcohol * 100).toFixed(
       1
-    )}%)`
+    ).replace('.', ',')}%)`
     row.appendChild(tdName)
 
     // delete block
@@ -401,9 +407,9 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         const tdName = document.createElement('td')
         tdName.innerText = `${drinks[category][drink].name} (${drinks[category][
           drink
-        ].volume.toFixed(2)}l, ${(
+        ].volume.toFixed(2).replace('.', ',')}l, ${(
           drinks[category][drink].alcohol * 100
-        ).toFixed(1)}%)`
+        ).toFixed(1).replace('.', ',')}%)`
         row.appendChild(tdName)
 
         // delete block
@@ -549,7 +555,7 @@ function work() {
   // Output
   outputElement.innerHTML = `Promille: ${promille.toFixed(
     2
-  )}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
+  ).replace('.', ',')}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
   outputElement.style.filter = `blur(${Math.min(
     promille,
     2

@@ -4,21 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voll-O-Meter</title>
+  <title>Voll-O-Meter - Dein Promillerechner</title>
 
   <!-- Favicon -->
   <link rel="icon" href="logo.png">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-    content="Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem Voll-O-Meter. Prost!">
-  <meta name="keywords" content="Promille, Alkohol, Trinkverlauf, lustig, Berechnung">
+    content="Behalte den Überblick über deinen Alkoholkonsum mit dem Voll-O-Meter. Dein Promillerechner für Partys und Feste. Prost!">
+  <meta name="keywords" content="Promille, Alkohol, Trinkverlauf, Rechner, Party, Feier, Bier, Wein, Cocktails">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Voll-O-Meter - Dein lustiger Abend-Tracker!">
+  <meta property="og:title" content="Voll-O-Meter - Dein Promillerechner für den Abend!">
   <meta property="og:description"
-    content="Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem Voll-O-Meter. Prost!">
+    content="Behalte den Überblick über deinen Alkoholkonsum mit dem Voll-O-Meter. Dein Promillerechner für Partys und Feste. Prost!">
   <meta property="og:image" content="https://loggel.github.io/VollOMeter/logo.png">
 
   <!-- Manifest -->
@@ -44,7 +44,7 @@
       </h5>
       <button class="extend square" id="installPWA" style="display:none;">
         <i>download</i>
-        <span>Install</span>
+        <span>Installieren</span>
       </button>
       <div class="circle transparent spin reverse" id="logoRight">
         <img class="responsive pulse"
@@ -71,19 +71,19 @@
           <button class="responsive extra large-elevate orange" name="mischbier">Mischbier</button>
         </div>
         <div class="s6">
-          <button class="responsive extra large-elevate orange" name="shot">Shot</button>
+          <button class="responsive extra large-elevate orange" name="shot">Kurze</button>
         </div>
         <div class="s6">
           <button class="responsive extra large-elevate pink" name="other">Sonstiges</button>
         </div>
         <div class="large-space s12"></div>
-        <h2 class="s12 center-align" id="output">Promille: 0.00‰</h2>
+        <h2 class="s12 center-align" id="output">Promille: 0,00‰</h2>
         <div class="large-space s12"></div>
       </div>
     </div>
 
     <div class="grid">
-      <div class="s12">Person</div>
+      <div class="s12">Angaben zur Person</div>
       <div class="field border s6">
         <input type="number" id="inputWeight">
         <span class="helper">Gewicht (kg)</span>
@@ -102,35 +102,35 @@
       <div class="s12">
         <label>
           <input type="checkbox" id="inputFood" />
-          <span>Drinking with food (slower absorption)?</span>
+          <span>Auf vollen Magen getrunken (langsamere Aufnahme)?</span>
         </label>
       </div>
       <div class="field suffix border s12 m6"> <!-- Adjust s12 m6 as needed for layout -->
         <select id="inputBodyType">
-          <option value="average" selected>Average</option>
-          <option value="slim">Slim</option>
-          <option value="aboveaverage">Above Average</option>
+          <option value="average" selected>Durchschnittlich</option>
+          <option value="slim">Schlank</option>
+          <option value="aboveaverage">Überdurchschnittlich</option>
         </select>
         <i>arrow_drop_down</i>
-        <span class="helper">Body Type</span>
+        <span class="helper">Körpertyp</span>
       </div>
       <div class="field suffix border s12 m6">
         <select id="inputDecayRate">
-          <option value="0.08">Slow (0.08‰/h)</option>
-          <option value="0.10" selected>Average (0.10‰/h)</option>
-          <option value="0.12">Fast (0.12‰/h)</option>
-          <option value="0.15">Very Fast (0.15‰/h)</option>
+          <option value="0.08">Langsam (0.08‰/h)</option>
+          <option value="0.10" selected>Durchschnittlich (0.10‰/h)</option>
+          <option value="0.12">Schnell (0.12‰/h)</option>
+          <option value="0.15">Sehr Schnell (0.15‰/h)</option>
         </select>
         <i>arrow_drop_down</i>
-        <span class="helper">Alcohol Decay Rate</span>
+        <span class="helper">Alkoholabbaurate</span>
       </div>
     </div>
 
     <table class="border">
       <thead>
         <tr>
-          <th>Zeit</th>
-          <th>Drink</th>
+          <th>Uhrzeit</th>
+          <th>Getränk</th>
           <th class="right-align">Löschen</th>
         </tr>
       </thead>
@@ -141,7 +141,7 @@
   </main>
 
   <dialog class=" responsive" id="dialogDrink">
-    <h5>Drink auswählen</h5>
+    <h5>Getränk auswählen</h5>
     <div class="grid">
       <button class="responsive s6">
         <img src="logo.png">
@@ -169,14 +169,14 @@
       </button>
     </div>
     <nav class="right-align">
-      <button class="border" onclick="document.getElementById('dialogDrink').classList.remove('active')">Cancel</button>
+      <button class="border" onclick="document.getElementById('dialogDrink').classList.remove('active')">Abbrechen</button>
     </nav>
   </dialog>
 
   <footer>
     <div class="row center-align">
       <p>
-        Made by <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
+        Erstellt von <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
           target="_blank">Logge</a> & <a href="https://github.com/Hairocketfire" target="_blank">Jonas</a>
       </p>
     </div>
