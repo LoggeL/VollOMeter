@@ -24,157 +24,179 @@
   <!-- Manifest -->
   <link rel="manifest" href="webmanifest.json">
 
-  <link href="https://cdn.jsdelivr.net/npm/beercss@3.2.10/dist/cdn/beer.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <link rel="stylesheet" href="main.css">
-
-
 </head>
 
 <body>
 
   <header>
-    <nav>
-      <div class="circle transparent spin">
-        <img class="responsive pulse"
-          src="VOMLogo.png">
+    <nav class="navbar">
+      <div class="nav-logo-left">
+        <img class="logo-spin" src="VOMLogo.png" alt="VOM Logo">
       </div>
-      <h5 class="max center-align">
-        <img src="logo.png" class="circle">
-        Voll-O-Meter
-      </h5>
-      <button class="extend square" id="installPWA" style="display:none;">
-        <i>download</i>
+      <div class="nav-title">
+        <img src="logo.png" class="title-logo" alt="Logo">
+        <h1>Voll-O-Meter</h1>
+      </div>
+      <button class="install-btn" id="installPWA" style="display:none;">
+        <span class="install-icon">⬇️</span>
         <span>Installieren</span>
       </button>
-      <div class="circle transparent spin reverse" id="logoRight">
-        <img class="responsive pulse"
-          src="VOMLogo.png">
+      <div class="nav-logo-right" id="logoRight">
+        <img class="logo-spin logo-spin-reverse" src="VOMLogo.png" alt="VOM Logo">
       </div>
     </nav>
   </header>
 
-  <main class="responsive">
-    <div class="space"></div>
+  <main class="main-content">
+    <div class="spacer"></div>
+
+    <div class="form-section">
+      <h3>Angaben zur Person</h3>
+      <div class="form-grid">
+        <div class="input-group">
+          <input type="number" id="inputWeight" class="form-input" placeholder=" ">
+          <label class="form-label">Gewicht (kg)</label>
+        </div>
+
+        <div class="input-group">
+          <select id="inputGender" class="form-select">
+            <option value="" disabled selected>Bitte wählen</option>
+            <option value="w">Weiblich</option>
+            <option value="m">Männlich</option>
+            <option value="d">Divers</option>
+          </select>
+          <label class="form-label">Geschlecht</label>
+        </div>
+        
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="inputFood" class="form-checkbox">
+            <span class="checkbox-text">Auf vollen Magen getrunken (langsamere Aufnahme)?</span>
+          </label>
+        </div>
+        
+        <div class="input-group">
+          <select id="inputBodyType" class="form-select">
+            <option value="average" selected>Durchschnittlich</option>
+            <option value="slim">Schlank</option>
+            <option value="aboveaverage">Überdurchschnittlich</option>
+          </select>
+          <label class="form-label">Körpertyp</label>
+        </div>
+        
+        <div class="input-group">
+          <select id="inputDecayRate" class="form-select">
+            <option value="0.08">Langsam (0.08‰/h)</option>
+            <option value="0.10" selected>Durchschnittlich (0.10‰/h)</option>
+            <option value="0.12">Schnell (0.12‰/h)</option>
+            <option value="0.15">Sehr Schnell (0.15‰/h)</option>
+          </select>
+          <label class="form-label">Alkoholabbaurate</label>
+        </div>
+      </div>
+    </div>
 
     <div class="page">
-      <div class="grid" id="inputGrid">
-        <div class="s6">
-          <button class="responsive extra large-elevate orange" name="cocktails">Cocktails</button>
+      <div class="drink-grid" id="inputGrid">
+        <button class="drink-btn drink-btn-orange" name="cocktails">Cocktails</button>
+        <button class="drink-btn drink-btn-pink" name="weinschorle">Weinschorle</button>
+        <button class="drink-btn drink-btn-pink" name="bier">Bier</button>
+        <button class="drink-btn drink-btn-orange" name="mischbier">Mischbier</button>
+        <button class="drink-btn drink-btn-orange" name="shot">Kurze</button>
+        <button class="drink-btn drink-btn-pink" name="other">Sonstiges</button>
+        
+        <div class="output-section">
+          <h2 id="output">Promille: 0,00‰</h2>
         </div>
-        <div class="s6">
-          <button class="responsive extra large-elevate pink" name="weinschorle">Weinschorle</button>
-        </div>
-        <div class="s6">
-          <button class="responsive extra large-elevate pink" name="bier">Bier</button>
-        </div>
-        <div class="s6">
-          <button class="responsive extra large-elevate orange" name="mischbier">Mischbier</button>
-        </div>
-        <div class="s6">
-          <button class="responsive extra large-elevate orange" name="shot">Kurze</button>
-        </div>
-        <div class="s6">
-          <button class="responsive extra large-elevate pink" name="other">Sonstiges</button>
-        </div>
-        <div class="large-space s12"></div>
-        <h2 class="s12 center-align" id="output">Promille: 0,00‰</h2>
-        <div class="large-space s12"></div>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="s12">Angaben zur Person</div>
-      <div class="field border s6">
-        <input type="number" id="inputWeight">
-        <span class="helper">Gewicht (kg)</span>
-      </div>
-
-      <div class="field suffix border s6">
-        <select id="inputGender">
-          <option value="" disabled selected>Bitte wählen</option>
-          <option value="w">Weiblich</option>
-          <option value="m">Männlich</option>
-          <option value="d">Divers</option>
-        </select>
-        <i>arrow_drop_down</i>
-        <span class="helper">Geschlecht</span>
-      </div>
-      <div class="s12">
-        <label>
-          <input type="checkbox" id="inputFood" />
-          <span>Auf vollen Magen getrunken (langsamere Aufnahme)?</span>
-        </label>
-      </div>
-      <div class="field suffix border s12 m6"> <!-- Adjust s12 m6 as needed for layout -->
-        <select id="inputBodyType">
-          <option value="average" selected>Durchschnittlich</option>
-          <option value="slim">Schlank</option>
-          <option value="aboveaverage">Überdurchschnittlich</option>
-        </select>
-        <i>arrow_drop_down</i>
-        <span class="helper">Körpertyp</span>
-      </div>
-      <div class="field suffix border s12 m6">
-        <select id="inputDecayRate">
-          <option value="0.08">Langsam (0.08‰/h)</option>
-          <option value="0.10" selected>Durchschnittlich (0.10‰/h)</option>
-          <option value="0.12">Schnell (0.12‰/h)</option>
-          <option value="0.15">Sehr Schnell (0.15‰/h)</option>
-        </select>
-        <i>arrow_drop_down</i>
-        <span class="helper">Alkoholabbaurate</span>
-      </div>
+    <div class="table-section">
+      <table class="drinks-table">
+        <thead>
+          <tr>
+            <th>Uhrzeit</th>
+            <th>Getränk</th>
+            <th class="text-right">Löschen</th>          </tr>
+        </thead>
+        <tbody id="drinkTable">
+        </tbody>
+      </table>
     </div>
-
-    <table class="border">
-      <thead>
-        <tr>
-          <th>Uhrzeit</th>
-          <th>Getränk</th>
-          <th class="right-align">Löschen</th>
-        </tr>
-      </thead>
-      <tbody id="drinkTable">
-      </tbody>
-    </table>
 
   </main>
 
-  <dialog class=" responsive" id="dialogDrink">
-    <h5>Getränk auswählen</h5>
-    <div class="grid">
-      <button class="responsive s6">
-        <img src="logo.png">
-        <span>Button</span>
-      </button>
-      <button class="responsive s6">
-        <img src="logo.png">
-        <span>Button</span>
-      </button>
-      <button class="responsive s6">
-        <img src="logo.png">
-        <span>Button</span>
-      </button>
-      <button class="responsive s6">
-        <img src="logo.png">
-        <span>Button</span>
-      </button>
-      <button class="responsive s6">
-        <img src="logo.png">
-        <span>Button</span>
-      </button>
-      <button class="responsive s6">
-        <img src="logo.png">
-        <span>Button</span>
-      </button>
+  <!-- Drink Animation Overlay -->
+  <div class="drink-animation-overlay" id="drinkAnimationOverlay">
+    <div class="drink-animation-container">
+      <div class="drink-scene">
+        <div class="drink-bottle">
+          <div class="bottle-cap"></div>
+          <div class="drink-stream"></div>
+        </div>
+        <div class="drink-glass">
+          <div class="drink-fill"></div>
+          <div class="drink-bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+          </div>
+        </div>
+      </div>
+      <div class="drink-sparkles">
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+      </div>
+      <div class="drink-animation-text" id="drinkAnimationText">Prost! 🍻</div>
+      <div class="drink-animation-subtext" id="drinkAnimationSubtext">Getränk hinzugefügt</div>
     </div>
-    <nav class="right-align">
-      <button class="border" onclick="document.getElementById('dialogDrink').classList.remove('active')">Abbrechen</button>
-    </nav>
+  </div>
+
+  <dialog class="modal" id="dialogDrink">
+    <div class="modal-content">
+      <h3 class="modal-title">Getränk auswählen</h3>
+      <div class="modal-grid">
+        <button class="modal-btn">
+          <img src="logo.png" alt="Drink">
+          <span>Button</span>
+        </button>
+        <button class="modal-btn">
+          <img src="logo.png" alt="Drink">
+          <span>Button</span>
+        </button>
+        <button class="modal-btn">
+          <img src="logo.png" alt="Drink">
+          <span>Button</span>
+        </button>
+        <button class="modal-btn">
+          <img src="logo.png" alt="Drink">
+          <span>Button</span>
+        </button>
+        <button class="modal-btn">
+          <img src="logo.png" alt="Drink">
+          <span>Button</span>
+        </button>
+        <button class="modal-btn">
+          <img src="logo.png" alt="Drink">
+          <span>Button</span>
+        </button>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="document.getElementById('dialogDrink').classList.remove('active')">Abbrechen</button>
+      </div>
+    </div>
   </dialog>
 
-  <footer>
-    <div class="row center-align">
+  <footer class="footer">
+    <div class="footer-content">
       <p>
         Erstellt von <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
           target="_blank">Logge</a> & <a href="https://github.com/Hairocketfire" target="_blank">Jonas</a>
@@ -182,8 +204,6 @@
     </div>
   </footer>
 
-
-  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.2.10/dist/cdn/beer.min.js"></script>
   <script src="main.js"></script>
 </body>
 

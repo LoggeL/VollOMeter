@@ -12,15 +12,15 @@ const inputBodyType = document.getElementById('inputBodyType')
 const inputDecayRate = document.getElementById('inputDecayRate')
 const drinkTable = document.getElementById('drinkTable')
 const dialogDrink = document.getElementById('dialogDrink')
-const dialogGrid = dialogDrink.querySelector('.grid')
-const dialogCaption = dialogDrink.querySelector('h5')
+const dialogGrid = dialogDrink.querySelector('.modal-grid')
+const dialogCaption = dialogDrink.querySelector('.modal-title')
 
 let drinkHistory = localStorage.getItem('drinkHistory')
   ? JSON.parse(localStorage.getItem('drinkHistory'))
   : []
 
 const drunkEmojis = [
-  // BAC in ‰
+  // BAC in ‰ with emojis
   { bac: 0, emoji: '🤔' },
   { bac: 0.3, emoji: '😄' },
   { bac: 0.5, emoji: '🥳' },
@@ -270,6 +270,51 @@ const drinks = {
   },
 }
 
+// Function to check if form data is complete
+function checkFormCompleteness() {
+  const weight = inputWeight.value;
+  const gender = inputGender.value;
+  const bodyType = inputBodyType.value;
+  const decayRate = inputDecayRate.value;
+  
+  const isComplete = weight && gender && bodyType && decayRate && weight > 0;
+  
+  const formSection = document.querySelector('.form-section');
+  if (isComplete) {
+    formSection.classList.remove('incomplete');
+    formSection.classList.add('complete');
+  } else {
+    formSection.classList.remove('complete');
+    formSection.classList.add('incomplete');
+  }
+  
+  return isComplete;
+}
+
+// Function to update form collapse state based on completeness
+function updateFormState() {
+  const formSection = document.querySelector('.form-section');
+  const isComplete = checkFormCompleteness();
+  
+  if (isComplete) {
+    // Auto-collapse if complete and not manually overridden
+    if (localStorage.getItem('formManuallyExpanded') !== 'true') {
+      formSection.classList.add('collapsed');
+      localStorage.setItem('formCollapsed', 'true');
+    }
+  } else {
+    // Auto-expand if incomplete
+    formSection.classList.remove('collapsed');
+    localStorage.setItem('formCollapsed', 'false');
+    localStorage.removeItem('formManuallyExpanded');
+  }
+  
+  // Update header state
+  const formHeader = formSection.querySelector('h3');
+  const isCollapsed = formSection.classList.contains('collapsed');
+  formHeader.style.opacity = isCollapsed ? '0.7' : '1';
+}
+
 // Load values from localStorage
 if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
   inputWeight.value = localStorage.getItem('weight')
@@ -284,7 +329,18 @@ if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
     inputDecayRate.value = localStorage.getItem('decayRate');
   }
   inputGrid.parentElement.classList.add('active');
+  
+  // Check form completeness and update state
+  updateFormState();
+  
   work(); // Call work if personal data is loaded and section is active
+} else {
+  // If no data is loaded, ensure form is expanded
+  const formSection = document.querySelector('.form-section');
+  if (formSection) {
+    formSection.classList.remove('collapsed');
+    formSection.classList.add('incomplete');
+  }
 }
 
 inputFood.addEventListener('change', (e) => {
@@ -294,23 +350,27 @@ inputFood.addEventListener('change', (e) => {
 
 inputBodyType.addEventListener('change', (e) => {
   localStorage.setItem('bodyType', e.target.value);
+  updateFormState(); // Check completeness
   work(); // Recalculate
 });
 
 inputDecayRate.addEventListener('change', (e) => {
   localStorage.setItem('decayRate', e.target.value);
+  updateFormState(); // Check completeness
   work(); // Recalculate
 });
 
 inputWeight.addEventListener('keyup', (e) => {
   localStorage.setItem('weight', e.target.value)
   if (inputGender.value !== '') inputGrid.parentElement.classList.add('active')
+  updateFormState(); // Check completeness
   work()
 })
 
 inputGender.addEventListener('change', (e) => {
   localStorage.setItem('gender', e.target.value)
   if (inputWeight.value) inputGrid.parentElement.classList.add('active')
+  updateFormState(); // Check completeness
   work()
 })
 
@@ -321,6 +381,8 @@ if (localStorage.getItem('drinkHistory')) {
     const { category, drink, time } = entry
     // Add to table
     const row = document.createElement('tr')
+    row.classList.add('drink-row')
+    row.dataset.time = time
 
     // Time block
     const tdTime = document.createElement('td')
@@ -329,19 +391,27 @@ if (localStorage.getItem('drinkHistory')) {
 
     // Name block
     const tdName = document.createElement('td')
-    tdName.innerText = `${drinks[category][drink].name} (${drinks[category][
+    const nameText = `${drinks[category][drink].name} (${drinks[category][
       drink
-    ].volume.toFixed(2).replace('.', ',')}l, ${(drinks[category][drink].alcohol * 100).toFixed(
-      1
-    ).replace('.', ',')}%)`
+    ].volume.toFixed(2).replace('.', ',')}l, ${(
+      drinks[category][drink].alcohol * 100
+    ).toFixed(1).replace('.', ',')}%)`
+    
+    // Add absorption status indicator
+    const statusSpan = document.createElement('span')
+    statusSpan.className = 'absorption-status'
+    statusSpan.innerHTML = ' <span class="status-indicator processing">~30 Min</span>'
+    
+    tdName.innerHTML = nameText
+    tdName.appendChild(statusSpan)
     row.appendChild(tdName)
 
     // delete block
     const td = document.createElement('td')
-    td.classList.add('right-align')
+    td.classList.add('text-right')
     const a = document.createElement('a')
     const i = document.createElement('i')
-    i.innerText = 'Löschen'
+    i.className = 'fas fa-trash delete-icon'
     a.appendChild(i)
     a.addEventListener('click', (e) => {
       e.preventDefault()
@@ -356,6 +426,11 @@ if (localStorage.getItem('drinkHistory')) {
     // Prepend to table
     drinkTable.prepend(row)
   })
+  
+  // Initialize progression markers for loaded drinks
+  if (inputWeight.value && inputGender.value) {
+    updateProgressionMarkers();
+  }
 }
 
 document.querySelectorAll('#inputGrid button').forEach((button) => {
@@ -370,13 +445,15 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       if (drink === 'name') return
       const button = document.createElement('button')
       button.setAttribute('name', drink)
-      button.className =
-        'responsive s12 m6 ' + (index % 4 <= 1 ? 'orange' : 'pink')
+      button.className = 'modal-btn ' + (index % 4 <= 1 ? 'modal-btn-orange' : 'modal-btn-pink')
       button.addEventListener('click', (e) => {
         dialogDrink.classList.remove('active')
         const drink = button.getAttribute('name')
 
         if (!drinks[category][drink]) return
+
+        // Show drink pouring animation
+        showDrinkAnimation(drinks[category][drink].name, category, drink);
 
         // If sound
         if (drinks[category][drink].sound) {
@@ -397,6 +474,8 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
         // Add to table
         const row = document.createElement('tr')
+        row.classList.add('drink-row')
+        row.dataset.time = time
 
         // Time block
         const tdTime = document.createElement('td')
@@ -405,19 +484,27 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
         // Name block
         const tdName = document.createElement('td')
-        tdName.innerText = `${drinks[category][drink].name} (${drinks[category][
+        const nameText = `${drinks[category][drink].name} (${drinks[category][
           drink
         ].volume.toFixed(2).replace('.', ',')}l, ${(
           drinks[category][drink].alcohol * 100
         ).toFixed(1).replace('.', ',')}%)`
+        
+        // Add absorption status indicator
+        const statusSpan = document.createElement('span')
+        statusSpan.className = 'absorption-status'
+        statusSpan.innerHTML = ' <span class="status-indicator processing">~30 Min</span>'
+        
+        tdName.innerHTML = nameText
+        tdName.appendChild(statusSpan)
         row.appendChild(tdName)
 
         // delete block
         const td = document.createElement('td')
-        td.classList.add('right-align')
+        td.classList.add('text-right')
         const a = document.createElement('a')
         const i = document.createElement('i')
-        i.innerText = 'Löschen'
+        i.className = 'fas fa-trash delete-icon'
         a.appendChild(i)
         a.addEventListener('click', (e) => {
           e.preventDefault()
@@ -440,7 +527,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       //   <span>Button</span>
       // </button>
       const img = document.createElement('img')
-      img.className = 'responsive'
+      img.className = 'modal-img'
       img.src = `img/${category}/${drink}.png`
       button.prepend(img)
 
@@ -452,6 +539,61 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
     })
   })
 })
+
+function updateProgressionMarkers() {
+  const currentTime = new Date().getTime();
+  const hasEaten = inputFood.checked;
+  const currentAbsorptionTimeMs = hasEaten ? ABSORPTION_TIME_WITH_FOOD_MS : ABSORPTION_TIME_EMPTY_STOMACH_MS;
+  
+  // Get all drink rows
+  const drinkRows = document.querySelectorAll('.drink-row');
+  
+  drinkRows.forEach(row => {
+    const drinkTime = parseInt(row.dataset.time);
+    const timeSinceConsumption = currentTime - drinkTime;
+    
+    // Calculate progression percentage
+    let progressPercentage = 0;
+    let phase = 'absorption';
+    
+    if (timeSinceConsumption < currentAbsorptionTimeMs) {
+      // Absorption phase - 0% to 100% of absorption time
+      progressPercentage = (timeSinceConsumption / currentAbsorptionTimeMs) * 100;
+      phase = 'absorption';
+    } else {
+      // Post-absorption phase - show full width with different color
+      progressPercentage = 100;
+      phase = 'decay';
+      
+      // After 6 hours, consider it completed
+      const hoursAfterAbsorption = (timeSinceConsumption - currentAbsorptionTimeMs) / MS_PER_HOUR;
+      if (hoursAfterAbsorption > 6) {
+        phase = 'completed';
+      }
+    }
+    
+    // Update row classes
+    row.classList.remove('absorption-phase', 'decay-phase', 'completed-phase');
+    row.classList.add(`${phase}-phase`);
+    
+    // Update progression width using CSS custom property
+    row.style.setProperty('--progression-width', `${Math.min(progressPercentage, 100)}%`);
+    
+    // Update absorption status indicator - only show during absorption
+    const statusIndicator = row.querySelector('.status-indicator');
+    if (statusIndicator) {
+      if (phase === 'absorption') {
+        const remainingMinutes = Math.ceil((currentAbsorptionTimeMs - timeSinceConsumption) / (1000 * 60));
+        statusIndicator.textContent = `~${remainingMinutes} Min`;
+        statusIndicator.className = 'status-indicator processing';
+        statusIndicator.style.display = 'inline-block';
+      } else {
+        // Hide the indicator once absorption is complete
+        statusIndicator.style.display = 'none';
+      }
+    }
+  });
+}
 
 function work() {
   // Get weight and gender
@@ -465,6 +607,9 @@ function work() {
   if (!weight || !gender || weight <= 0 || !bodyType || !inputDecayRate.value) { // Added check for decay rate value
     return
   }
+
+  // Update progression markers for all drinks
+  updateProgressionMarkers();
 
   // Determine alcohol distribution ratio (Widmark r factor)
   let alcoholDistributionRatio;
@@ -522,12 +667,6 @@ function work() {
 
   if (!promille) promille = 0; // Ensure NaN or undefined becomes 0, though Math.max should prevent NaN.
 
-  let emoji = ''
-  for (const e of drunkEmojis) {
-    if (promille >= e.bac) emoji = e.emoji
-    else break
-  }
-
   // Apply/remove CSS effects based on promille
   const outputElement = document.getElementById('output');
 
@@ -552,14 +691,48 @@ function work() {
     outputElement.classList.remove('effect-wavy-text');
   }
 
-  // Output
-  outputElement.innerHTML = `Promille: ${promille.toFixed(
+  // Get current emoji
+  let currentEmoji = '🤔';
+  for (const e of drunkEmojis) {
+    if (promille >= e.bac) currentEmoji = e.emoji;
+    else break;
+  }
+
+  // Create warning icons for driving
+  const warningIcons = promille > 0.5 ? `<br/><span class="warning-icons">🚗❌⚠️</span>` : '';
+
+  // Get BAC peak prediction
+  let peakPrediction = '';
+  if (drinkHistory.length > 0) {
+    const prediction = predictBACPeak();
+    if (prediction && prediction.maxBAC > 0.01) { // Show peak if it's meaningful (>0.01‰)
+      const peakTime = prediction.peakTime.toLocaleTimeString('de-DE', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+      const peakBAC = prediction.maxBAC.toFixed(2).replace('.', ',');
+      
+      // Show if peak is significantly higher than current, or if we're still in absorption phase
+      const currentTime = new Date();
+      const hasRecentDrinks = drinkHistory.some(drink => {
+        const absorptionTime = hasEaten ? ABSORPTION_TIME_WITH_FOOD_MS : ABSORPTION_TIME_EMPTY_STOMACH_MS;
+        return (currentTime.getTime() - drink.time) < absorptionTime;
+      });
+      
+      if (prediction.maxBAC > promille * 1.05 || hasRecentDrinks) {
+        peakPrediction = `<br/><span class="peak-prediction">📈 Peak: ${peakBAC}‰ um ${peakTime}</span>`;
+      }
+    }
+  }
+
+  // Output with emoji
+  outputElement.innerHTML = `<span class="promille-text">Promille: ${promille.toFixed(
     2
-  ).replace('.', ',')}‰ ${emoji} ${promille > 0.5 ? '<br/>⛔🚗🚫' : ''}`
+  ).replace('.', ',')}‰</span> <span class="status-emoji">${currentEmoji}</span> ${warningIcons}${peakPrediction}`;
   outputElement.style.filter = `blur(${Math.min(
     promille,
     2
-  )}px)`
+  )}px)`;
 }
 
 setInterval(work, 60 * 1000) // Recalculate every minute to update decay
@@ -588,3 +761,148 @@ window.addEventListener('beforeinstallprompt', (e) => {
     })
   })
 })
+
+// Add collapsible functionality to form section
+document.addEventListener('DOMContentLoaded', () => {
+  const formSection = document.querySelector('.form-section');
+  const formHeader = formSection.querySelector('h3');
+  
+  // Initial form state setup
+  updateFormState();
+  
+  formHeader.addEventListener('click', () => {
+    const wasCollapsed = formSection.classList.contains('collapsed');
+    
+    formSection.classList.toggle('collapsed');
+    const isCollapsed = formSection.classList.contains('collapsed');
+    localStorage.setItem('formCollapsed', isCollapsed);
+    
+    // If user manually expands when form is complete, remember this preference
+    if (!isCollapsed && checkFormCompleteness()) {
+      localStorage.setItem('formManuallyExpanded', 'true');
+    } else if (isCollapsed) {
+      localStorage.removeItem('formManuallyExpanded');
+    }
+    
+    // Update header indicator
+    formHeader.style.opacity = isCollapsed ? '0.7' : '1';
+  });
+  
+  // Update progression markers and status indicators every minute
+  setInterval(() => {
+    if (drinkHistory.length > 0 && inputWeight.value && inputGender.value) {
+      updateProgressionMarkers();
+      work(); // Also update BAC calculation
+    }
+  }, 60000); // Update every minute
+});
+
+// Function to predict BAC peak
+function predictBACPeak() {
+  if (drinkHistory.length === 0) return null;
+  
+  const currentTime = new Date();
+  const weight = parseFloat(inputWeight.value) || 70;
+  const gender = inputGender.value || 'm';
+  const bodyType = inputBodyType.value || 'average';
+  const hasEaten = inputFood.checked;
+  const decayRate = parseFloat(inputDecayRate.value) || 0.10;
+  
+  // Calculate BAC for future time points (next 12 hours with 5-minute resolution)
+  let maxBAC = 0;
+  let peakTime = null;
+  
+  for (let futureMinutes = 0; futureMinutes <= 720; futureMinutes += 5) {
+    const futureTime = new Date(currentTime.getTime() + futureMinutes * 60000);
+    let futureBac = 0;
+    
+    drinkHistory.forEach(drink => {
+      const drinkTime = new Date(drink.time);
+      const minutesSinceDrink = (futureTime - drinkTime) / (1000 * 60);
+      
+      if (minutesSinceDrink >= 0) {
+        futureBac += calculateDrinkBAC(drink, minutesSinceDrink, weight, gender, bodyType, hasEaten, decayRate);
+      }
+    });
+    
+    if (futureBac > maxBAC) {
+      maxBAC = futureBac;
+      peakTime = futureTime;
+    }
+  }
+  
+  return { maxBAC, peakTime };
+}
+
+// Function to calculate BAC for a single drink at a specific time
+function calculateDrinkBAC(drink, minutesSinceDrink, weight, gender, bodyType, hasEaten, decayRate) {
+  const drinkData = drinks[drink.category][drink.drink];
+  const drinkVolumeL = drinkData.volume; // in Liters
+  const alcoholPercentage = drinkData.alcohol; // e.g., 0.05 for 5%
+
+  // Amount of alcohol in grams (same as main work function)
+  const alcoholGrams = drinkVolumeL * alcoholPercentage * ETHANOL_DENSITY_G_PER_L;
+
+  // Use same r-factors as main work function
+  let alcoholDistributionRatio;
+  if (gender === 'm' && rFactors.male[bodyType]) {
+    alcoholDistributionRatio = rFactors.male[bodyType];
+  } else if (gender === 'w' && rFactors.female[bodyType]) {
+    alcoholDistributionRatio = rFactors.female[bodyType];
+  } else if (gender === 'd' && rFactors.diverse[bodyType]) {
+    alcoholDistributionRatio = rFactors.diverse[bodyType];
+  } else {
+    alcoholDistributionRatio = rFactors.diverse.average;
+  }
+
+  // Initial promille contribution from this drink (same as main work function)
+  const initialDrinkPromille = alcoholGrams / (weight * alcoholDistributionRatio);
+
+  const absorptionTime = hasEaten ? ABSORPTION_TIME_WITH_FOOD_MS : ABSORPTION_TIME_EMPTY_STOMACH_MS;
+  const timeSinceConsumptionMs = minutesSinceDrink * 60 * 1000; // Convert minutes to milliseconds
+  
+  let bac = 0;
+  
+  if (timeSinceConsumptionMs < absorptionTime) {
+    // Absorption phase - gradual increase (same as main work function)
+    bac = initialDrinkPromille * (timeSinceConsumptionMs / absorptionTime);
+  } else {
+    // Post-absorption - peak reached, now decaying (same as main work function)
+    const timeAfterAbsorptionPeak = timeSinceConsumptionMs - absorptionTime;
+    const hoursAfterAbsorptionPeak = timeAfterAbsorptionPeak / MS_PER_HOUR;
+    const decay = hoursAfterAbsorptionPeak * decayRate;
+    bac = Math.max(0, initialDrinkPromille - decay);
+  }
+  
+  return bac;
+}
+
+// Function to show drink pouring animation
+function showDrinkAnimation(drinkName, drinkCategory, drinkKey) {
+  const overlay = document.getElementById('drinkAnimationOverlay');
+  const textElement = document.getElementById('drinkAnimationText');
+  const subtextElement = document.getElementById('drinkAnimationSubtext');
+  const bottleElement = overlay.querySelector('.drink-bottle');
+  
+  // Update text based on drink
+  textElement.textContent = `${drinkName} 🍻`;
+  subtextElement.textContent = 'Getränk hinzugefügt';
+  
+  // Update bottle to show actual drink image
+  const drinkImagePath = `img/${drinkCategory}/${drinkKey}.png`;
+  bottleElement.style.backgroundImage = `url('${drinkImagePath}')`;
+  bottleElement.style.backgroundSize = 'cover';
+  bottleElement.style.backgroundPosition = 'center';
+  bottleElement.style.backgroundRepeat = 'no-repeat';
+  
+  // Show overlay
+  overlay.classList.add('active');
+  
+  // Hide after animation completes
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    // Reset bottle background
+    bottleElement.style.backgroundImage = '';
+    bottleElement.style.background = 'var(--gradient-orange)';
+  }, 3000); // 3 seconds total animation time
+}
