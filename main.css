@@ -737,6 +737,11 @@ body {
   aspect-ratio: 1;
 }
 
+.modal-subtext {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
 .modal-btn:hover {
   background: var(--gradient-orange);
   border-color: var(--primary-orange);
