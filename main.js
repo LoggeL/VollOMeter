@@ -122,25 +122,25 @@ const drinks = {
     name: 'Weinschorle',
     weisherbstschorle: {
       name: 'Weißherbstschorle',
-      volume: 0.25,
+      volume: 0.5,
       alcohol: 0.06,
       sound: 'schorle.webm',
     },
     rieslingschorle: {
       name: 'Rieslingschorle',
-      volume: 0.25,
+      volume: 0.5,
       alcohol: 0.07,
       sound: 'schorle.webm',
     },
     persching: {
       name: 'Persching',
-      volume: 0.2,
+      volume: 0.5,
       alcohol: 0.05,
       sound: 'schorle.webm',
     },
     colarot: {
       name: 'Cola Rot',
-      volume: 0.3,
+      volume: 0.5,
       alcohol: 0.05,
       sound: 'schorle.webm',
     },
@@ -164,19 +164,13 @@ const drinks = {
     },
     traubensaftschorle: {
       name: 'Traubensaftschorle',
-      volume: 0.2,
+      volume: 0.5,
       alcohol: 0.0,
       sound: 'schorle.webm',
     },
   },
   shot: {
     name: 'Kurze',
-    luft: {
-      name: 'Berliner Luft',
-      volume: 0.02,
-      alcohol: 0.4,
-      sound: 'shot.webm',
-    },
     pffefi: {
       name: 'Pfeffi',
       volume: 0.02,
@@ -386,7 +380,10 @@ if (localStorage.getItem('drinkHistory')) {
 
     // Time block
     const tdTime = document.createElement('td')
-    tdTime.innerText = new Date(time).toLocaleTimeString()
+    tdTime.innerText = new Date(time).toLocaleTimeString('de-DE', {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
     row.appendChild(tdTime)
 
     // Name block
@@ -790,8 +787,8 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           row.dataset.time = time
 
           // Time block
-          const tdTime = document.createElement('td')
-          tdTime.innerText = new Date().toLocaleTimeString()
+        const tdTime = document.createElement('td')
+        tdTime.innerText = new Date(time).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
           row.appendChild(tdTime)
 
           // Name block
@@ -973,8 +970,10 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       dialogGrid.appendChild(addButton)
     } else {
       // Original behavior for other categories
-      Object.keys(drinks[category]).forEach((drink, index) => {
-        if (drink === 'name') return
+      Object.keys(drinks[category])
+        .filter((drink) => drink !== 'name')
+        .sort((a, b) => drinks[category][a].name.localeCompare(drinks[category][b].name, 'de'))
+        .forEach((drink, index) => {
         const button = document.createElement('button')
         button.setAttribute('name', drink)
         button.className =
@@ -1012,8 +1011,8 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           row.dataset.time = time
 
           // Time block
-          const tdTime = document.createElement('td')
-          tdTime.innerText = new Date().toLocaleTimeString()
+        const tdTime = document.createElement('td')
+        tdTime.innerText = new Date(time).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
           row.appendChild(tdTime)
 
           // Name block
@@ -1066,11 +1065,21 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         const img = document.createElement('img')
         img.className = 'modal-img'
         img.src = `img/${category}/${drink}.png`
+        img.alt = drinks[category][drink].name
         button.prepend(img)
 
         const span = document.createElement('span')
         span.innerText = drinks[category][drink].name
         button.appendChild(span)
+
+        const details = document.createElement('small')
+        details.className = 'modal-subtext'
+        details.innerText = `${drinks[category][drink].volume
+          .toFixed(2)
+          .replace('.', ',')}l • ${(drinks[category][drink].alcohol * 100)
+          .toFixed(1)
+          .replace('.', ',')}%`
+        button.appendChild(details)
 
         dialogGrid.appendChild(button)
       })
@@ -1179,7 +1188,7 @@ function work() {
   const currentTime = new Date().getTime()
 
   if (drinkHistory.length === 0) {
-    promille = 0
+    // no drinks; totalPromille stays 0
   } else {
     for (const entry of drinkHistory) {
       let drinkData
