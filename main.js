@@ -1,3 +1,47 @@
+// Theme handling
+;(function initTheme() {
+  const root = document.documentElement
+  const saved = localStorage.getItem('theme')
+  const systemPrefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+  const initialTheme = saved || (systemPrefersLight ? 'light' : 'dark')
+  if (initialTheme === 'light') {
+    root.setAttribute('data-theme', 'light')
+  } else {
+    root.removeAttribute('data-theme')
+  }
+  const btn = document.getElementById('themeToggle')
+  const label = document.getElementById('themeToggleText')
+  const setLabel = () => {
+    const isLight = root.getAttribute('data-theme') === 'light'
+    if (label) label.textContent = isLight ? 'Dark' : 'Light'
+  }
+  setLabel()
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const isLight = root.getAttribute('data-theme') === 'light'
+      if (isLight) {
+        root.removeAttribute('data-theme')
+        localStorage.setItem('theme', 'dark')
+      } else {
+        root.setAttribute('data-theme', 'light')
+        localStorage.setItem('theme', 'light')
+      }
+      setLabel()
+    })
+  }
+  // Update if system preference changes and user has no explicit choice
+  if (!saved && window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+      if (e.matches) {
+        root.setAttribute('data-theme', 'light')
+      } else {
+        root.removeAttribute('data-theme')
+      }
+      setLabel()
+    })
+  }
+})()
+
 // Constants
 const ABSORPTION_TIME_EMPTY_STOMACH_MS = 30 * 60 * 1000 // 30 minutes in milliseconds
 const ABSORPTION_TIME_WITH_FOOD_MS = 2 * 60 * 60 * 1000 // 2 hours in milliseconds
