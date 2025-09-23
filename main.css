@@ -46,6 +46,22 @@
   --border-radius-lg: 16px;
 }
 
+/* ===== LIGHT THEME ===== */
+:root[data-theme="light"] {
+  /* Neutral Colors */
+  --bg-primary: #f7f7f8;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f0f2f5;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+
+  /* Effects */
+  --gradient-dark: linear-gradient(135deg, #ffffff, #f7f7f8);
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--bg-primary);
@@ -53,6 +69,57 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* Component tweaks for light theme */
+:root[data-theme="light"] .form-section {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+:root[data-theme="light"] .form-input,
+:root[data-theme="light"] .form-select {
+  background: #ffffff;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .form-input:focus,
+:root[data-theme="light"] .form-select:focus {
+  background-color: #ffffff;
+}
+
+:root[data-theme="light"] .form-label {
+  background: var(--bg-primary);
+}
+
+:root[data-theme="light"] .drink-btn {
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .output-section h2 {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="light"] .drinks-table th {
+  color: #ffffff;
+}
+
+:root[data-theme="light"] .modal {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme="light"] .modal-content {
+  background: var(--gradient-dark);
+}
+
+:root[data-theme="light"] .drink-glass {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--text-muted);
+}
+
+:root[data-theme="light"] .footer {
+  border-top-color: var(--border-color);
 }
 
 /* ===== LAYOUT ===== */
