@@ -643,16 +643,21 @@ body {
   text-align: right;
 }
 
-.drinks-table a {
+.btn-icon {
+  background: transparent;
+  border: none;
   color: var(--primary-orange);
   text-decoration: none;
   cursor: pointer;
   padding: var(--spacing-sm);
   border-radius: var(--border-radius-sm);
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.drinks-table a:hover {
+.btn-icon:hover {
   background: rgba(255, 107, 53, 0.2);
   color: white;
 }
@@ -664,7 +669,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.drinks-table a:hover .delete-icon {
+.btn-icon:hover .delete-icon {
   color: #ff4444;
   transform: scale(1.2);
 }
