@@ -463,11 +463,14 @@ if (localStorage.getItem('drinkHistory')) {
     // delete block
     const td = document.createElement('td')
     td.classList.add('text-right')
-    const a = document.createElement('a')
+    const btn = document.createElement('button')
+    btn.type = 'button'
+    btn.className = 'btn-icon'
+    btn.setAttribute('aria-label', `${drinkData.name} löschen`)
     const i = document.createElement('i')
     i.className = 'fas fa-trash delete-icon'
-    a.appendChild(i)
-    a.addEventListener('click', (e) => {
+    btn.appendChild(i)
+    btn.addEventListener('click', (e) => {
       e.preventDefault()
       e.stopPropagation()
       drinkHistory = drinkHistory.filter((e) => e.time !== time)
@@ -475,7 +478,7 @@ if (localStorage.getItem('drinkHistory')) {
       row.remove()
       work()
     })
-    td.appendChild(a)
+    td.appendChild(btn)
     row.appendChild(td)
     // Prepend to table
     drinkTable.prepend(row)
@@ -858,11 +861,14 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           // delete block
           const td = document.createElement('td')
           td.classList.add('text-right')
-          const a = document.createElement('a')
+          const btn = document.createElement('button')
+          btn.type = 'button'
+          btn.className = 'btn-icon'
+          btn.setAttribute('aria-label', `${customDrinks[drinkKey].name} löschen`)
           const i = document.createElement('i')
           i.className = 'fas fa-trash delete-icon'
-          a.appendChild(i)
-          a.addEventListener('click', (e) => {
+          btn.appendChild(i)
+          btn.addEventListener('click', (e) => {
             e.preventDefault()
             e.stopPropagation()
             drinkHistory = drinkHistory.filter((e) => e.time !== time)
@@ -870,7 +876,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
             row.remove()
             work()
           })
-          td.appendChild(a)
+          td.appendChild(btn)
           row.appendChild(td)
           // Prepend to table
           drinkTable.prepend(row)
@@ -879,13 +885,16 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         })
 
         // Add delete button for custom drinks
-        const deleteBtn = document.createElement('span')
+        const deleteBtn = document.createElement('button')
+        deleteBtn.type = 'button'
+        deleteBtn.setAttribute('aria-label', `Delete ${drink.name}`)
         deleteBtn.innerHTML = '×'
         deleteBtn.style.cssText = `
           position: absolute;
           top: 5px;
           right: 5px;
           background: rgba(255,255,255,0.8);
+          border: none;
           border-radius: 50%;
           width: 20px;
           height: 20px;
@@ -896,6 +905,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           font-weight: bold;
           font-size: 14px;
           color: #333;
+          padding: 0;
         `
         deleteBtn.addEventListener('click', (e) => {
           e.preventDefault()
@@ -1082,11 +1092,14 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           // delete block
           const td = document.createElement('td')
           td.classList.add('text-right')
-          const a = document.createElement('a')
+          const btn = document.createElement('button')
+          btn.type = 'button'
+          btn.className = 'btn-icon'
+          btn.setAttribute('aria-label', `${drinks[category][drink].name} löschen`)
           const i = document.createElement('i')
           i.className = 'fas fa-trash delete-icon'
-          a.appendChild(i)
-          a.addEventListener('click', (e) => {
+          btn.appendChild(i)
+          btn.addEventListener('click', (e) => {
             e.preventDefault()
             e.stopPropagation()
             drinkHistory = drinkHistory.filter((e) => e.time !== time)
@@ -1094,7 +1107,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
             row.remove()
             work()
           })
-          td.appendChild(a)
+          td.appendChild(btn)
           row.appendChild(td)
           // Prepend to table
           drinkTable.prepend(row)
