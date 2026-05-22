@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "featureId": "feat_ui-flow_148a28939d",
+  "title": "Schorle And Wine-Mix Catalog Assets",
+  "summary": "Weinschorle and related mixed-drink image assets plus the schorle audio cue.\n\nAgent mapper reason: The weinschorle directory and schorle audio represent a distinct drink category whose filenames and UI mapping should be reviewed as a unit.",
+  "kind": "ui-flow",
+  "source": "agent-mapper",
+  "confidence": "medium",
+  "entrypoints": [
+    {
+      "path": "main.js",
+      "symbol": null,
+      "route": null,
+      "command": null
+    }
+  ],
+  "ownedFiles": [
+    {
+      "path": "img/weinschorle/aperol.png",
+      "reason": "Weinschorle or mixed-drink option image asset."
+    },
+    {
+      "path": "img/weinschorle/colarot.png",
+      "reason": "Weinschorle or mixed-drink option image asset."
+    },
+    {
+      "path": "img/weinschorle/hugo.png",
+      "reason": "Weinschorle or mixed-drink option image asset."
+    },
+    {
+      "path": "img/weinschorle/persching.png",
+      "reason": "Weinschorle or mixed-drink option image asset."
+    },
+    {
+      "path": "img/weinschorle/rieslingschorle.png",
+      "reason": "Weinschorle option image asset."
+    },
+    {
+      "path": "img/weinschorle/sangria.png",
+      "reason": "Weinschorle or mixed-drink option image asset."
+    },
+    {
+      "path": "img/weinschorle/traubensaftschorle.png",
+      "reason": "Schorle option image asset."
+    },
+    {
+      "path": "img/weinschorle/weisherbstschorle.png",
+      "reason": "Weinschorle option image asset."
+    },
+    {
+      "path": "audio/schorle.webm",
+      "reason": "Audio cue associated with schorle selections."
+    }
+  ],
+  "contextFiles": [
+    {
+      "path": "main.js",
+      "reason": "Likely maps schorle options to these filenames."
+    },
+    {
+      "path": "index.html",
+      "reason": "Provides the UI containers where schorle assets render."
+    },
+    {
+      "path": "main.css",
+      "reason": "Controls display sizing and layout for schorle images."
+    }
+  ],
+  "tests": [],
+  "tags": [
+    "agent-mapped",
+    "assets",
+    "schorle",
+    "drink-catalog"
+  ],
+  "trustBoundaries": [
+    "filesystem"
+  ],
+  "status": "reviewed",
+  "lock": null,
+  "findingIds": [],
+  "patchAttemptIds": [],
+  "analysisHistory": [
+    {
+      "runId": "20260522T112106-c7ae83",
+      "kind": "review",
+      "summary": "0 finding(s)",
+      "provider": "codex",
+      "model": null,
+      "reasoningEffort": null,
+      "createdAt": "2026-05-22T11:21:51.954Z"
+    }
+  ],
+  "createdAt": "2026-05-22T11:21:01.321Z",
+  "updatedAt": "2026-05-22T11:21:51.954Z"
+}

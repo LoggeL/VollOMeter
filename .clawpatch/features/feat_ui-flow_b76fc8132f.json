@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "featureId": "feat_ui-flow_b76fc8132f",
+  "title": "Beer Catalog Assets",
+  "summary": "Beer and mixed-beer image assets plus the beer audio cue used by the drink UI.\n\nAgent mapper reason: Beer and mixed-beer assets form a coherent catalog category and should be checked against the JavaScript mappings and UI rendering together.",
+  "kind": "ui-flow",
+  "source": "agent-mapper",
+  "confidence": "medium",
+  "entrypoints": [
+    {
+      "path": "main.js",
+      "symbol": null,
+      "route": null,
+      "command": null
+    }
+  ],
+  "ownedFiles": [
+    {
+      "path": "img/bier/bockbier.png",
+      "reason": "Beer option image asset."
+    },
+    {
+      "path": "img/bier/dunkles.png",
+      "reason": "Beer option image asset."
+    },
+    {
+      "path": "img/bier/helles.png",
+      "reason": "Beer option image asset."
+    },
+    {
+      "path": "img/bier/kellerbier.png",
+      "reason": "Beer option image asset."
+    },
+    {
+      "path": "img/bier/pils.png",
+      "reason": "Beer option image asset."
+    },
+    {
+      "path": "img/bier/weizen.png",
+      "reason": "Beer option image asset."
+    },
+    {
+      "path": "img/mischbier/astrarakete.png",
+      "reason": "Mixed-beer option image asset."
+    },
+    {
+      "path": "img/mischbier/colabier.png",
+      "reason": "Mixed-beer option image asset."
+    },
+    {
+      "path": "img/mischbier/desperados.png",
+      "reason": "Mixed-beer option image asset."
+    },
+    {
+      "path": "img/mischbier/mixery.png",
+      "reason": "Mixed-beer option image asset."
+    },
+    {
+      "path": "img/mischbier/radler.png",
+      "reason": "Mixed-beer option image asset."
+    },
+    {
+      "path": "img/mischbier/weiteres_bier.png",
+      "reason": "Mixed-beer fallback or additional option image asset."
+    },
+    {
+      "path": "audio/beer.webm",
+      "reason": "Audio cue associated with beer selections."
+    }
+  ],
+  "contextFiles": [
+    {
+      "path": "main.js",
+      "reason": "Likely maps drink categories to these assets."
+    },
+    {
+      "path": "index.html",
+      "reason": "Provides the UI containers where drink assets render."
+    },
+    {
+      "path": "main.css",
+      "reason": "Controls display sizing and layout for drink images."
+    }
+  ],
+  "tests": [],
+  "tags": [
+    "agent-mapped",
+    "assets",
+    "beer",
+    "drink-catalog"
+  ],
+  "trustBoundaries": [
+    "filesystem"
+  ],
+  "status": "pending",
+  "lock": null,
+  "findingIds": [],
+  "patchAttemptIds": [],
+  "analysisHistory": [],
+  "createdAt": "2026-05-22T11:21:01.321Z",
+  "updatedAt": "2026-05-22T11:21:01.321Z"
+}

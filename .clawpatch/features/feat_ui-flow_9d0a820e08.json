@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "featureId": "feat_ui-flow_9d0a820e08",
+  "title": "Static Web App Shell",
+  "summary": "Single-page browser app entrypoint, styling, script bootstrap, manifest, and logo assets.\n\nAgent mapper reason: The repository has one HTML entrypoint, one CSS file, one JavaScript file, and manifest/logo metadata, so these files should be reviewed together for app behavior, layout, and browser integration.",
+  "kind": "ui-flow",
+  "source": "agent-mapper",
+  "confidence": "high",
+  "entrypoints": [
+    {
+      "path": "index.html",
+      "symbol": null,
+      "route": null,
+      "command": null
+    }
+  ],
+  "ownedFiles": [
+    {
+      "path": "index.html",
+      "reason": "Primary HTML entrypoint that wires the browser UI together."
+    },
+    {
+      "path": "main.css",
+      "reason": "Global visual styling for the static app."
+    },
+    {
+      "path": "main.js",
+      "reason": "Only JavaScript source file; likely contains UI behavior and drink selection logic."
+    },
+    {
+      "path": "webmanifest.json",
+      "reason": "PWA/browser metadata for the app shell."
+    },
+    {
+      "path": "logo.png",
+      "reason": "Logo referenced by the app shell or manifest."
+    },
+    {
+      "path": "VOMLogo.png",
+      "reason": "Primary branding image used by the app."
+    }
+  ],
+  "contextFiles": [],
+  "tests": [],
+  "tags": [
+    "agent-mapped",
+    "static-site",
+    "single-page-app",
+    "pwa",
+    "frontend"
+  ],
+  "trustBoundaries": [
+    "user-input",
+    "filesystem"
+  ],
+  "status": "needs-fix",
+  "lock": null,
+  "findingIds": [
+    "fnd_sig-feat-ui-flow-9d0a820e08-b451_a2ab0452af",
+    "fnd_sig-feat-ui-flow-9d0a820e08-4ca2_ebb76bcf98"
+  ],
+  "patchAttemptIds": [],
+  "analysisHistory": [
+    {
+      "runId": "20260522T112106-c7ae83",
+      "kind": "review",
+      "summary": "2 finding(s)",
+      "provider": "codex",
+      "model": null,
+      "reasoningEffort": null,
+      "createdAt": "2026-05-22T11:22:14.856Z"
+    }
+  ],
+  "createdAt": "2026-05-22T11:21:01.321Z",
+  "updatedAt": "2026-05-22T11:22:14.856Z"
+}

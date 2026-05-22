@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "findingId": "fnd_sig-feat-ui-flow-9d0a820e08-b451_a2ab0452af",
+  "featureId": "feat_ui-flow_9d0a820e08",
+  "title": "Custom drink names are rendered as HTML",
+  "category": "security",
+  "severity": "medium",
+  "confidence": "high",
+  "triage": "confirmed-bug",
+  "evidence": [
+    {
+      "path": "main.js",
+      "startLine": 505,
+      "endLine": 513,
+      "symbol": "addCustomDrink",
+      "quote": "customDrinks[drinkKey] = {\n    name: name,"
+    },
+    {
+      "path": "main.js",
+      "startLine": 993,
+      "endLine": 1013,
+      "symbol": null,
+      "quote": "const name = document.getElementById('customDrinkName').value.trim()\n...\naddCustomDrink(name, volume, alcohol)"
+    },
+    {
+      "path": "main.js",
+      "startLine": 843,
+      "endLine": 858,
+      "symbol": null,
+      "quote": "const nameText = `${customDrinks[drinkKey].name} ...`\n...\ntdName.innerHTML = nameText"
+    },
+    {
+      "path": "main.js",
+      "startLine": 459,
+      "endLine": 459,
+      "symbol": null,
+      "quote": "tdName.innerHTML = nameText"
+    }
+  ],
+  "reasoning": "The custom drink name is accepted from an input field and stored without escaping. When that custom drink is selected, and again when saved drink history is reloaded, the name is interpolated into a string assigned with innerHTML. A name such as `<img src=x onerror=alert(1)>` is short enough for the form's maxlength and will execute when rendered. This can read or modify the app's localStorage state and any same-origin data available to the static app.",
+  "reproduction": "Create a custom drink named `<img src=x onerror=alert(1)>`, then select it from Sonstiges. The table row insertion assigns the generated string to `tdName.innerHTML`, causing the handler to run.",
+  "recommendation": "Render the drink name and details with text nodes or `textContent` instead of `innerHTML`. Keep the status badge as a separately created element, as the code already does, and validate custom drink names for display length/allowed characters separately from escaping.",
+  "whyTestsDoNotAlreadyCoverThis": "No tests were provided for custom drink creation or DOM rendering of user-provided drink names.",
+  "suggestedRegressionTest": "Add a browser or DOM test that creates a custom drink whose name contains HTML markup, selects it, and asserts the table cell displays the literal text without creating an `img` element or firing inline handlers.",
+  "minimumFixScope": "Replace the `tdName.innerHTML = nameText` custom-drink rendering paths with text-node based rendering; audit the other `innerHTML` assignments that include persisted or user-entered values.",
+  "status": "fixed",
+  "history": [
+    {
+      "runId": "20260522T112326-113862",
+      "kind": "revalidate",
+      "status": "fixed",
+      "note": null,
+      "reasoning": "The original evidence paths still exist in main.js, but the cited sinks have changed. addCustomDrink still stores the raw name at main.js:505-516 and form submission still passes customDrinkName at main.js:990-1015, but the vulnerable render paths now use tdName.textContent = nameText followed by appending the constant statusSpan at main.js:447-460 for reloaded history and main.js:843-858 for newly selected custom drinks. The broader search found no remaining tdName.innerHTML assignment; custom drink names in the modal are rendered via span.innerText = drink.name at main.js:935-937. Remaining innerHTML assignments are constant markup or non-custom-drink output. There is no test suite in the repository, so I verified with node --check and a source assertion that no tdName.innerHTML assignment remains.",
+      "commands": [
+        "pwd && rg -n \"addCustomDrink|customDrinkName|tdName\\.innerHTML|innerHTML|customDrinks\" main.js",
+        "rg --files",
+        "git status --short",
+        "nl -ba main.js | sed -n '430,470p'",
+        "nl -ba main.js | sed -n '490,520p'",
+        "nl -ba main.js | sed -n '780,870p'",
+        "nl -ba main.js | sed -n '980,1020p'",
+        "git diff -- main.js | sed -n '1,220p'",
+        "nl -ba main.js | sed -n '870,950p'",
+        "nl -ba main.js | sed -n '1060,1100p'",
+        "rg -n \"tdName\\.innerHTML|\\.innerHTML\\s*=|customDrinks\\[[^\\]]+\\]\\.name|drink\\.name|textContent = nameText|innerText = .*name|aria-label.*name\" main.js",
+        "ls -la",
+        "node --check main.js",
+        "node -e \"const fs=require('fs'); const s=fs.readFileSync('main.js','utf8'); if (/tdName\\.innerHTML\\s*=/.test(s)) { console.error('tdName.innerHTML assignment remains'); process.exit(1); } for (const needle of ['tdName.textContent = nameText','span.innerText = drink.name']) if (!s.includes(needle)) { console.error('missing '+needle); process.exit(1); } console.log('custom drink name rendering uses text sinks; no tdName.innerHTML assignment found');\"",
+        "rg -n \"<script|main\\.js|customDrinkName|drinkTable|inputGrid\" index.html"
+      ],
+      "createdAt": "2026-05-22T11:24:22.169Z"
+    }
+  ],
+  "signature": "sig_feat-ui-flow-9d0a820e08_b451951dd4",
+  "linkedPatchAttemptIds": [
+    "pat_fnd-sig-feat-ui-flow-9d0a820e08-_ce1dfc9e89"
+  ],
+  "createdByRunId": "20260522T112106-c7ae83",
+  "createdAt": "2026-05-22T11:22:14.856Z",
+  "updatedAt": "2026-05-22T11:24:22.169Z"
+}

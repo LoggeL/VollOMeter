@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "patchAttemptId": "pat_fnd-sig-feat-ui-flow-9d0a820e08-_ce1dfc9e89",
+  "findingIds": [
+    "fnd_sig-feat-ui-flow-9d0a820e08-b451_a2ab0452af"
+  ],
+  "featureIds": [
+    "feat_ui-flow_9d0a820e08"
+  ],
+  "status": "applied",
+  "plan": "Replaced drink-name table cell rendering with textContent in main.js so custom and persisted drink names display as literal text instead of executable HTML. Kept the existing static status badge append behavior unchanged.",
+  "filesChanged": [
+    "main.js"
+  ],
+  "commandsRun": [],
+  "testResults": [],
+  "provider": {
+    "name": "codex",
+    "model": null,
+    "reasoningEffort": null,
+    "requestId": null,
+    "startedAt": "2026-05-22T11:22:34.776Z",
+    "finishedAt": "2026-05-22T11:23:14.770Z"
+  },
+  "git": {
+    "baseSha": "58748002ebc10e7acff52a294952a799ba043c42",
+    "commitSha": null,
+    "branchName": "main",
+    "prUrl": null
+  },
+  "createdAt": "2026-05-22T11:22:34.774Z",
+  "updatedAt": "2026-05-22T11:23:14.770Z"
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "projectId": "prj_https-github-com-loggel-vollomet_3a5e52306a",
+  "name": "VollOMeter",
+  "rootPath": "/home/logge/projects/VollOMeter",
+  "git": {
+    "remoteUrl": "https://github.com/LoggeL/VollOMeter.git",
+    "defaultBranch": "main",
+    "currentBranch": "main",
+    "headSha": "58748002ebc10e7acff52a294952a799ba043c42"
+  },
+  "detected": {
+    "languages": [],
+    "frameworks": [],
+    "packageManagers": [],
+    "commands": {
+      "typecheck": null,
+      "lint": null,
+      "format": null,
+      "test": null
+    }
+  },
+  "createdAt": "2026-05-22T11:19:49.849Z",
+  "updatedAt": "2026-05-22T11:19:49.849Z"
+}

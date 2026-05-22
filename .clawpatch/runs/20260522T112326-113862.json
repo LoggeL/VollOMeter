@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "runId": "20260522T112326-113862",
+  "command": "revalidate",
+  "args": [
+    "--root",
+    "/home/logge/projects/VollOMeter",
+    "revalidate",
+    "--finding",
+    "fnd_sig-feat-ui-flow-9d0a820e08-b451_a2ab0452af",
+    "--no-input",
+    "--json"
+  ],
+  "rootPath": "/home/logge/projects/VollOMeter",
+  "headSha": "58748002ebc10e7acff52a294952a799ba043c42",
+  "startedAt": "2026-05-22T11:23:26.286Z",
+  "finishedAt": "2026-05-22T11:24:22.172Z",
+  "status": "completed",
+  "claimedFeatureIds": [],
+  "findingIds": [
+    "fnd_sig-feat-ui-flow-9d0a820e08-b451_a2ab0452af"
+  ],
+  "patchAttemptIds": [],
+  "errors": []
+}

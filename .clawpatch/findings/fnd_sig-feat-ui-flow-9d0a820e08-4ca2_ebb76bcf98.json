@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "findingId": "fnd_sig-feat-ui-flow-9d0a820e08-4ca2_ebb76bcf98",
+  "featureId": "feat_ui-flow_9d0a820e08",
+  "title": "Malformed persisted state can stop the app during bootstrap",
+  "category": "bug",
+  "severity": "low",
+  "confidence": "high",
+  "triage": "confirmed-bug",
+  "evidence": [
+    {
+      "path": "main.js",
+      "startLine": 62,
+      "endLine": 64,
+      "symbol": null,
+      "quote": "let drinkHistory = localStorage.getItem('drinkHistory')\n  ? JSON.parse(localStorage.getItem('drinkHistory'))\n  : []"
+    },
+    {
+      "path": "main.js",
+      "startLine": 415,
+      "endLine": 416,
+      "symbol": null,
+      "quote": "if (localStorage.getItem('drinkHistory')) {\n  drinkHistory = JSON.parse(localStorage.getItem('drinkHistory'))"
+    },
+    {
+      "path": "main.js",
+      "startLine": 493,
+      "endLine": 497,
+      "symbol": "getCustomDrinks",
+      "quote": "const customDrinks = localStorage.getItem('customDrinks')\n  return customDrinks ? JSON.parse(customDrinks) : {}"
+    }
+  ],
+  "reasoning": "The app parses localStorage values without any error handling. If `drinkHistory` is malformed, the exception occurs during script initialization before event handlers and UI state are fully set up, leaving the app unusable until storage is manually cleared. `customDrinks` has the same issue when opening the Sonstiges flow.",
+  "reproduction": "Run `localStorage.setItem('drinkHistory', 'not json')` in the browser console and reload the page. `JSON.parse` throws before the rest of the app initializes.",
+  "recommendation": "Wrap persisted-state reads in a small safe JSON helper that validates the expected shape and falls back to an empty array/object when parsing fails. Optionally remove or quarantine the bad key after detecting corruption.",
+  "whyTestsDoNotAlreadyCoverThis": "No tests were provided for bootstrap behavior with missing, old, or corrupted localStorage data.",
+  "suggestedRegressionTest": "Add a startup test with malformed `drinkHistory` and `customDrinks` values that verifies the page still initializes and resets to empty state.",
+  "minimumFixScope": "Centralize safe parsing for `drinkHistory` and `customDrinks`, then use it at bootstrap and in `getCustomDrinks`.",
+  "status": "open",
+  "history": [],
+  "signature": "sig_feat-ui-flow-9d0a820e08_4ca21f7873",
+  "linkedPatchAttemptIds": [],
+  "createdByRunId": "20260522T112106-c7ae83",
+  "createdAt": "2026-05-22T11:22:14.856Z",
+  "updatedAt": "2026-05-22T11:22:14.856Z"
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "featureId": "feat_ui-flow_e5a07a2f60",
+  "title": "Shot Catalog Assets",
+  "summary": "Shot image assets plus the shot audio cue used by the selection flow.\n\nAgent mapper reason: Shot-related image and audio files are a bounded catalog slice; the non-ASCII filename makes path reference review especially important.",
+  "kind": "ui-flow",
+  "source": "agent-mapper",
+  "confidence": "medium",
+  "entrypoints": [
+    {
+      "path": "main.js",
+      "symbol": null,
+      "route": null,
+      "command": null
+    }
+  ],
+  "ownedFiles": [
+    {
+      "path": "img/shot/hut.png",
+      "reason": "Shot option image asset."
+    },
+    {
+      "path": "img/shot/jäger.png",
+      "reason": "Shot option image asset with non-ASCII filename that may affect references."
+    },
+    {
+      "path": "img/shot/luft.png",
+      "reason": "Shot option image asset."
+    },
+    {
+      "path": "img/shot/nuss.png",
+      "reason": "Shot option image asset."
+    },
+    {
+      "path": "img/shot/pffefi.png",
+      "reason": "Shot option image asset."
+    },
+    {
+      "path": "img/shot/sauer.png",
+      "reason": "Shot option image asset."
+    },
+    {
+      "path": "audio/shot.webm",
+      "reason": "Audio cue associated with shot selections."
+    }
+  ],
+  "contextFiles": [
+    {
+      "path": "main.js",
+      "reason": "Likely maps shot options to these filenames."
+    },
+    {
+      "path": "index.html",
+      "reason": "Provides the UI containers where shot assets render."
+    },
+    {
+      "path": "main.css",
+      "reason": "Controls display sizing and layout for shot images."
+    }
+  ],
+  "tests": [],
+  "tags": [
+    "agent-mapped",
+    "assets",
+    "shots",
+    "drink-catalog"
+  ],
+  "trustBoundaries": [
+    "filesystem"
+  ],
+  "status": "pending",
+  "lock": null,
+  "findingIds": [],
+  "patchAttemptIds": [],
+  "analysisHistory": [],
+  "createdAt": "2026-05-22T11:21:01.321Z",
+  "updatedAt": "2026-05-22T11:21:01.321Z"
+}

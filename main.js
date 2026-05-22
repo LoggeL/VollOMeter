@@ -456,7 +456,7 @@ if (localStorage.getItem('drinkHistory')) {
     statusSpan.innerHTML =
       ' <span class="status-indicator processing">~30 Min</span>'
 
-    tdName.innerHTML = nameText
+    tdName.textContent = nameText
     tdName.appendChild(statusSpan)
     row.appendChild(tdName)
 
@@ -854,7 +854,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           statusSpan.innerHTML =
             ' <span class="status-indicator processing">~30 Min</span>'
 
-          tdName.innerHTML = nameText
+          tdName.textContent = nameText
           tdName.appendChild(statusSpan)
           row.appendChild(tdName)
 
@@ -1085,7 +1085,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           statusSpan.innerHTML =
             ' <span class="status-indicator processing">~30 Min</span>'
 
-          tdName.innerHTML = nameText
+          tdName.textContent = nameText
           tdName.appendChild(statusSpan)
           row.appendChild(tdName)
 

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "featureId": "feat_ui-flow_8726515da7",
+  "title": "Cocktail Catalog Assets",
+  "summary": "Cocktail image assets plus the cocktail audio cue for cocktail selections.\n\nAgent mapper reason: Cocktail images and their category audio belong to one review slice because naming, mapping, and rendering need to stay consistent.",
+  "kind": "ui-flow",
+  "source": "agent-mapper",
+  "confidence": "medium",
+  "entrypoints": [
+    {
+      "path": "main.js",
+      "symbol": null,
+      "route": null,
+      "command": null
+    }
+  ],
+  "ownedFiles": [
+    {
+      "path": "img/cocktails/blhawaii.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/caipi.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/cuba.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/liit.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/mojito.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/penis.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/pina.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "img/cocktails/sob.png",
+      "reason": "Cocktail option image asset."
+    },
+    {
+      "path": "audio/cocktail.webm",
+      "reason": "Audio cue associated with cocktail selections."
+    },
+    {
+      "path": "audio/penis.webm",
+      "reason": "Special audio cue likely tied to the similarly named cocktail asset."
+    }
+  ],
+  "contextFiles": [
+    {
+      "path": "main.js",
+      "reason": "Likely maps cocktail names and special cases to these assets."
+    },
+    {
+      "path": "index.html",
+      "reason": "Provides the UI containers where cocktail assets render."
+    },
+    {
+      "path": "main.css",
+      "reason": "Controls display sizing and layout for cocktail images."
+    }
+  ],
+  "tests": [],
+  "tags": [
+    "agent-mapped",
+    "assets",
+    "cocktails",
+    "drink-catalog"
+  ],
+  "trustBoundaries": [
+    "filesystem"
+  ],
+  "status": "reviewed",
+  "lock": null,
+  "findingIds": [],
+  "patchAttemptIds": [],
+  "analysisHistory": [
+    {
+      "runId": "20260522T112106-c7ae83",
+      "kind": "review",
+      "summary": "0 finding(s)",
+      "provider": "codex",
+      "model": null,
+      "reasoningEffort": null,
+      "createdAt": "2026-05-22T11:22:03.185Z"
+    }
+  ],
+  "createdAt": "2026-05-22T11:21:01.321Z",
+  "updatedAt": "2026-05-22T11:22:03.185Z"
+}

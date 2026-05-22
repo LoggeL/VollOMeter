@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "runId": "20260522T111957-88356b",
+  "command": "review",
+  "args": [
+    "--root",
+    "/home/logge/projects/VollOMeter",
+    "review",
+    "--limit",
+    "3",
+    "--no-input",
+    "--json"
+  ],
+  "rootPath": "/home/logge/projects/VollOMeter",
+  "headSha": "58748002ebc10e7acff52a294952a799ba043c42",
+  "startedAt": "2026-05-22T11:19:57.390Z",
+  "finishedAt": "2026-05-22T11:19:57.392Z",
+  "status": "completed",
+  "claimedFeatureIds": [],
+  "findingIds": [],
+  "patchAttemptIds": [],
+  "errors": []
+}
