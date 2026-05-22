@@ -60,6 +60,9 @@ const dialogGrid = dialogDrink.querySelector('.modal-grid')
 const dialogCaption = dialogDrink.querySelector('.modal-title')
 const drinksPage = inputGrid.closest('.page')
 const heroMeterValue = document.querySelector('.hero-meter strong')
+const lastDrinkInfo = document.getElementById('lastDrinkInfo')
+const drinkCountInfo = document.getElementById('drinkCountInfo')
+const soberInfo = document.getElementById('soberInfo')
 let wasFormComplete = false
 
 function readStoredJson(key, fallback, isValid) {
@@ -1256,6 +1259,14 @@ function work() {
   if (!weight || !gender || weight <= 0 || !bodyType || !inputDecayRate.value) {
     // Added check for decay rate value
     if (heroMeterValue) heroMeterValue.textContent = '0,00‰'
+    const outputElement = document.getElementById('output')
+    if (outputElement) {
+      outputElement.innerHTML = '<span class="promille-text">0,00‰</span> <span class="status-emoji">🤔</span><br><span class="meter-note">Locker flockig! 🍻</span>'
+      outputElement.style.filter = ''
+    }
+    if (lastDrinkInfo) lastDrinkInfo.textContent = '-'
+    if (drinkCountInfo) drinkCountInfo.textContent = String(drinkHistory.length)
+    if (soberInfo) soberInfo.textContent = 'Daten fehlen'
     return
   }
 
@@ -1399,10 +1410,23 @@ function work() {
   // Output with emoji
   const formattedPromille = promille.toFixed(2).replace('.', ',')
   if (heroMeterValue) heroMeterValue.textContent = `${formattedPromille}‰`
-  outputElement.innerHTML = `<span class="promille-text">Promille: ${promille
-    .toFixed(2)
-    .replace('.', ',')}‰</span> <span class="status-emoji">${currentEmoji}</span> ${warningIcons}${peakPrediction}`
+  outputElement.innerHTML = `<span class="promille-text">${formattedPromille}‰</span> <span class="status-emoji">${currentEmoji}</span><br><span class="meter-note">Locker flockig! 🍻</span>${warningIcons}${peakPrediction}`
   outputElement.style.filter = `blur(${Math.min(promille, 2)}px)`
+
+  if (drinkCountInfo) drinkCountInfo.textContent = String(drinkHistory.length)
+  if (lastDrinkInfo) {
+    const latest = drinkHistory[drinkHistory.length - 1]
+    if (!latest) {
+      lastDrinkInfo.textContent = '-'
+    } else {
+      const minutes = Math.max(0, Math.round((Date.now() - latest.time) / 60000))
+      lastDrinkInfo.textContent = minutes === 0 ? 'gerade eben' : `vor ${minutes} Min.`
+    }
+  }
+  if (soberInfo) {
+    soberInfo.textContent =
+      promille <= 0.01 ? 'Nüchtern' : promille < 0.5 ? 'Locker' : 'Nicht fahren'
+  }
 }
 
 setInterval(work, 60 * 1000) // Recalculate every minute to update decay

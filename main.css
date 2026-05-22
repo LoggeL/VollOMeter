@@ -2310,3 +2310,681 @@ body::after {
 :root[data-theme="light"] .drinks-table th {
   color: #4b0033;
 }
+
+/* ===== VOM NIGHTLIFE REDESIGN OVERRIDES ===== */
+:root {
+  --key-pink: #FF00A8;
+  --vom-orange: #ff8b22;
+  --vom-orange-hot: #ff5f1f;
+  --vom-pink: #ff2f93;
+  --vom-line: rgba(255, 139, 34, 0.56);
+  --vom-soft-line: rgba(255, 255, 255, 0.1);
+  --vom-shadow: 0 24px 80px rgba(0, 0, 0, 0.58);
+  --hand-font: 'Kalam', 'Inter', sans-serif;
+}
+
+html {
+  background: #06060d;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: #06060d;
+  color: #fff;
+  background:
+    radial-gradient(circle at 11% 83%, rgba(255, 0, 168, 0.36), transparent 24rem),
+    radial-gradient(circle at 87% 18%, rgba(255, 128, 28, 0.38), transparent 25rem),
+    linear-gradient(rgba(5, 4, 10, 0.62), rgba(5, 4, 10, 0.86)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23ff8b22' stroke-opacity='.16'%3E%3Cpath d='M0 90h180M90 0v180'/%3E%3C/g%3E%3Cg fill='%23fff' fill-opacity='.08'%3E%3Ccircle cx='24' cy='30' r='2'/%3E%3Ccircle cx='140' cy='116' r='3'/%3E%3Ccircle cx='74' cy='150' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(140deg, #080710 0%, #0a0813 44%, #130710 100%);
+  background-attachment: fixed;
+}
+
+body::before {
+  width: min(100vw, 1240px);
+  max-width: none;
+  height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 13%, transparent 87%, rgba(255, 255, 255, 0.16)),
+    radial-gradient(circle at 50% 97%, rgba(255, 139, 34, 0.24), transparent 26rem);
+  opacity: 0.85;
+  z-index: -2;
+}
+
+body::after { opacity: 0.045; z-index: -1; }
+
+.main-content {
+  max-width: 1240px;
+  padding: 0 22px 44px;
+}
+
+.spacer { height: 18px; }
+
+.navbar {
+  width: min(1240px, calc(100vw - 28px));
+  margin: 16px auto 0;
+  padding: 16px 28px;
+  border: 1.5px solid var(--vom-line);
+  border-radius: 22px;
+  background: rgba(4, 4, 10, 0.72);
+  box-shadow: var(--vom-shadow), inset 0 0 34px rgba(255, 0, 168, 0.08);
+  position: relative;
+  top: auto;
+}
+
+.nav-title { justify-content: flex-start; }
+
+.nav-title h1,
+.hero-copy h2 {
+  font-family: var(--hand-font);
+  font-weight: 700;
+  letter-spacing: 0;
+  background: linear-gradient(95deg, #ff9b25 0%, #ff7227 52%, #ff2f93 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(255, 95, 31, 0.35));
+}
+
+.nav-title h1 {
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 0.92;
+}
+
+.title-logo { display: none; }
+
+.nav-logo-left,
+.nav-logo-right {
+  width: 78px;
+  height: 78px;
+}
+
+.logo-spin {
+  width: 72px;
+  height: 72px;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 0 11px rgba(255, 100, 25, 0.72));
+}
+
+.install-btn {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  min-height: 52px;
+  padding: 0 18px;
+  background: rgba(12, 12, 24, 0.82);
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.04), 0 10px 28px rgba(0, 0, 0, 0.34);
+}
+
+#installPWA { background: linear-gradient(135deg, var(--key-pink), #ff7140); }
+
+.app-stage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.hero-panel {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.hero-copy,
+.hero-meter,
+.form-section,
+.info-panel,
+.output-section h2,
+.drink-btn,
+.drinks-table,
+.modal-content {
+  border: 1.5px solid var(--vom-line);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(10, 9, 18, 0.84), rgba(13, 9, 22, 0.66));
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.48),
+    inset 0 0 34px rgba(255, 255, 255, 0.035),
+    0 0 26px rgba(255, 0, 168, 0.08);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+.hero-copy {
+  padding: 22px 26px;
+  min-height: 128px;
+}
+
+.eyebrow {
+  color: #fff;
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  font-weight: 700;
+}
+
+.hero-copy h2 {
+  margin-top: 4px;
+  font-size: clamp(3rem, 7vw, 5.4rem);
+  line-height: 0.84;
+}
+
+.hero-meter {
+  padding: 20px 26px 18px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border-color: rgba(255, 95, 31, 0.7);
+}
+
+.meter-label,
+.drink-section-title,
+.form-section h3,
+.info-panel h3 {
+  color: var(--vom-orange);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.hero-meter strong {
+  font-size: clamp(4.7rem, 10vw, 7.7rem);
+  line-height: 0.92;
+  font-weight: 900;
+  letter-spacing: 0;
+  color: #fff;
+  text-shadow: 0 0 22px rgba(255, 255, 255, 0.18);
+}
+
+.meter-note {
+  font-family: var(--hand-font);
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  color: var(--vom-pink);
+  font-weight: 700;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(270px, 0.9fr) minmax(250px, 0.55fr);
+  gap: 16px;
+}
+
+.form-section,
+.info-panel {
+  margin: 0;
+  padding: 20px;
+}
+
+.form-section::before,
+.form-section::after,
+.output-section h2::before,
+.output-section h2::after,
+.drink-btn::after,
+.modal-content::before {
+  display: none;
+}
+
+.form-section:hover { box-shadow: var(--vom-shadow), 0 0 34px rgba(255, 139, 34, 0.15); }
+
+.form-section h3,
+.info-panel h3 {
+  justify-content: flex-start;
+  text-align: left;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.form-section h3::after { margin-left: auto; }
+
+.form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.checkbox-group {
+  grid-column: 1 / -1;
+  padding: 12px;
+  background: rgba(255, 139, 34, 0.07);
+  border-color: rgba(255, 139, 34, 0.22);
+}
+
+.form-input,
+.form-select {
+  height: 46px;
+  min-height: 46px;
+  border-radius: 10px;
+  border: 1px solid var(--vom-soft-line);
+  background-color: rgba(12, 12, 22, 0.72);
+}
+
+.form-label { background: #0b0a13; }
+
+.form-section.collapsed { padding: 16px 18px; }
+
+.info-panel dl {
+  display: grid;
+  gap: 12px;
+}
+
+.info-panel dl div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+}
+
+.info-panel dt {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 700;
+}
+
+.info-panel dd {
+  color: var(--vom-pink);
+  font-weight: 900;
+}
+
+.page {
+  display: contents;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.page.active { pointer-events: all; }
+
+.page:not(.active)::before {
+  margin: 0;
+  border-color: var(--vom-line);
+  background: rgba(255, 139, 34, 0.16);
+}
+
+.output-section { margin: 0; }
+
+.output-section h2 {
+  min-height: 184px;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  border-color: rgba(255, 47, 147, 0.62);
+  font-size: clamp(3.6rem, 9vw, 6.8rem);
+  line-height: 1;
+}
+
+.promille-text {
+  color: #fff;
+  background: none !important;
+  -webkit-text-fill-color: #fff !important;
+  font-weight: 900;
+}
+
+.status-emoji { filter: drop-shadow(0 0 18px rgba(255, 139, 34, 0.45)) !important; }
+
+.output-section .meter-note {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.32em;
+  line-height: 1;
+}
+
+.peak-prediction,
+.warning-icons {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.18em !important;
+}
+
+.drink-section-title {
+  margin: 6px 0 -2px;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.drink-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.drink-btn {
+  min-height: 160px;
+  aspect-ratio: 1 / 0.92;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 10px 12px;
+  border-color: rgba(255, 139, 34, 0.68);
+  color: #fff;
+  background: rgba(9, 9, 17, 0.78);
+}
+
+.drink-btn img {
+  width: min(92px, 76%);
+  height: 96px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 12px rgba(0, 0, 0, 0.42));
+}
+
+.drink-btn span {
+  font-family: var(--hand-font);
+  font-size: clamp(1.25rem, 1.9vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.42);
+}
+
+.drink-btn-pink,
+.drink-btn-orange {
+  border: 1.5px solid var(--vom-line);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36), inset 0 0 30px rgba(255, 0, 168, 0.06);
+}
+
+.drink-btn:hover {
+  transform: translateY(-5px);
+  border-color: var(--vom-pink);
+  box-shadow: 0 0 28px rgba(255, 0, 168, 0.25), 0 20px 52px rgba(0, 0, 0, 0.5);
+}
+
+.table-section {
+  max-width: 980px;
+  margin: 0 auto 34px;
+}
+
+.drinks-table {
+  border-color: rgba(255, 139, 34, 0.45);
+  background: rgba(8, 8, 15, 0.72);
+}
+
+.drinks-table thead { background: transparent; }
+
+.drinks-table th {
+  padding: 12px 18px;
+  color: var(--vom-orange);
+  font-size: 0.85rem;
+}
+
+.drinks-table td { padding: 10px 18px; }
+
+.btn-icon {
+  border-radius: 9px;
+  border: 1px solid rgba(255, 47, 147, 0.32);
+  color: var(--vom-pink);
+}
+
+.modal-grid { grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); }
+
+.modal-img {
+  width: 74px;
+  height: 74px;
+  border-radius: 12px;
+  object-fit: contain;
+  background: transparent;
+  box-shadow: none;
+}
+
+.mobile-bottom-nav { display: none; }
+
+@media (min-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: minmax(280px, 0.92fr) minmax(420px, 1.35fr) minmax(240px, 0.7fr);
+    align-items: stretch;
+  }
+
+  .dashboard-grid .form-section { grid-column: 1; }
+  .dashboard-grid .info-panel { grid-column: 3; }
+  .output-section { grid-column: 2; grid-row: 1; }
+
+  .page {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+  }
+
+  .page:not(.active)::before,
+  .drink-section-title,
+  .drink-grid { grid-column: 1 / -1; }
+}
+
+@media (max-width: 899px) {
+  .main-content { padding: 0 12px 86px; }
+
+  .navbar {
+    width: min(440px, calc(100vw - 20px));
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 18px;
+  }
+
+  .nav-logo-left { display: none; }
+
+  .nav-logo-right,
+  .logo-spin {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nav-title { justify-content: center; }
+  .nav-title h1 { font-size: 2rem; }
+
+  .install-btn {
+    min-height: 42px;
+    padding: 0 12px;
+  }
+
+  #themeToggleText,
+  #installPWA span:last-child { display: none; }
+
+  .hero-panel { display: none; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .info-panel { display: none; }
+
+  .form-section {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .checkbox-group { display: none; }
+  .form-section h3 { margin-bottom: 12px; }
+
+  .form-input,
+  .form-select {
+    height: 40px;
+    min-height: 40px;
+    font-size: 0.92rem;
+    padding: 8px 10px;
+  }
+
+  .form-label {
+    top: 9px;
+    left: 10px;
+    font-size: 0.78rem;
+  }
+
+  .form-input:not(:placeholder-shown) + .form-label,
+  .form-input:focus + .form-label,
+  .form-select:focus + .form-label,
+  .form-select:valid + .form-label {
+    transform: translateY(-1.55rem) scale(0.82);
+  }
+
+  .output-section h2 {
+    min-height: 164px;
+    border-radius: 18px;
+    font-size: clamp(3.7rem, 18vw, 5.4rem);
+  }
+
+  .drink-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .drink-btn {
+    min-height: 118px;
+    border-radius: 14px;
+    padding: 9px 6px;
+  }
+
+  .drink-btn img {
+    height: 72px;
+    width: 76%;
+  }
+
+  .drink-btn span { font-size: 1.04rem; }
+
+  .table-section { margin: 0 12px 18px; }
+
+  .drinks-table th,
+  .drinks-table td {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+
+  .footer { display: none; }
+
+  .mobile-bottom-nav {
+    position: fixed;
+    z-index: 110;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 8px max(16px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(255, 139, 34, 0.24);
+    background: rgba(9, 9, 16, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .mobile-bottom-nav a {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+    color: rgba(255, 255, 255, 0.64);
+    text-decoration: none;
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+
+  .mobile-bottom-nav a.active { color: var(--vom-orange); }
+  .mobile-bottom-nav i { font-size: 1.2rem; }
+}
+
+@media (max-width: 430px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .output-section h2 { padding: 18px 12px; }
+  .drink-btn { min-height: 108px; }
+}
+
+/* Final contrast pass: the app should stay dark even when the saved theme is light. */
+:root[data-theme="light"] body,
+body {
+  background:
+    radial-gradient(circle at 7% 86%, rgba(255, 0, 168, 0.28), transparent 20rem),
+    radial-gradient(circle at 89% 18%, rgba(255, 128, 28, 0.25), transparent 22rem),
+    linear-gradient(rgba(4, 4, 10, 0.78), rgba(4, 4, 10, 0.88)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23ff8b22' stroke-opacity='.13'%3E%3Cpath d='M0 90h180M90 0v180'/%3E%3C/g%3E%3Cg fill='%23fff' fill-opacity='.08'%3E%3Ccircle cx='24' cy='30' r='2'/%3E%3Ccircle cx='140' cy='116' r='3'/%3E%3Ccircle cx='74' cy='150' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(140deg, #06060d 0%, #090711 48%, #130710 100%);
+  color: #fff;
+}
+
+.hero-copy,
+.hero-meter,
+.form-section,
+.info-panel,
+.output-section h2,
+.drink-btn,
+.drinks-table,
+.modal-content,
+:root[data-theme="light"] .hero-copy,
+:root[data-theme="light"] .hero-meter,
+:root[data-theme="light"] .form-section,
+:root[data-theme="light"] .info-panel,
+:root[data-theme="light"] .output-section h2,
+:root[data-theme="light"] .drink-btn,
+:root[data-theme="light"] .drinks-table,
+:root[data-theme="light"] .modal-content {
+  background: linear-gradient(145deg, rgba(9, 8, 16, 0.9), rgba(17, 9, 22, 0.76));
+  color: #fff;
+}
+
+.eyebrow {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-transform: none;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 6px;
+  margin-bottom: 0;
+}
+
+.form-label,
+:root[data-theme="light"] .form-label,
+:root[data-theme="light"] .form-input:not(:placeholder-shown) + .form-label,
+:root[data-theme="light"] .form-input:focus + .form-label,
+:root[data-theme="light"] .form-select:focus + .form-label,
+:root[data-theme="light"] .form-select:valid + .form-label {
+  position: static;
+  transform: none !important;
+  pointer-events: auto;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.form-input,
+.form-select,
+:root[data-theme="light"] .form-input,
+:root[data-theme="light"] .form-select {
+  color: #fff;
+  background-color: rgba(16, 14, 26, 0.82);
+}
+
+.form-input::placeholder { color: transparent; }
+
+.promille-text,
+.output-section h2,
+:root[data-theme="light"] .promille-text,
+:root[data-theme="light"] .output-section h2 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.drink-btn span,
+:root[data-theme="light"] .drink-btn span {
+  color: #fff !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.output-section h2 {
+  overflow: hidden;
+  text-align: center;
+  display: block;
+  align-content: center;
+}
+
+.output-section .status-emoji {
+  font-size: 0.74em;
+  vertical-align: 0.04em;
+}
+
+@media (max-width: 899px) {
+  .form-label {
+    font-size: 0.72rem;
+  }
+
+  .output-section h2 {
+    font-size: clamp(3.2rem, 15vw, 4.6rem);
+  }
+}

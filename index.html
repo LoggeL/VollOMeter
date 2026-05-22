@@ -27,10 +27,10 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Google Fonts - Inter -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="main.css">
 </head>
@@ -66,18 +66,19 @@
     <section class="app-stage">
       <div class="hero-panel">
         <div class="hero-copy">
-          <div class="eyebrow">Partyrechner für den Abend</div>
-          <h2>Voll bleiben. Überblick behalten.</h2>
+          <div class="eyebrow">Der Promillerechner für gute Zeiten 🎉</div>
+          <h2>Voll-O-Meter</h2>
         </div>
         <div class="hero-meter">
-          <span class="meter-label">Aktuell</span>
+          <span class="meter-label">Aktueller Promillewert</span>
           <strong>0,00‰</strong>
-          <span class="meter-note">Trinkverlauf live</span>
+          <span class="meter-note">Locker flockig! 🍻</span>
         </div>
       </div>
 
+      <div class="dashboard-grid">
       <div class="form-section">
-        <h3>Angaben zur Person</h3>
+        <h3><i class="fa-regular fa-user"></i> Angaben zur Person</h3>
         <div class="form-grid">
           <div class="input-group">
             <input type="number" id="inputWeight" class="form-input" placeholder=" ">
@@ -122,11 +123,31 @@
         </div>
       </div>
 
-      <div class="page">
-        <div class="output-section">
-          <h2 id="output">Promille: 0,00‰</h2>
-        </div>
+      <div class="output-section">
+        <h2 id="output"><span class="promille-text">0,00‰</span> <span class="status-emoji">🤔</span><br><span class="meter-note">Locker flockig! 🍻</span></h2>
+      </div>
 
+      <aside class="info-panel" aria-label="Info">
+        <h3><i class="fa-solid fa-circle-info"></i> Info</h3>
+        <dl>
+          <div>
+            <dt>Letztes Getränk</dt>
+            <dd id="lastDrinkInfo">-</dd>
+          </div>
+          <div>
+            <dt>Getränke heute</dt>
+            <dd id="drinkCountInfo">0</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd id="soberInfo">Bereit</dd>
+          </div>
+        </dl>
+      </aside>
+      </div>
+
+      <div class="page">
+        <h3 class="drink-section-title"><i class="fa-solid fa-whiskey-glass"></i> Getränk hinzufügen</h3>
         <div class="drink-grid" id="inputGrid">
           <button class="drink-btn drink-btn-orange" name="cocktails">
             <img src="img/cocktails/mojito.png" alt="">
@@ -170,6 +191,12 @@
     </div>
 
   </main>
+
+  <nav class="mobile-bottom-nav" aria-label="Navigation">
+    <a href="#" class="active"><i class="fa-solid fa-house"></i><span>Start</span></a>
+    <a href="#drinkTable"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="#footer"><i class="fa-solid fa-circle-info"></i><span>Info</span></a>
+  </nav>
 
   <!-- Drink Animation Overlay -->
   <div class="drink-animation-overlay" id="drinkAnimationOverlay">
@@ -236,7 +263,7 @@
     </div>
   </dialog>
 
-  <footer class="footer">
+  <footer class="footer" id="footer">
     <div class="footer-content">
       <p>
         Erstellt von <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
