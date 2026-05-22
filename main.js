@@ -59,6 +59,7 @@ const dialogDrink = document.getElementById('dialogDrink')
 const dialogGrid = dialogDrink.querySelector('.modal-grid')
 const dialogCaption = dialogDrink.querySelector('.modal-title')
 const drinksPage = inputGrid.closest('.page')
+const heroMeterValue = document.querySelector('.hero-meter strong')
 let wasFormComplete = false
 
 function readStoredJson(key, fallback, isValid) {
@@ -1254,6 +1255,7 @@ function work() {
   // Validate
   if (!weight || !gender || weight <= 0 || !bodyType || !inputDecayRate.value) {
     // Added check for decay rate value
+    if (heroMeterValue) heroMeterValue.textContent = '0,00‰'
     return
   }
 
@@ -1395,12 +1397,11 @@ function work() {
   }
 
   // Output with emoji
+  const formattedPromille = promille.toFixed(2).replace('.', ',')
+  if (heroMeterValue) heroMeterValue.textContent = `${formattedPromille}‰`
   outputElement.innerHTML = `<span class="promille-text">Promille: ${promille
     .toFixed(2)
-    .replace(
-      '.',
-      ','
-    )}‰</span> <span class="status-emoji">${currentEmoji}</span> ${warningIcons}${peakPrediction}`
+    .replace('.', ',')}‰</span> <span class="status-emoji">${currentEmoji}</span> ${warningIcons}${peakPrediction}`
   outputElement.style.filter = `blur(${Math.min(promille, 2)}px)`
 }
 

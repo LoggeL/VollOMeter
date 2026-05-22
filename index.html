@@ -63,66 +63,98 @@
   <main class="main-content">
     <div class="spacer"></div>
 
-    <div class="form-section">
-      <h3>Angaben zur Person</h3>
-      <div class="form-grid">
-        <div class="input-group">
-          <input type="number" id="inputWeight" class="form-input" placeholder=" ">
-          <label class="form-label" for="inputWeight">Gewicht (kg)</label>
+    <section class="app-stage">
+      <div class="hero-panel">
+        <div class="hero-copy">
+          <div class="eyebrow">Partyrechner für den Abend</div>
+          <h2>Voll bleiben. Überblick behalten.</h2>
         </div>
-
-        <div class="input-group">
-          <select id="inputGender" class="form-select">
-            <option value="" disabled selected>Bitte wählen</option>
-            <option value="w">Weiblich</option>
-            <option value="m">Männlich</option>
-            <option value="d">Divers</option>
-          </select>
-          <label class="form-label" for="inputGender">Geschlecht</label>
-        </div>
-        
-        <div class="checkbox-group">
-          <label class="checkbox-label" for="inputFood">
-            <input type="checkbox" id="inputFood" class="form-checkbox">
-            <span class="checkbox-text">Auf vollen Magen getrunken (langsamere Aufnahme)?</span>
-          </label>
-        </div>
-        
-        <div class="input-group">
-          <select id="inputBodyType" class="form-select">
-            <option value="average" selected>Durchschnittlich</option>
-            <option value="slim">Schlank</option>
-            <option value="aboveaverage">Überdurchschnittlich</option>
-          </select>
-          <label class="form-label" for="inputBodyType">Körpertyp</label>
-        </div>
-        
-        <div class="input-group">
-          <select id="inputDecayRate" class="form-select">
-            <option value="0.08">Langsam (0.08‰/h)</option>
-            <option value="0.10" selected>Durchschnittlich (0.10‰/h)</option>
-            <option value="0.12">Schnell (0.12‰/h)</option>
-            <option value="0.15">Sehr Schnell (0.15‰/h)</option>
-          </select>
-          <label class="form-label" for="inputDecayRate">Alkoholabbaurate</label>
+        <div class="hero-meter">
+          <span class="meter-label">Aktuell</span>
+          <strong>0,00‰</strong>
+          <span class="meter-note">Trinkverlauf live</span>
         </div>
       </div>
-    </div>
 
-    <div class="page">
-      <div class="drink-grid" id="inputGrid">
-        <button class="drink-btn drink-btn-orange" name="cocktails">Cocktails</button>
-        <button class="drink-btn drink-btn-pink" name="weinschorle">Weinschorle</button>
-        <button class="drink-btn drink-btn-pink" name="bier">Bier</button>
-        <button class="drink-btn drink-btn-orange" name="mischbier">Mischbier</button>
-        <button class="drink-btn drink-btn-orange" name="shot">Kurze</button>
-        <button class="drink-btn drink-btn-pink" name="other">Sonstiges</button>
-        
+      <div class="form-section">
+        <h3>Angaben zur Person</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <input type="number" id="inputWeight" class="form-input" placeholder=" ">
+            <label class="form-label" for="inputWeight">Gewicht (kg)</label>
+          </div>
+
+          <div class="input-group">
+            <select id="inputGender" class="form-select">
+              <option value="" disabled selected>Bitte wählen</option>
+              <option value="w">Weiblich</option>
+              <option value="m">Männlich</option>
+              <option value="d">Divers</option>
+            </select>
+            <label class="form-label" for="inputGender">Geschlecht</label>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label" for="inputFood">
+              <input type="checkbox" id="inputFood" class="form-checkbox">
+              <span class="checkbox-text">Auf vollen Magen getrunken (langsamere Aufnahme)?</span>
+            </label>
+          </div>
+
+          <div class="input-group">
+            <select id="inputBodyType" class="form-select">
+              <option value="average" selected>Durchschnittlich</option>
+              <option value="slim">Schlank</option>
+              <option value="aboveaverage">Überdurchschnittlich</option>
+            </select>
+            <label class="form-label" for="inputBodyType">Körpertyp</label>
+          </div>
+
+          <div class="input-group">
+            <select id="inputDecayRate" class="form-select">
+              <option value="0.08">Langsam (0.08‰/h)</option>
+              <option value="0.10" selected>Durchschnittlich (0.10‰/h)</option>
+              <option value="0.12">Schnell (0.12‰/h)</option>
+              <option value="0.15">Sehr Schnell (0.15‰/h)</option>
+            </select>
+            <label class="form-label" for="inputDecayRate">Alkoholabbaurate</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="page">
         <div class="output-section">
           <h2 id="output">Promille: 0,00‰</h2>
         </div>
+
+        <div class="drink-grid" id="inputGrid">
+          <button class="drink-btn drink-btn-orange" name="cocktails">
+            <img src="img/cocktails/mojito.png" alt="">
+            <span>Cocktails</span>
+          </button>
+          <button class="drink-btn drink-btn-pink" name="weinschorle">
+            <img src="img/weinschorle/rieslingschorle.png" alt="">
+            <span>Weinschorle</span>
+          </button>
+          <button class="drink-btn drink-btn-pink" name="bier">
+            <img src="img/bier/pils.png" alt="">
+            <span>Bier</span>
+          </button>
+          <button class="drink-btn drink-btn-orange" name="mischbier">
+            <img src="img/mischbier/radler.png" alt="">
+            <span>Mischbier</span>
+          </button>
+          <button class="drink-btn drink-btn-orange" name="shot">
+            <img src="img/shot/pffefi.png" alt="">
+            <span>Kurze</span>
+          </button>
+          <button class="drink-btn drink-btn-pink" name="other">
+            <img src="VOMLogo.png" alt="">
+            <span>Sonstiges</span>
+          </button>
+        </div>
       </div>
-    </div>
+    </section>
 
     <div class="table-section">
       <table class="drinks-table">
