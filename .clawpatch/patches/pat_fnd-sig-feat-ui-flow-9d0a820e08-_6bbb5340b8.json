@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "patchAttemptId": "pat_fnd-sig-feat-ui-flow-9d0a820e08-_6bbb5340b8",
+  "findingIds": [
+    "fnd_sig-feat-ui-flow-9d0a820e08-4ca2_ebb76bcf98"
+  ],
+  "featureIds": [
+    "feat_ui-flow_9d0a820e08"
+  ],
+  "status": "applied",
+  "plan": "Added a shared safe localStorage JSON reader in main.js, using it for drinkHistory bootstrap/hydration and customDrinks reads. Malformed or wrong-shaped persisted values now fall back to empty state and have the bad key removed.",
+  "filesChanged": [
+    "main.js"
+  ],
+  "commandsRun": [],
+  "testResults": [],
+  "provider": {
+    "name": "codex",
+    "model": null,
+    "reasoningEffort": null,
+    "requestId": null,
+    "startedAt": "2026-05-22T11:24:46.135Z",
+    "finishedAt": "2026-05-22T11:25:31.462Z"
+  },
+  "git": {
+    "baseSha": "08f21bdf941e0ba804e9cbb0d90593d6d59f37c0",
+    "commitSha": null,
+    "branchName": "main",
+    "prUrl": null
+  },
+  "createdAt": "2026-05-22T11:24:46.132Z",
+  "updatedAt": "2026-05-22T11:25:31.462Z"
+}

@@ -36,11 +36,34 @@
   "whyTestsDoNotAlreadyCoverThis": "No tests were provided for bootstrap behavior with missing, old, or corrupted localStorage data.",
   "suggestedRegressionTest": "Add a startup test with malformed `drinkHistory` and `customDrinks` values that verifies the page still initializes and resets to empty state.",
   "minimumFixScope": "Centralize safe parsing for `drinkHistory` and `customDrinks`, then use it at bootstrap and in `getCustomDrinks`.",
-  "status": "open",
-  "history": [],
+  "status": "fixed",
+  "history": [
+    {
+      "runId": "20260522T112541-ef0d30",
+      "kind": "revalidate",
+      "status": "fixed",
+      "note": null,
+      "reasoning": "The original evidence no longer exists as unsafe parsing. In current main.js, lines 62-75 define readStoredJson with try/catch, validation, key removal, and fallback return. drinkHistory is initialized through that helper at line 77, the old line-415 reload parse site is gone and current lines 428-429 only iterate the already-safe array, and getCustomDrinks now uses readStoredJson at lines 505-511 with an object validator. A targeted Node check of the helper behavior with malformed drinkHistory and customDrinks returned empty fallbacks and cleared both bad keys. node --check main.js also passed. No project test files or package config were present, so validation was static plus a focused helper execution.",
+      "commands": [
+        "pwd && rg -n \"drinkHistory|customDrinks|JSON\\.parse|safe\" main.js .",
+        "rg --files",
+        "git status --short",
+        "nl -ba main.js | sed -n '50,90p'",
+        "nl -ba main.js | sed -n '410,435p'",
+        "nl -ba main.js | sed -n '495,515p'",
+        "find . -maxdepth 2 -type f \\( -name 'package.json' -o -name '*test*' -o -name 'vite.config.*' -o -name 'playwright.config.*' \\) -print",
+        "node --check main.js",
+        "rg -n \"localStorage\\.getItem\\('(drinkHistory|customDrinks)'\\)|JSON\\.parse\\(localStorage\\.getItem\\('(drinkHistory|customDrinks)'\\)\\)|JSON\\.parse\\(customDrinks\\)|JSON\\.parse\\(stored\\)\" main.js",
+        "node - <<'NODE'\nfunction makeStorage(initial) {\n  const store = { ...initial }\n  return {\n    getItem(key) { return Object.prototype.hasOwnProperty.call(store, key) ? store[key] : null },\n    removeItem(key) { delete store[key] },\n    dump() { return { ...store } },\n  }\n}\nfunction readStoredJson(key, fallback, isValid) {\n  const stored = localStorage.getItem(key)\n  if (!stored) return fallback\n  try {\n    const parsed = JSON.parse(stored)\n    if (isValid(parsed)) return parsed\n  } catch (error) {}\n  localStorage.removeItem(key)\n  return fallback\n}\nglobal.localStorage = makeStorage({ drinkHistory: 'not json', customDrinks: 'not json' })\nlet drinkHistory = readStoredJson('drinkHistory', [], Array.isArray)\nfunction getCustomDrinks() {\n  return readStoredJson('customDrinks', {}, (customDrinks) => customDrinks !== null && typeof customDrinks === 'object' && !Array.isArray(customDrinks))\n}\nconsole.log(JSON.stringify({ drinkHistory, customDrinks: getCustomDrinks(), storage: localStorage.dump() }))\nNODE"
+      ],
+      "createdAt": "2026-05-22T11:26:27.460Z"
+    }
+  ],
   "signature": "sig_feat-ui-flow-9d0a820e08_4ca21f7873",
-  "linkedPatchAttemptIds": [],
+  "linkedPatchAttemptIds": [
+    "pat_fnd-sig-feat-ui-flow-9d0a820e08-_6bbb5340b8"
+  ],
   "createdByRunId": "20260522T112106-c7ae83",
   "createdAt": "2026-05-22T11:22:14.856Z",
-  "updatedAt": "2026-05-22T11:22:14.856Z"
+  "updatedAt": "2026-05-22T11:26:27.460Z"
 }

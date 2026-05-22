@@ -59,9 +59,22 @@ const dialogDrink = document.getElementById('dialogDrink')
 const dialogGrid = dialogDrink.querySelector('.modal-grid')
 const dialogCaption = dialogDrink.querySelector('.modal-title')
 
-let drinkHistory = localStorage.getItem('drinkHistory')
-  ? JSON.parse(localStorage.getItem('drinkHistory'))
-  : []
+function readStoredJson(key, fallback, isValid) {
+  const stored = localStorage.getItem(key)
+  if (!stored) return fallback
+
+  try {
+    const parsed = JSON.parse(stored)
+    if (isValid(parsed)) return parsed
+  } catch (error) {
+    // Ignore malformed persisted data and reset below.
+  }
+
+  localStorage.removeItem(key)
+  return fallback
+}
+
+let drinkHistory = readStoredJson('drinkHistory', [], Array.isArray)
 
 const drunkEmojis = [
   // BAC in ‰ with emojis
@@ -412,9 +425,7 @@ inputGender.addEventListener('change', (e) => {
   work()
 })
 
-if (localStorage.getItem('drinkHistory')) {
-  drinkHistory = JSON.parse(localStorage.getItem('drinkHistory'))
-
+if (drinkHistory.length > 0) {
   drinkHistory.forEach((entry) => {
     const { category, drink, time } = entry
     // Add to table
@@ -492,8 +503,12 @@ if (localStorage.getItem('drinkHistory')) {
 
 // Function to get custom drinks from localStorage
 function getCustomDrinks() {
-  const customDrinks = localStorage.getItem('customDrinks')
-  return customDrinks ? JSON.parse(customDrinks) : {}
+  return readStoredJson(
+    'customDrinks',
+    {},
+    (customDrinks) =>
+      customDrinks !== null && typeof customDrinks === 'object' && !Array.isArray(customDrinks)
+  )
 }
 
 // Function to save custom drinks to localStorage
