@@ -2998,3 +2998,352 @@ body {
     font-size: clamp(3.2rem, 15vw, 4.6rem);
   }
 }
+
+/* ===== SPEC MATCH PASS ===== */
+body {
+  overflow-x: clip;
+}
+
+.mobile-menu-btn {
+  display: none;
+}
+
+.nav-logo-left,
+.nav-logo-right {
+  position: relative;
+}
+
+.nav-logo-left::after,
+.nav-logo-right::after {
+  content: 'VOM';
+  position: absolute;
+  inset: 0;
+  display: none;
+  place-items: center;
+  border: 2px solid var(--vom-orange);
+  border-radius: 50%;
+  color: var(--vom-orange);
+  font-family: var(--hand-font);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  transform: rotate(-8deg);
+  text-shadow: 0 0 12px rgba(255, 139, 34, 0.7);
+  box-shadow: 0 0 16px rgba(255, 0, 168, 0.22);
+}
+
+.nav-logo-left::after,
+.nav-logo-right::after {
+  display: grid;
+}
+
+.nav-logo-left .logo-spin,
+.nav-logo-right .logo-spin {
+  opacity: 0;
+}
+
+.navbar,
+.main-content,
+.app-stage,
+.dashboard-grid,
+.page,
+.drink-grid,
+.drink-btn,
+.output-section h2 {
+  min-width: 0;
+}
+
+.output-section h2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: clamp(10px, 2vw, 18px);
+  align-items: center;
+  justify-items: center;
+}
+
+.output-section .promille-text {
+  grid-column: 1;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.output-section .status-emoji {
+  grid-column: 2;
+  justify-self: start;
+  max-width: 1.1em;
+  overflow: visible;
+}
+
+.output-section .meter-note,
+.output-section .peak-prediction,
+.output-section .warning-icons {
+  grid-column: 1 / -1;
+}
+
+.warning-icons,
+.peak-prediction {
+  display: none !important;
+}
+
+.form-section.collapsed .form-grid {
+  display: grid;
+}
+
+.form-section.collapsed .checkbox-group {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .navbar {
+    padding: 14px 24px;
+  }
+
+  .nav-title h1 {
+    font-size: clamp(2.45rem, 3.6vw, 3.5rem);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(280px, 0.86fr) minmax(390px, 1.18fr) minmax(230px, 0.7fr);
+  }
+
+  .form-section {
+    padding: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .output-section h2 {
+    min-height: 244px;
+    padding-inline: 22px;
+    font-size: clamp(3.25rem, 6.4vw, 5.2rem);
+  }
+
+  .drink-btn {
+    min-height: 150px;
+  }
+
+  .drink-btn img {
+    height: 88px;
+  }
+}
+
+@media (max-width: 899px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .main-content {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 0 12px 86px;
+  }
+
+  .spacer {
+    height: 16px;
+  }
+
+  .navbar {
+    width: min(430px, calc(100vw - 24px));
+    min-height: 64px;
+    grid-template-columns: 42px minmax(0, 1fr) 44px;
+    display: grid;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    border-color: rgba(255, 139, 34, 0.64);
+  }
+
+  .mobile-menu-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    background: transparent;
+    color: var(--vom-orange);
+    font-size: 1.35rem;
+  }
+
+  .nav-logo-left,
+  .install-btn,
+  #installPWA {
+    display: none !important;
+  }
+
+  .nav-logo-right {
+    display: flex;
+    width: 42px;
+    height: 42px;
+    justify-self: end;
+  }
+
+  .logo-spin {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-title {
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .nav-title h1 {
+    font-size: clamp(1.95rem, 8.2vw, 2.2rem);
+    line-height: 0.92;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .dashboard-grid {
+    gap: 16px;
+  }
+
+  .form-section,
+  .output-section h2,
+  .drink-btn,
+  .drinks-table {
+    border-radius: 16px;
+  }
+
+  .form-section {
+    padding: 14px;
+  }
+
+  .form-section h3 {
+    margin-bottom: 12px;
+    font-size: 0.86rem;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .input-group {
+    min-width: 0;
+  }
+
+  .form-input,
+  .form-select {
+    width: 100%;
+    height: 39px;
+    min-height: 39px;
+    min-width: 0;
+    padding: 7px 9px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+  }
+
+  .form-select {
+    background-position: right 7px center;
+    background-size: 16px;
+    padding-right: 25px;
+  }
+
+  .form-label {
+    font-size: 0.68rem;
+    line-height: 1.1;
+  }
+
+  .form-section.collapsed .form-grid {
+    display: grid;
+  }
+
+  .form-section.collapsed .checkbox-group {
+    display: none;
+  }
+
+  .form-section.collapsed {
+    padding: 14px;
+  }
+
+  .page:not(.active)::before {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .output-section h2 {
+    min-height: 176px;
+    padding: 18px 16px;
+    font-size: clamp(3.25rem, 17.5vw, 4.65rem);
+    column-gap: 8px;
+  }
+
+  .output-section .status-emoji {
+    font-size: 0.72em;
+  }
+
+  .output-section .meter-note {
+    margin-top: 8px;
+    font-size: 0.3em;
+  }
+
+  .drink-section-title {
+    margin: 4px 0 0;
+    font-size: 0.94rem;
+  }
+
+  .drink-grid {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .drink-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 112px;
+    aspect-ratio: 1 / 1.02;
+    padding: 8px 5px 9px;
+  }
+
+  .drink-btn img {
+    width: 78%;
+    max-width: 78px;
+    height: 68px;
+  }
+
+  .drink-btn span {
+    max-width: 100%;
+    font-size: clamp(0.88rem, 4.15vw, 1.05rem);
+    overflow-wrap: anywhere;
+  }
+
+  .table-section {
+    width: min(100%, 430px);
+    margin: 0 auto 18px;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 374px) {
+  .main-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-title h1 {
+    font-size: 1.78rem;
+  }
+
+  .output-section h2 {
+    font-size: 3rem;
+  }
+
+  .drink-grid {
+    gap: 8px;
+  }
+
+  .drink-btn {
+    min-height: 102px;
+  }
+}

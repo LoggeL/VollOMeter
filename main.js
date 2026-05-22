@@ -1261,7 +1261,7 @@ function work() {
     if (heroMeterValue) heroMeterValue.textContent = '0,00‰'
     const outputElement = document.getElementById('output')
     if (outputElement) {
-      outputElement.innerHTML = '<span class="promille-text">0,00‰</span> <span class="status-emoji">🤔</span><br><span class="meter-note">Locker flockig! 🍻</span>'
+      outputElement.innerHTML = '<span class="promille-text">0,00‰</span><span class="status-emoji">🤔</span><span class="meter-note">Locker flockig! 🍻</span>'
       outputElement.style.filter = ''
     }
     if (lastDrinkInfo) lastDrinkInfo.textContent = '-'
@@ -1378,7 +1378,7 @@ function work() {
 
   // Create warning icons for driving
   const warningIcons =
-    promille > 0.5 ? `<br/><span class="warning-icons">🚗❌⚠️</span>` : ''
+    promille > 0.5 ? `<span class="warning-icons">🚗❌⚠️</span>` : ''
 
   // Get BAC peak prediction
   let peakPrediction = ''
@@ -1402,7 +1402,7 @@ function work() {
       })
 
       if (prediction.maxBAC > promille * 1.05 || hasRecentDrinks) {
-        peakPrediction = `<br/><span class="peak-prediction">📈 Peak: ${peakBAC}‰ um ${peakTime}</span>`
+        peakPrediction = `<span class="peak-prediction">📈 Peak: ${peakBAC}‰ um ${peakTime}</span>`
       }
     }
   }
@@ -1410,7 +1410,7 @@ function work() {
   // Output with emoji
   const formattedPromille = promille.toFixed(2).replace('.', ',')
   if (heroMeterValue) heroMeterValue.textContent = `${formattedPromille}‰`
-  outputElement.innerHTML = `<span class="promille-text">${formattedPromille}‰</span> <span class="status-emoji">${currentEmoji}</span><br><span class="meter-note">Locker flockig! 🍻</span>${warningIcons}${peakPrediction}`
+  outputElement.innerHTML = `<span class="promille-text">${formattedPromille}‰</span><span class="status-emoji">${currentEmoji}</span><span class="meter-note">Locker flockig! 🍻</span>${warningIcons}${peakPrediction}`
   outputElement.style.filter = `blur(${Math.min(promille, 2)}px)`
 
   if (drinkCountInfo) drinkCountInfo.textContent = String(drinkHistory.length)
@@ -1441,11 +1441,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e
   addBtn.style.display = 'flex'
 
-  logoRight.style.display = 'none'
-
   addBtn.addEventListener('click', (e) => {
     addBtn.style.display = 'none'
-    logoRight.style.display = 'block'
+    logoRight.style.display = 'flex'
     deferredPrompt.prompt()
     deferredPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
