@@ -102,6 +102,19 @@ const rFactors = {
   diverse: { slim: 0.665, average: 0.615, aboveaverage: 0.55 }, // Averages
 }
 
+const generatedSpriteByCategory = {
+  cocktails: 'img/generated/cocktails.png',
+  weinschorle: 'img/generated/weinschorle.png',
+  bier: 'img/generated/bier.png',
+  mischbier: 'img/generated/mischbier.png',
+  shot: 'img/generated/shot.png',
+  other: 'img/generated/other.png',
+}
+
+function getGeneratedSprite(category) {
+  return generatedSpriteByCategory[category] || generatedSpriteByCategory.other
+}
+
 const drinks = {
   bier: {
     name: 'Bier',
@@ -407,6 +420,7 @@ if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
   if (formSection) {
     formSection.classList.remove('collapsed')
     formSection.classList.add('incomplete')
+    formSection.dataset.needsInitialFocus = 'true'
   }
   updateFormState()
 }
@@ -1158,8 +1172,8 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         // </button>
         const img = document.createElement('img')
         img.className = 'modal-img'
-        img.src = `img/${category}/${drink}.png`
-        img.alt = drinks[category][drink].name
+        img.src = getGeneratedSprite(category)
+        img.alt = ''
         button.prepend(img)
 
         const span = document.createElement('span')
@@ -1461,6 +1475,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial form state setup
   updateFormState()
+
+  if (formSection.dataset.needsInitialFocus === 'true') {
+    inputWeight.focus({ preventScroll: true })
+    formSection.scrollIntoView({ block: 'nearest' })
+    delete formSection.dataset.needsInitialFocus
+  }
 
   formHeader.addEventListener('click', () => {
     const isComplete = checkFormCompleteness()

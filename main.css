@@ -3274,12 +3274,12 @@ body {
   .output-section h2 {
     min-height: 176px;
     padding: 18px 16px;
-    font-size: clamp(3.25rem, 17.5vw, 4.65rem);
+    font-size: clamp(2.78rem, 14.8vw, 4.08rem);
     column-gap: 8px;
   }
 
   .output-section .status-emoji {
-    font-size: 0.72em;
+    font-size: 0.6em;
   }
 
   .output-section .meter-note {
@@ -3336,7 +3336,7 @@ body {
   }
 
   .output-section h2 {
-    font-size: 3rem;
+    font-size: 2.8rem;
   }
 
   .drink-grid {
@@ -3345,5 +3345,293 @@ body {
 
   .drink-btn {
     min-height: 102px;
+  }
+}
+
+/* ===== GENERATED ASSET INTEGRATION ===== */
+:root {
+  --vom-bg-image: url("img/generated/vom-party-bg.webp");
+}
+
+:root[data-theme="light"] body,
+body {
+  background:
+    linear-gradient(rgba(3, 3, 9, 0.34), rgba(3, 3, 9, 0.55)),
+    var(--vom-bg-image) center top / cover fixed no-repeat,
+    #05050a;
+}
+
+body::before,
+body::after {
+  display: none;
+}
+
+.main-content {
+  max-width: 1240px;
+}
+
+.navbar {
+  max-width: 1240px;
+  margin-inline: auto;
+  border: 1.5px solid rgba(255, 139, 34, 0.72);
+  border-radius: 22px;
+}
+
+.form-section,
+.info-panel,
+.output-section h2,
+.drink-btn,
+.drinks-table,
+.modal-content {
+  background: linear-gradient(145deg, rgba(6, 6, 12, 0.78), rgba(17, 9, 22, 0.72));
+}
+
+.form-section.incomplete {
+  border-color: rgba(255, 139, 34, 0.92);
+  box-shadow:
+    0 0 0 1px rgba(255, 139, 34, 0.22),
+    0 24px 76px rgba(0, 0, 0, 0.56),
+    0 0 34px rgba(255, 0, 168, 0.13);
+}
+
+.form-section h3 {
+  cursor: pointer;
+}
+
+.form-section h3::after {
+  content: "\f078";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--vom-pink);
+  transition: transform 0.2s ease;
+}
+
+.form-section.collapsed h3 {
+  margin-bottom: 0;
+}
+
+.form-section.collapsed h3::after {
+  transform: rotate(-90deg);
+}
+
+.form-section.collapsed .form-grid {
+  display: none;
+}
+
+.form-section:focus-within {
+  outline: 2px solid rgba(255, 139, 34, 0.72);
+  outline-offset: 3px;
+}
+
+.drink-grid {
+  align-items: stretch;
+}
+
+.drink-btn {
+  border-color: rgba(255, 139, 34, 0.72);
+}
+
+.drink-btn img {
+  width: min(122px, 84%);
+  height: 108px;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 12px rgba(0, 0, 0, 0.58));
+}
+
+.drink-btn[name="mischbier"] img {
+  height: 120px;
+}
+
+.drink-btn[name="other"] img {
+  width: min(138px, 88%);
+}
+
+.modal-img {
+  background: transparent;
+}
+
+.modal {
+  background: rgba(3, 3, 8, 0.68);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+}
+
+.modal-content {
+  background: linear-gradient(145deg, rgba(8, 7, 15, 0.96), rgba(27, 11, 31, 0.94));
+  border-color: rgba(255, 139, 34, 0.72);
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.72),
+    0 0 42px rgba(255, 0, 168, 0.16),
+    inset 0 0 28px rgba(255, 255, 255, 0.035);
+}
+
+.modal-title {
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(255, 139, 34, 0.36);
+}
+
+.modal-btn {
+  min-width: 0;
+  background: linear-gradient(145deg, rgba(14, 12, 23, 0.9), rgba(35, 14, 39, 0.78));
+}
+
+.modal-btn .modal-img {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 12px 10px rgba(0, 0, 0, 0.46));
+}
+
+@media (max-width: 899px) {
+  .modal-content {
+    width: calc(100vw - 24px);
+    max-width: 430px;
+    max-height: calc(100vh - 28px);
+    overflow: auto;
+    padding: 16px;
+  }
+
+  .modal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .modal-btn {
+    min-height: 128px;
+    padding: 10px 6px;
+  }
+
+  .modal-btn .modal-img {
+    width: 74px;
+    height: 74px;
+  }
+
+  .modal-btn span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    line-height: 1.05;
+  }
+
+  .modal-subtext {
+    font-size: 0.74rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .spacer {
+    height: 18px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: minmax(270px, 0.8fr) minmax(440px, 1.25fr) minmax(250px, 0.72fr);
+  }
+
+  .drink-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .drink-btn {
+    min-height: 168px;
+  }
+}
+
+@media (max-width: 899px) {
+  :root[data-theme="light"] body,
+  body {
+    background:
+      linear-gradient(rgba(3, 3, 9, 0.28), rgba(3, 3, 9, 0.64)),
+      var(--vom-bg-image) center top / auto 100% fixed no-repeat,
+      #05050a;
+  }
+
+  .navbar {
+    margin-inline: auto;
+  }
+
+  .form-section.collapsed {
+    padding: 12px 14px;
+  }
+
+  .form-section.collapsed .form-grid {
+    display: none;
+  }
+
+  .drink-btn img {
+    height: 76px;
+    max-width: 88px;
+  }
+
+  .drink-btn[name="mischbier"] img {
+    height: 82px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .main-content {
+    width: auto;
+    max-width: none;
+    margin-left: 12px;
+    margin-right: 12px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .navbar {
+    width: calc(100vw - 24px);
+    max-width: none;
+    margin: 12px 12px 0;
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .nav-logo-right {
+    display: none;
+  }
+
+  .mobile-bottom-nav {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .table-section {
+    width: auto;
+    max-width: none;
+    margin-left: 12px;
+    margin-right: 12px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .output-section h2 {
+    grid-template-columns: minmax(0, 1fr);
+    position: relative;
+    font-size: clamp(2.65rem, 13.8vw, 3.8rem);
+  }
+
+  .output-section .promille-text {
+    grid-column: 1;
+    justify-self: center;
+    padding-right: 0.42em;
+  }
+
+  .output-section .status-emoji {
+    position: absolute;
+    top: 34px;
+    right: 14px;
+    max-width: none;
+    font-size: 0.56em;
+  }
+
+  .drink-grid {
+    width: 100%;
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
