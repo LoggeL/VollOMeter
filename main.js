@@ -58,6 +58,8 @@ const drinkTable = document.getElementById('drinkTable')
 const dialogDrink = document.getElementById('dialogDrink')
 const dialogGrid = dialogDrink.querySelector('.modal-grid')
 const dialogCaption = dialogDrink.querySelector('.modal-title')
+const drinksPage = inputGrid.closest('.page')
+let wasFormComplete = false
 
 function readStoredJson(key, fallback, isValid) {
   const stored = localStorage.getItem(key)
@@ -323,12 +325,12 @@ const drinks = {
 
 // Function to check if form data is complete
 function checkFormCompleteness() {
-  const weight = inputWeight.value
+  const weight = parseFloat(inputWeight.value)
   const gender = inputGender.value
   const bodyType = inputBodyType.value
   const decayRate = inputDecayRate.value
 
-  const isComplete = weight && gender && bodyType && decayRate && weight > 0
+  const isComplete = Number.isFinite(weight) && weight > 0 && gender && bodyType && decayRate
 
   const formSection = document.querySelector('.form-section')
   if (isComplete) {
@@ -346,10 +348,21 @@ function checkFormCompleteness() {
 function updateFormState() {
   const formSection = document.querySelector('.form-section')
   const isComplete = checkFormCompleteness()
+  const justCompleted = isComplete && !wasFormComplete
+
+  if (drinksPage) {
+    drinksPage.classList.toggle('active', isComplete)
+    drinksPage.setAttribute('aria-disabled', String(!isComplete))
+  }
+
+  inputGrid.querySelectorAll('button').forEach((button) => {
+    button.disabled = !isComplete
+    button.setAttribute('aria-disabled', String(!isComplete))
+  })
 
   if (isComplete) {
-    // Auto-collapse if complete and not manually overridden
-    if (localStorage.getItem('formManuallyExpanded') !== 'true') {
+    // Collapse automatically once the required person data is filled.
+    if (justCompleted || localStorage.getItem('formCollapsed') !== 'false') {
       formSection.classList.add('collapsed')
       localStorage.setItem('formCollapsed', 'true')
     }
@@ -357,13 +370,14 @@ function updateFormState() {
     // Auto-expand if incomplete
     formSection.classList.remove('collapsed')
     localStorage.setItem('formCollapsed', 'false')
-    localStorage.removeItem('formManuallyExpanded')
   }
 
   // Update header state
   const formHeader = formSection.querySelector('h3')
   const isCollapsed = formSection.classList.contains('collapsed')
   formHeader.style.opacity = isCollapsed ? '0.7' : '1'
+  wasFormComplete = isComplete
+  return isComplete
 }
 
 // Load values from localStorage
@@ -379,12 +393,10 @@ if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
   if (localStorage.getItem('decayRate')) {
     inputDecayRate.value = localStorage.getItem('decayRate')
   }
-  inputGrid.parentElement.classList.add('active')
-
   // Check form completeness and update state
-  updateFormState()
+  const isComplete = updateFormState()
 
-  work() // Call work if personal data is loaded and section is active
+  if (isComplete) work() // Call work if personal data is loaded and section is active
 } else {
   // If no data is loaded, ensure form is expanded
   const formSection = document.querySelector('.form-section')
@@ -392,6 +404,7 @@ if (localStorage.getItem('weight') && localStorage.getItem('gender')) {
     formSection.classList.remove('collapsed')
     formSection.classList.add('incomplete')
   }
+  updateFormState()
 }
 
 inputFood.addEventListener('change', (e) => {
@@ -411,16 +424,14 @@ inputDecayRate.addEventListener('change', (e) => {
   work() // Recalculate
 })
 
-inputWeight.addEventListener('keyup', (e) => {
+inputWeight.addEventListener('input', (e) => {
   localStorage.setItem('weight', e.target.value)
-  if (inputGender.value !== '') inputGrid.parentElement.classList.add('active')
   updateFormState() // Check completeness
   work()
 })
 
 inputGender.addEventListener('change', (e) => {
   localStorage.setItem('gender', e.target.value)
-  if (inputWeight.value) inputGrid.parentElement.classList.add('active')
   updateFormState() // Check completeness
   work()
 })
@@ -798,6 +809,13 @@ function createCustomDrinkForm() {
 
 document.querySelectorAll('#inputGrid button').forEach((button) => {
   button.addEventListener('click', (e) => {
+    if (!checkFormCompleteness()) {
+      e.preventDefault()
+      document.querySelector('.form-section').classList.remove('collapsed')
+      updateFormState()
+      return
+    }
+
     dialogDrink.classList.add('active')
     const category = button.getAttribute('name')
 
@@ -1422,18 +1440,16 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFormState()
 
   formHeader.addEventListener('click', () => {
-    const wasCollapsed = formSection.classList.contains('collapsed')
+    const isComplete = checkFormCompleteness()
+    if (!isComplete) {
+      formSection.classList.remove('collapsed')
+      updateFormState()
+      return
+    }
 
     formSection.classList.toggle('collapsed')
     const isCollapsed = formSection.classList.contains('collapsed')
-    localStorage.setItem('formCollapsed', isCollapsed)
-
-    // If user manually expands when form is complete, remember this preference
-    if (!isCollapsed && checkFormCompleteness()) {
-      localStorage.setItem('formManuallyExpanded', 'true')
-    } else if (isCollapsed) {
-      localStorage.removeItem('formManuallyExpanded')
-    }
+    localStorage.setItem('formCollapsed', String(isCollapsed))
 
     // Update header indicator
     formHeader.style.opacity = isCollapsed ? '0.7' : '1'

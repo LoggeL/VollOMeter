@@ -221,11 +221,31 @@ body::after {
   opacity: 0.5;
   pointer-events: none;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .page.active {
   opacity: 1;
   pointer-events: all;
+}
+
+.page:not(.active)::before {
+  content: 'Bitte zuerst Angaben zur Person ausfüllen';
+  display: block;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  border-radius: var(--border-radius);
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--text-primary);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.16);
+}
+
+.page:not(.active) .drink-btn {
+  cursor: not-allowed;
+  filter: grayscale(0.35);
 }
 
 /* ===== HEADER & NAVIGATION ===== */
