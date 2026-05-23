@@ -115,6 +115,18 @@ function getGeneratedSprite(category) {
   return generatedSpriteByCategory[category] || generatedSpriteByCategory.other
 }
 
+function getDrinkImage(category, drinkKey) {
+  if (category === 'other') return getGeneratedSprite('other')
+  return `img/${category}/${drinkKey}.png`
+}
+
+function playDrinkSound(sound = 'beer.webm') {
+  const audio = new Audio(`audio/${sound}?${new Date().getTime()}`)
+  audio.play().catch(() => {
+    // Browsers can block audio in synthetic or restricted click contexts.
+  })
+}
+
 const drinks = {
   bier: {
     name: 'Bier',
@@ -637,6 +649,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
     dialogCaption.innerText = drinks[category].name
     // fill dialog with buttons for the sub drinks
+    dialogGrid.classList.remove('custom-drink-mode')
     dialogGrid.innerHTML = ''
 
     // Special handling for "other" category (Sonstiges)
@@ -663,9 +676,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           // Show drink pouring animation
           showDrinkAnimation(customDrinks[drinkKey].name, 'other', drinkKey)
 
-          // Play default sound
-          const audio = new Audio(`audio/beer.webm?${new Date().getTime()}`)
-          audio.play()
+          playDrinkSound()
 
           const time = new Date().getTime()
           drinkHistory.push({
@@ -774,6 +785,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         e.stopPropagation()
 
         // Replace dialog content with form
+        dialogGrid.classList.add('custom-drink-mode')
         dialogGrid.innerHTML = createCustomDrinkForm()
 
         // Add click handlers for volume tips
@@ -859,10 +871,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
           // If sound
           if (drinks[category][drink].sound) {
-            const audio = new Audio(
-              `audio/${drinks[category][drink].sound}?${new Date().getTime()}`
-            )
-            audio.play()
+            playDrinkSound(drinks[category][drink].sound)
           }
 
           const time = new Date().getTime()
@@ -936,7 +945,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         // </button>
         const img = document.createElement('img')
         img.className = 'modal-img'
-        img.src = getGeneratedSprite(category)
+        img.src = getDrinkImage(category, drink)
         img.alt = ''
         button.prepend(img)
 
@@ -1420,7 +1429,10 @@ function showDrinkAnimation(drinkName, drinkCategory, drinkKey) {
   subtextElement.textContent = 'Getränk hinzugefügt'
 
   // Update bottle to show actual drink image
-  const drinkImagePath = `img/${drinkCategory}/${drinkKey}.png`
+  const drinkImagePath =
+    drinkCategory === 'other' && !drinks[drinkCategory][drinkKey]
+      ? getGeneratedSprite('other')
+      : `img/${drinkCategory}/${drinkKey}.png`
   bottleElement.style.backgroundImage = `url('${drinkImagePath}')`
   bottleElement.style.backgroundSize = 'cover'
   bottleElement.style.backgroundPosition = 'center'
