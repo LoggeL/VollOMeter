@@ -570,260 +570,58 @@ function deleteCustomDrink(drinkKey) {
 
 // Function to create custom drink form
 function createCustomDrinkForm() {
-  const formHTML = `
-    <div class="custom-drink-form" style="
-      padding: 30px 20px;
-      max-width: 420px;
-      margin: 0 auto;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    ">
-      <div style="
-        text-align: center;
-        margin-bottom: 30px;
-      ">
-        <div style="
-          font-size: 64px;
-          margin-bottom: 12px;
-          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        ">🍺</div>
-        <h4 style="
-          margin: 0 0 8px 0;
-          font-size: 24px;
-          font-weight: 700;
-          color: #2c3e50;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        ">Neues Getränk hinzufügen</h4>
-        <p style="
-          margin: 0;
-          font-size: 16px;
-          color: #7f8c8d;
-          font-weight: 500;
-        ">Erstelle dein eigenes Getränk</p>
+  return `
+    <div class="custom-drink-form">
+      <div class="custom-drink-header">
+        <div class="custom-drink-icon"><i class="fa-solid fa-plus"></i></div>
+        <h4>Neues Getränk hinzufügen</h4>
+        <p>Erstelle dein eigenes Getränk im Voll-O-Meter-Stil.</p>
       </div>
-      
-      <div style="display: grid; gap: 20px; margin-bottom: 30px;">
-        <div class="input-group">
-          <label style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #34495e;
-          ">🏷️ Name des Getränks</label>
-          <input type="text" id="customDrinkName" placeholder="z.B. Mein Lieblingsbier" maxlength="30" style="
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e0e6ed;
-            border-radius: 12px;
-            font-size: 16px;
-            background: #ffffff;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-sizing: border-box;
-            font-family: inherit;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          " onfocus="this.style.borderColor='#3498db'; this.style.boxShadow='0 4px 16px rgba(52, 152, 219, 0.2)'; this.style.transform='translateY(-2px)'" onblur="this.style.borderColor='#e0e6ed'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.04)'; this.style.transform='translateY(0)'">
+
+      <div class="custom-drink-fields">
+        <label class="custom-field">
+          <span><i class="fa-solid fa-tag"></i> Name des Getränks</span>
+          <input type="text" id="customDrinkName" placeholder="z.B. Lieblingsbier" maxlength="30">
+        </label>
+
+        <label class="custom-field">
+          <span><i class="fa-solid fa-bottle-water"></i> Volumen in Liter</span>
+          <input type="number" id="customDrinkVolume" placeholder="0.33" step="0.01" min="0.01" max="5">
+        </label>
+        <div class="custom-tips" aria-label="Volumen-Vorschläge">
+          <button type="button" class="volume-tip" data-volume="0.33">0,33 l Dose</button>
+          <button type="button" class="volume-tip" data-volume="0.5">0,5 l Flasche</button>
+          <button type="button" class="volume-tip" data-volume="0.2">0,2 l Glas</button>
         </div>
-        
-        <div class="input-group">
-          <label style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #34495e;
-          ">📏 Volumen in Liter</label>
-          <input type="number" id="customDrinkVolume" placeholder="0.33" step="0.01" min="0.01" max="5" style="
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e0e6ed;
-            border-radius: 12px;
-            font-size: 16px;
-            background: #ffffff;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-sizing: border-box;
-            font-family: inherit;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          " onfocus="this.style.borderColor='#3498db'; this.style.boxShadow='0 4px 16px rgba(52, 152, 219, 0.2)'; this.style.transform='translateY(-2px)'" onblur="this.style.borderColor='#e0e6ed'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.04)'; this.style.transform='translateY(0)'">
-                     <div style="
-             display: flex;
-             gap: 12px;
-             margin-top: 8px;
-             flex-wrap: wrap;
-           ">
-             <small class="volume-tip" data-volume="0.33" style="
-               padding: 4px 8px;
-               background: #ecf0f1;
-               border-radius: 6px;
-               font-size: 12px;
-               color: #5d6d7e;
-               font-weight: 500;
-               cursor: pointer;
-               transition: all 0.2s ease;
-               user-select: none;
-             " onmouseover="this.style.background='#3498db'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ecf0f1'; this.style.color='#5d6d7e'; this.style.transform='scale(1)'">0.33L (Dose)</small>
-             <small class="volume-tip" data-volume="0.5" style="
-               padding: 4px 8px;
-               background: #ecf0f1;
-               border-radius: 6px;
-               font-size: 12px;
-               color: #5d6d7e;
-               font-weight: 500;
-               cursor: pointer;
-               transition: all 0.2s ease;
-               user-select: none;
-             " onmouseover="this.style.background='#3498db'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ecf0f1'; this.style.color='#5d6d7e'; this.style.transform='scale(1)'">0.5L (Flasche)</small>
-             <small class="volume-tip" data-volume="0.2" style="
-               padding: 4px 8px;
-               background: #ecf0f1;
-               border-radius: 6px;
-               font-size: 12px;
-               color: #5d6d7e;
-               font-weight: 500;
-               cursor: pointer;
-               transition: all 0.2s ease;
-               user-select: none;
-             " onmouseover="this.style.background='#3498db'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ecf0f1'; this.style.color='#5d6d7e'; this.style.transform='scale(1)'">0.2L (Glas)</small>
-           </div>
-        </div>
-        
-        <div class="input-group">
-          <label style="
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #34495e;
-          ">🌡️ Alkoholgehalt in %</label>
-          <input type="number" id="customDrinkAlcohol" placeholder="5.0" step="0.1" min="0" max="80" style="
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e0e6ed;
-            border-radius: 12px;
-            font-size: 16px;
-            background: #ffffff;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-sizing: border-box;
-            font-family: inherit;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-          " onfocus="this.style.borderColor='#3498db'; this.style.boxShadow='0 4px 16px rgba(52, 152, 219, 0.2)'; this.style.transform='translateY(-2px)'" onblur="this.style.borderColor='#e0e6ed'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.04)'; this.style.transform='translateY(0)'">
-                     <div style="
-             display: flex;
-             gap: 12px;
-             margin-top: 8px;
-             flex-wrap: wrap;
-           ">
-             <small class="alcohol-tip" data-alcohol="5" style="
-               padding: 4px 8px;
-               background: #ecf0f1;
-               border-radius: 6px;
-               font-size: 12px;
-               color: #5d6d7e;
-               font-weight: 500;
-               cursor: pointer;
-               transition: all 0.2s ease;
-               user-select: none;
-             " onmouseover="this.style.background='#e67e22'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ecf0f1'; this.style.color='#5d6d7e'; this.style.transform='scale(1)'">5% (Bier)</small>
-             <small class="alcohol-tip" data-alcohol="12" style="
-               padding: 4px 8px;
-               background: #ecf0f1;
-               border-radius: 6px;
-               font-size: 12px;
-               color: #5d6d7e;
-               font-weight: 500;
-               cursor: pointer;
-               transition: all 0.2s ease;
-               user-select: none;
-             " onmouseover="this.style.background='#e67e22'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ecf0f1'; this.style.color='#5d6d7e'; this.style.transform='scale(1)'">12% (Wein)</small>
-             <small class="alcohol-tip" data-alcohol="40" style="
-               padding: 4px 8px;
-               background: #ecf0f1;
-               border-radius: 6px;
-               font-size: 12px;
-               color: #5d6d7e;
-               font-weight: 500;
-               cursor: pointer;
-               transition: all 0.2s ease;
-               user-select: none;
-             " onmouseover="this.style.background='#e67e22'; this.style.color='white'; this.style.transform='scale(1.05)'" onmouseout="this.style.background='#ecf0f1'; this.style.color='#5d6d7e'; this.style.transform='scale(1)'">40% (Schnaps)</small>
-           </div>
+
+        <label class="custom-field">
+          <span><i class="fa-solid fa-percent"></i> Alkoholgehalt</span>
+          <input type="number" id="customDrinkAlcohol" placeholder="5.0" step="0.1" min="0" max="80">
+        </label>
+        <div class="custom-tips" aria-label="Alkoholgehalt-Vorschläge">
+          <button type="button" class="alcohol-tip" data-alcohol="5">5% Bier</button>
+          <button type="button" class="alcohol-tip" data-alcohol="12">12% Wein</button>
+          <button type="button" class="alcohol-tip" data-alcohol="40">40% Kurzer</button>
         </div>
       </div>
-      
-      <div style="display: flex; gap: 16px;">
-        <button type="button" id="saveCustomDrink" style="
-          flex: 1;
-          padding: 18px 24px;
-          background: linear-gradient(135deg, #27ae60, #2ecc71);
-          color: white;
-          border: none;
-          border-radius: 12px;
-          font-size: 16px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
-          font-family: inherit;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(46, 204, 113, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(46, 204, 113, 0.3)'">
-          ✅ Speichern
+
+      <div class="custom-drink-actions">
+        <button type="button" id="saveCustomDrink" class="custom-primary-btn">
+          <i class="fa-solid fa-check"></i> Speichern
         </button>
-        <button type="button" id="cancelCustomDrink" style="
-          flex: 1;
-          padding: 18px 24px;
-          background: linear-gradient(135deg, #e74c3c, #c0392b);
-          color: white;
-          border: none;
-          border-radius: 12px;
-          font-size: 16px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
-          font-family: inherit;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(231, 76, 60, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(231, 76, 60, 0.3)'">
-          ❌ Abbrechen
+        <button type="button" id="cancelCustomDrink" class="custom-secondary-btn">
+          Abbrechen
         </button>
       </div>
-      
-      <div style="
-        margin-top: 25px;
-        padding: 16px 20px;
-        background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
-        border-radius: 12px;
-        border-left: 4px solid #3498db;
-        box-shadow: 0 2px 8px rgba(52, 152, 219, 0.1);
-      ">
-        <div style="
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 16px;
-          color: #2980b9;
-          font-weight: 700;
-          margin-bottom: 8px;
-        ">💡 Tipp</div>
-        <div style="
-          font-size: 14px;
-          color: #34495e;
-          line-height: 1.5;
-          font-weight: 500;
-        ">Alle Angaben findest du meist auf der Flasche oder Dose. Bei selbstgemischten Getränken schätze den Alkoholgehalt.</div>
+
+      <div class="custom-drink-note">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>Angaben stehen meist auf Flasche oder Dose. Bei gemischten Drinks reicht eine realistische Schätzung.</span>
       </div>
     </div>
   `
-  return formHTML
 }
+
 
 document.querySelectorAll('#inputGrid button').forEach((button) => {
   button.addEventListener('click', (e) => {
@@ -940,24 +738,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         deleteBtn.type = 'button'
         deleteBtn.setAttribute('aria-label', `Delete ${drink.name}`)
         deleteBtn.innerHTML = '×'
-        deleteBtn.style.cssText = `
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background: rgba(255,255,255,0.8);
-          border: none;
-          border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          font-weight: bold;
-          font-size: 14px;
-          color: #333;
-          padding: 0;
-        `
+        deleteBtn.className = 'custom-drink-delete'
         deleteBtn.addEventListener('click', (e) => {
           e.preventDefault()
           e.stopPropagation()
@@ -969,17 +750,6 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
 
         const img = document.createElement('div')
         img.className = 'modal-img'
-        img.style.cssText = `
-          width: 60px;
-          height: 60px;
-          background: linear-gradient(135deg, #ff6b35, #f7931e);
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 30px;
-          color: white;
-        `
         img.textContent = '🍺'
         button.prepend(img)
 
@@ -995,7 +765,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       const addButton = document.createElement('button')
       addButton.className = 'modal-btn modal-btn-orange'
       addButton.innerHTML = `
-        <div class="modal-img" style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; display: flex; align-items: center; justify-content: center; font-size: 30px;">+</div>
+        <div class="modal-img modal-add-icon"><i class="fa-solid fa-plus"></i></div>
         <span>Neues Getränk</span>
       `
 
@@ -1012,12 +782,9 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
             const volume = tip.getAttribute('data-volume')
             document.getElementById('customDrinkVolume').value = volume
             document.getElementById('customDrinkVolume').focus()
-            // Brief highlight effect
-            tip.style.background = '#27ae60'
-            tip.style.color = 'white'
+            tip.classList.add('selected')
             setTimeout(() => {
-              tip.style.background = '#ecf0f1'
-              tip.style.color = '#5d6d7e'
+              tip.classList.remove('selected')
             }, 200)
           })
         })
@@ -1028,12 +795,9 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
             const alcohol = tip.getAttribute('data-alcohol')
             document.getElementById('customDrinkAlcohol').value = alcohol
             document.getElementById('customDrinkAlcohol').focus()
-            // Brief highlight effect
-            tip.style.background = '#27ae60'
-            tip.style.color = 'white'
+            tip.classList.add('selected')
             setTimeout(() => {
-              tip.style.background = '#ecf0f1'
-              tip.style.color = '#5d6d7e'
+              tip.classList.remove('selected')
             }, 200)
           })
         })
@@ -1192,6 +956,33 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         dialogGrid.appendChild(button)
       })
     }
+  })
+})
+
+function setMobileView(view) {
+  const normalizedView = ['start', 'statistics', 'info'].includes(view) ? view : 'start'
+  document.body.classList.remove('mobile-view-start', 'mobile-view-statistics', 'mobile-view-info')
+  document.body.classList.add(`mobile-view-${normalizedView}`)
+
+  document
+    .querySelectorAll('.mobile-bottom-nav a')
+    .forEach((item) =>
+      item.classList.toggle('active', item.getAttribute('data-mobile-target') === normalizedView)
+    )
+
+  if (window.matchMedia('(max-width: 899px)').matches) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+}
+
+setMobileView((window.location.hash || '#start').replace('#', ''))
+
+document.querySelectorAll('.mobile-bottom-nav a').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault()
+    const targetId = link.getAttribute('data-mobile-target')
+    setMobileView(targetId)
+    history.replaceState(null, '', `#${targetId}`)
   })
 })
 

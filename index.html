@@ -66,7 +66,7 @@
     </nav>
   </header>
 
-  <main class="main-content">
+  <main class="main-content" id="start">
     <div class="spacer"></div>
 
     <section class="app-stage">
@@ -133,7 +133,7 @@
         <h2 id="output"><span class="promille-text">0,00‰</span><span class="status-emoji">🤔</span><span class="meter-note">Locker flockig! 🍻</span></h2>
       </div>
 
-      <aside class="info-panel" aria-label="Info">
+      <aside class="info-panel" id="info" aria-label="Info">
         <h3><i class="fa-solid fa-circle-info"></i> Info</h3>
         <dl>
           <div>
@@ -183,7 +183,8 @@
       </div>
     </section>
 
-    <div class="table-section">
+    <div class="table-section" id="statistics">
+      <h3 class="mobile-section-title"><i class="fa-solid fa-chart-simple"></i> Statistik</h3>
       <table class="drinks-table">
         <thead>
           <tr>
@@ -199,9 +200,9 @@
   </main>
 
   <nav class="mobile-bottom-nav" aria-label="Navigation">
-    <a href="#" class="active"><i class="fa-solid fa-house"></i><span>Start</span></a>
-    <a href="#drinkTable"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
-    <a href="#footer"><i class="fa-solid fa-circle-info"></i><span>Info</span></a>
+    <a href="#start" class="active" data-mobile-target="start"><i class="fa-solid fa-house"></i><span>Start</span></a>
+    <a href="#statistics" data-mobile-target="statistics"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="#info" data-mobile-target="info"><i class="fa-solid fa-circle-info"></i><span>Info</span></a>
   </nav>
 
   <!-- Drink Animation Overlay -->
