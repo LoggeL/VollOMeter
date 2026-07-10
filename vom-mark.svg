@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Voll-O-Meter Logo</title>
+  <desc id="desc">Ein stilisierter Tacho mit korallfarbener Nadel.</desc>
+  <rect x="2" y="2" width="60" height="60" rx="18" fill="#171c1a"/>
+  <path d="M14 38a18 18 0 0 1 36 0" fill="none" stroke="#d8ff7d" stroke-width="5" stroke-linecap="round"/>
+  <path d="M18.5 27.5l3 2.5M45.5 27.5l-3 2.5M32 20v4" fill="none" stroke="#f6f8f6" stroke-width="2.5" stroke-linecap="round" opacity=".72"/>
+  <path d="M32 38l11-13" fill="none" stroke="#ff7043" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="4.5" fill="#f6f8f6"/>
+  <path d="M22 46h20" fill="none" stroke="#f6f8f6" stroke-width="3" stroke-linecap="round" opacity=".22"/>
+  <circle cx="49" cy="15" r="4" fill="#ff7043"/>
+</svg>

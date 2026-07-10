@@ -1,16 +1,17 @@
 {
   "name": "Voll-O-Meter",
   "short_name": "Voll-O-Meter",
-  "description": "Werde zum Mathegenie mit deinem Bierglas! Behalte den Überblick über dein Trink-Business mit dem Voll-O-Meter. Prost!",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "description": "Der klare Promille-Tracker für deinen Abend.",
+  "background_color": "#111614",
+  "theme_color": "#111614",
   "display": "standalone",
   "start_url": "index.html",
   "icons": [
     {
-      "src": "logo.png",
-      "sizes": "500x500",
-      "type": "image/png"
+      "src": "vom-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

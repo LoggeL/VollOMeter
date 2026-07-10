@@ -1,211 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voll-O-Meter - Dein Promillerechner</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="logo.png">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="Behalte den Überblick über deinen Alkoholkonsum mit dem Voll-O-Meter. Dein Promillerechner für Partys und Feste. Prost!">
-  <meta name="keywords" content="Promille, Alkohol, Trinkverlauf, Rechner, Party, Feier, Bier, Wein, Cocktails">
+  <title>Voll-O-Meter – Promille im Blick</title>
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Voll-O-Meter - Dein Promillerechner für den Abend!">
-  <meta property="og:description"
-    content="Behalte den Überblick über deinen Alkoholkonsum mit dem Voll-O-Meter. Dein Promillerechner für Partys und Feste. Prost!">
-  <meta property="og:image" content="https://loggel.github.io/VollOMeter/logo.png">
-
-  <!-- Manifest -->
+  <link rel="icon" href="vom-mark.svg" type="image/svg+xml">
   <link rel="manifest" href="webmanifest.json">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta name="description"
+    content="Behalte deinen Alkoholkonsum und den geschätzten Promillewert mit dem Voll-O-Meter im Blick.">
+  <meta name="keywords" content="Promille, Alkohol, Trinkverlauf, Rechner, Party, Feier, Bier, Wein, Cocktails">
+  <meta name="theme-color" content="#111614">
 
-  <!-- Google Fonts -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Voll-O-Meter – Promille im Blick">
+  <meta property="og:description" content="Der klare Promille-Tracker für deinen Abend.">
+  <meta property="og:image" content="https://loggel.github.io/VollOMeter/logo.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Hauptnavigation">
+      <a class="brand" href="#start" aria-label="Voll-O-Meter Startseite">
+        <img class="brand-mark" src="vom-mark.svg" alt="">
+        <span class="brand-copy">
+          <strong>Voll-O-Meter</strong>
+          <small>Promille im Blick</small>
+        </span>
+      </a>
 
-  <header>
-    <nav class="navbar">
-      <div class="nav-logo-left">
-        <img class="logo-spin" src="VOMLogo.png" alt="VOM Logo">
-      </div>
-      <div class="nav-title">
-        <img src="logo.png" class="title-logo" alt="Logo">
-        <div>
-          <h1>Voll-O-Meter</h1>
-          <p>Der Promillerechner für gute Zeiten 🎉</p>
-        </div>
-      </div>
-      <button class="install-btn" id="themeToggle" aria-label="Theme umschalten" title="Theme umschalten">
-        <span class="install-icon">🌓</span>
-        <span id="themeToggleText">Light</span>
-      </button>
-      <button class="install-btn" id="installPWA" style="display:none;">
-        <span class="install-icon">⬇️</span>
-        <span>Installieren</span>
-      </button>
-      <div class="nav-logo-right" id="logoRight">
-        <img class="logo-spin logo-spin-reverse" src="VOMLogo.png" alt="VOM Logo">
+      <div class="nav-actions">
+        <button class="utility-btn" id="themeToggle" type="button" aria-label="Theme umschalten">
+          <span class="install-icon" aria-hidden="true">☀️</span>
+          <span id="themeToggleText">Light</span>
+        </button>
+        <button class="utility-btn utility-btn-primary" id="installPWA" type="button" style="display:none;">
+          <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+          <span>Installieren</span>
+        </button>
       </div>
     </nav>
   </header>
 
   <main class="main-content" id="start">
-    <div class="spacer"></div>
-
-    <section class="app-stage">
-      <div class="hero-panel" aria-hidden="true">
-        <div class="hero-copy">
-          <div class="eyebrow">Der Promillerechner für gute Zeiten 🎉</div>
-          <h2>Voll-O-Meter</h2>
+    <div class="app-stage">
+      <section class="dashboard-grid" aria-label="Aktueller Stand">
+        <div class="output-section">
+          <span class="section-kicker">Live-Schätzung</span>
+          <h1 id="output" class="status-value" aria-live="polite">
+            <span class="promille-text">0,00‰</span>
+            <span class="status-emoji" aria-hidden="true">🤔</span>
+            <span class="meter-note">Bereit für den Abend</span>
+          </h1>
+          <p class="safety-note">
+            <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
+            Nur eine Schätzung. Wenn du unsicher bist: nicht fahren.
+          </p>
         </div>
-        <div class="hero-meter">
-          <span class="meter-label">Aktueller Promillewert</span>
-          <strong>0,00‰</strong>
-          <span class="meter-note">Locker flockig! 🍻</span>
-        </div>
-      </div>
 
-      <div class="dashboard-grid">
-      <div class="form-section">
-        <h3><i class="fa-regular fa-user"></i> Angaben zur Person</h3>
-        <div class="form-grid">
+        <aside class="info-panel" id="info" aria-label="Zusammenfassung">
+          <div class="panel-heading">
+            <span class="section-kicker">Heute</span>
+            <h2>Dein Überblick</h2>
+          </div>
+          <dl>
+            <div>
+              <dt>Letztes Getränk</dt>
+              <dd id="lastDrinkInfo">–</dd>
+            </div>
+            <div>
+              <dt>Getränke</dt>
+              <dd id="drinkCountInfo">0</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd id="soberInfo">Bereit</dd>
+            </div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="form-section" aria-labelledby="person-title">
+        <h2 id="person-title">
+          <button class="form-toggle" type="button" aria-expanded="true" aria-controls="person-fields">
+            <span><i class="fa-regular fa-user" aria-hidden="true"></i> Angaben zur Person</span>
+            <i class="fa-solid fa-chevron-up form-toggle-icon" aria-hidden="true"></i>
+          </button>
+        </h2>
+        <div class="form-grid" id="person-fields">
           <div class="input-group">
-            <input type="number" id="inputWeight" class="form-input" placeholder=" ">
-            <label class="form-label" for="inputWeight">Gewicht (kg)</label>
+            <label class="form-label" for="inputWeight">Gewicht</label>
+            <div class="input-with-unit">
+              <input type="number" id="inputWeight" class="form-input" inputmode="decimal" placeholder="75" min="1">
+              <span>kg</span>
+            </div>
           </div>
 
           <div class="input-group">
+            <label class="form-label" for="inputGender">Geschlecht</label>
             <select id="inputGender" class="form-select">
               <option value="" disabled selected>Bitte wählen</option>
               <option value="w">Weiblich</option>
               <option value="m">Männlich</option>
               <option value="d">Divers</option>
             </select>
-            <label class="form-label" for="inputGender">Geschlecht</label>
-          </div>
-
-          <div class="checkbox-group">
-            <label class="checkbox-label" for="inputFood">
-              <input type="checkbox" id="inputFood" class="form-checkbox">
-              <span class="checkbox-text">Auf vollen Magen getrunken (langsamere Aufnahme)?</span>
-            </label>
           </div>
 
           <div class="input-group">
+            <label class="form-label" for="inputBodyType">Körpertyp</label>
             <select id="inputBodyType" class="form-select">
               <option value="average" selected>Durchschnittlich</option>
               <option value="slim">Schlank</option>
               <option value="aboveaverage">Überdurchschnittlich</option>
             </select>
-            <label class="form-label" for="inputBodyType">Körpertyp</label>
           </div>
 
           <div class="input-group">
+            <label class="form-label" for="inputDecayRate">Abbaurate</label>
             <select id="inputDecayRate" class="form-select">
-              <option value="0.08">Langsam (0.08‰/h)</option>
-              <option value="0.10" selected>Durchschnittlich (0.10‰/h)</option>
-              <option value="0.12">Schnell (0.12‰/h)</option>
-              <option value="0.15">Sehr Schnell (0.15‰/h)</option>
+              <option value="0.08">Langsam · 0,08‰/h</option>
+              <option value="0.10" selected>Durchschnitt · 0,10‰/h</option>
+              <option value="0.12">Schnell · 0,12‰/h</option>
+              <option value="0.15">Sehr schnell · 0,15‰/h</option>
             </select>
-            <label class="form-label" for="inputDecayRate">Alkoholabbaurate</label>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label" for="inputFood">
+              <input type="checkbox" id="inputFood" class="form-checkbox">
+              <span class="checkbox-control" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
+              <span class="checkbox-text">
+                <strong>Mit vollem Magen</strong>
+                <small>Die Aufnahme wird langsamer geschätzt.</small>
+              </span>
+            </label>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="output-section">
-        <h2 id="output"><span class="promille-text">0,00‰</span><span class="status-emoji">🤔</span><span class="meter-note">Locker flockig! 🍻</span></h2>
-      </div>
+      <section class="page" aria-labelledby="drink-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Getränk erfassen</span>
+            <h2 id="drink-title">Was trinkst du?</h2>
+          </div>
+          <p>Wähle eine Kategorie und danach dein Getränk.</p>
+        </div>
 
-      <aside class="info-panel" id="info" aria-label="Info">
-        <h3><i class="fa-solid fa-circle-info"></i> Info</h3>
-        <dl>
-          <div>
-            <dt>Letztes Getränk</dt>
-            <dd id="lastDrinkInfo">-</dd>
-          </div>
-          <div>
-            <dt>Getränke heute</dt>
-            <dd id="drinkCountInfo">0</dd>
-          </div>
-          <div>
-            <dt>Status</dt>
-            <dd id="soberInfo">Bereit</dd>
-          </div>
-        </dl>
-      </aside>
-      </div>
-
-      <div class="page">
-        <h3 class="drink-section-title"><i class="fa-solid fa-whiskey-glass"></i> Getränk hinzufügen</h3>
         <div class="drink-grid" id="inputGrid">
-          <button class="drink-btn drink-btn-orange" name="cocktails">
-            <img src="img/generated/cocktails.png" alt="">
+          <button class="drink-btn" name="cocktails" type="button">
+            <img src="img/generated/cocktails.png" alt="" loading="lazy">
             <span>Cocktails</span>
           </button>
-          <button class="drink-btn drink-btn-pink" name="weinschorle">
-            <img src="img/generated/weinschorle.png" alt="">
+          <button class="drink-btn" name="weinschorle" type="button">
+            <img src="img/generated/weinschorle.png" alt="" loading="lazy">
             <span>Weinschorle</span>
           </button>
-          <button class="drink-btn drink-btn-pink" name="bier">
-            <img src="img/generated/bier.png" alt="">
+          <button class="drink-btn" name="bier" type="button">
+            <img src="img/generated/bier.png" alt="" loading="lazy">
             <span>Bier</span>
           </button>
-          <button class="drink-btn drink-btn-orange" name="mischbier">
-            <img src="img/generated/mischbier.png" alt="">
+          <button class="drink-btn" name="mischbier" type="button">
+            <img src="img/generated/mischbier.png" alt="" loading="lazy">
             <span>Mischbier</span>
           </button>
-          <button class="drink-btn drink-btn-orange" name="shot">
-            <img src="img/generated/shot.png" alt="">
+          <button class="drink-btn" name="shot" type="button">
+            <img src="img/generated/shot.png" alt="" loading="lazy">
             <span>Kurze</span>
           </button>
-          <button class="drink-btn drink-btn-pink" name="other">
-            <img src="img/generated/other.png" alt="">
+          <button class="drink-btn" name="other" type="button">
+            <img src="img/generated/other.png" alt="" loading="lazy">
             <span>Sonstiges</span>
           </button>
         </div>
-      </div>
-    </section>
-
-    <div class="table-section" id="statistics">
-      <h3 class="mobile-section-title"><i class="fa-solid fa-chart-simple"></i> Statistik</h3>
-      <table class="drinks-table">
-        <thead>
-          <tr>
-            <th>Uhrzeit</th>
-            <th>Getränk</th>
-            <th class="text-right">Löschen</th>          </tr>
-        </thead>
-        <tbody id="drinkTable">
-        </tbody>
-      </table>
+      </section>
     </div>
 
+    <section class="table-section" id="statistics" aria-labelledby="history-title">
+      <div class="section-heading history-heading">
+        <div>
+          <span class="section-kicker">Chronologisch</span>
+          <h2 id="history-title">Dein Verlauf</h2>
+        </div>
+        <p>Das Neueste steht oben.</p>
+      </div>
+      <div class="table-shell">
+        <table class="drinks-table">
+          <thead>
+            <tr>
+              <th>Uhrzeit</th>
+              <th>Getränk</th>
+              <th class="text-right"><span class="sr-only">Aktion</span></th>
+            </tr>
+          </thead>
+          <tbody id="drinkTable"></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
-  <nav class="mobile-bottom-nav" aria-label="Navigation">
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
     <a href="#start" class="active" data-mobile-target="start"><i class="fa-solid fa-house"></i><span>Start</span></a>
-    <a href="#statistics" data-mobile-target="statistics"><i class="fa-solid fa-chart-simple"></i><span>Statistik</span></a>
+    <a href="#statistics" data-mobile-target="statistics"><i class="fa-solid fa-clock-rotate-left"></i><span>Verlauf</span></a>
     <a href="#info" data-mobile-target="info"><i class="fa-solid fa-circle-info"></i><span>Info</span></a>
   </nav>
 
-  <!-- Drink Animation Overlay -->
-  <div class="drink-animation-overlay" id="drinkAnimationOverlay">
+  <div class="drink-animation-overlay" id="drinkAnimationOverlay" aria-live="polite">
     <div class="drink-animation-container">
-      <div class="drink-scene">
+      <div class="drink-scene" aria-hidden="true">
         <div class="drink-bottle">
           <div class="bottle-cap"></div>
           <div class="drink-stream"></div>
@@ -213,67 +223,33 @@
         <div class="drink-glass">
           <div class="drink-fill"></div>
           <div class="drink-bubbles">
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
+            <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
           </div>
         </div>
       </div>
-      <div class="drink-sparkles">
-        <div class="sparkle"></div>
-        <div class="sparkle"></div>
-        <div class="sparkle"></div>
-        <div class="sparkle"></div>
-        <div class="sparkle"></div>
+      <div class="drink-sparkles" aria-hidden="true">
+        <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
       </div>
-      <div class="drink-animation-text" id="drinkAnimationText">Prost! 🍻</div>
-      <div class="drink-animation-subtext" id="drinkAnimationSubtext">Getränk hinzugefügt</div>
+      <strong class="drink-animation-text" id="drinkAnimationText">Prost! 🍻</strong>
+      <span class="drink-animation-subtext" id="drinkAnimationSubtext">Getränk hinzugefügt</span>
     </div>
   </div>
 
-  <dialog class="modal" id="dialogDrink">
+  <dialog class="modal" id="dialogDrink" aria-labelledby="dialog-title">
     <div class="modal-content">
-      <h3 class="modal-title">Getränk auswählen</h3>
-      <div class="modal-grid">
-        <button class="modal-btn">
-          <img src="logo.png" alt="Drink">
-          <span>Button</span>
-        </button>
-        <button class="modal-btn">
-          <img src="logo.png" alt="Drink">
-          <span>Button</span>
-        </button>
-        <button class="modal-btn">
-          <img src="logo.png" alt="Drink">
-          <span>Button</span>
-        </button>
-        <button class="modal-btn">
-          <img src="logo.png" alt="Drink">
-          <span>Button</span>
-        </button>
-        <button class="modal-btn">
-          <img src="logo.png" alt="Drink">
-          <span>Button</span>
-        </button>
-        <button class="modal-btn">
-          <img src="logo.png" alt="Drink">
-          <span>Button</span>
-        </button>
+      <div class="modal-header">
+        <span class="section-kicker">Auswahl</span>
+        <h2 class="modal-title" id="dialog-title">Getränk auswählen</h2>
       </div>
+      <div class="modal-grid"></div>
       <div class="modal-actions">
-        <button class="btn-secondary" onclick="document.getElementById('dialogDrink').classList.remove('active')">Schließen</button>
+        <button class="btn-secondary" type="button" onclick="closeDrinkDialog()">Schließen</button>
       </div>
     </div>
   </dialog>
 
   <footer class="footer" id="footer">
-    <div class="footer-content">
-      <p>
-        Erstellt von <a href="https://discord.gg/K7Tjtfq" target="_blank">Tojokn</a> & <a href="https://lmf.logge.top"
-          target="_blank">Logge</a> & <a href="https://github.com/Hairocketfire" target="_blank">Jonas</a>
-      </p>
-    </div>
+    <p>Gebaut von <a href="https://discord.gg/K7Tjtfq" target="_blank" rel="noreferrer">Tojokn</a>, <a href="https://lmf.logge.top" target="_blank" rel="noreferrer">Logge</a> &amp; <a href="https://github.com/Hairocketfire" target="_blank" rel="noreferrer">Jonas</a></p>
   </footer>
 
   <script src="main.js"></script>

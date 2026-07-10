@@ -73,6 +73,33 @@ const drinkCountInfo = document.getElementById('drinkCountInfo')
 const soberInfo = document.getElementById('soberInfo')
 let wasFormComplete = false
 
+function openDrinkDialog() {
+  dialogDrink.classList.add('active')
+  if (!dialogDrink.open && typeof dialogDrink.showModal === 'function') {
+    dialogDrink.showModal()
+  }
+}
+
+function closeDrinkDialog() {
+  dialogDrink.classList.remove('active')
+  if (dialogDrink.open && typeof dialogDrink.close === 'function') {
+    dialogDrink.close()
+  }
+}
+
+dialogDrink.addEventListener('cancel', (event) => {
+  event.preventDefault()
+  closeDrinkDialog()
+})
+
+dialogDrink.addEventListener('click', (event) => {
+  if (event.target === dialogDrink) closeDrinkDialog()
+})
+
+dialogDrink.addEventListener('close', () => {
+  dialogDrink.classList.remove('active')
+})
+
 function readStoredJson(key, fallback, isValid) {
   const stored = localStorage.getItem(key)
   if (!stored) return fallback
@@ -410,9 +437,9 @@ function updateFormState() {
   }
 
   // Update header state
-  const formHeader = formSection.querySelector('h3')
+  const formHeader = formSection.querySelector('.form-toggle')
   const isCollapsed = formSection.classList.contains('collapsed')
-  formHeader.style.opacity = isCollapsed ? '0.7' : '1'
+  if (formHeader) formHeader.setAttribute('aria-expanded', String(!isCollapsed))
   wasFormComplete = isComplete
   return isComplete
 }
@@ -652,7 +679,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
       return
     }
 
-    dialogDrink.classList.add('active')
+    openDrinkDialog()
     const category = button.getAttribute('name')
 
     dialogCaption.innerText = drinks[category].name
@@ -676,7 +703,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
         button.style.position = 'relative'
 
         button.addEventListener('click', (e) => {
-          dialogDrink.classList.remove('active')
+          closeDrinkDialog()
           const drinkKey = button.getAttribute('name')
 
           if (!customDrinks[drinkKey]) return
@@ -846,13 +873,13 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
             }
 
             addCustomDrink(name, volume, alcohol)
-            dialogDrink.classList.remove('active')
+            closeDrinkDialog()
           })
 
         document
           .getElementById('cancelCustomDrink')
           .addEventListener('click', () => {
-            dialogDrink.classList.remove('active')
+            closeDrinkDialog()
           })
       })
 
@@ -869,7 +896,7 @@ document.querySelectorAll('#inputGrid button').forEach((button) => {
           'modal-btn ' +
           (index % 4 <= 1 ? 'modal-btn-orange' : 'modal-btn-pink')
         button.addEventListener('click', (e) => {
-          dialogDrink.classList.remove('active')
+          closeDrinkDialog()
           const drink = button.getAttribute('name')
 
           if (!drinks[category][drink]) return
@@ -1083,7 +1110,7 @@ function work() {
     if (heroMeterValue) heroMeterValue.textContent = '0,00‰'
     const outputElement = document.getElementById('output')
     if (outputElement) {
-      outputElement.innerHTML = '<span class="promille-text">0,00‰</span><span class="status-emoji">🤔</span><span class="meter-note">Locker flockig! 🍻</span>'
+      outputElement.innerHTML = '<span class="promille-text">0,00‰</span><span class="status-emoji">🤔</span><span class="meter-note">Bereit für den Abend</span>'
       outputElement.style.filter = ''
     }
     if (lastDrinkInfo) lastDrinkInfo.textContent = '-'
@@ -1167,29 +1194,10 @@ function work() {
 
   if (!promille) promille = 0 // Ensure NaN or undefined becomes 0, though Math.max should prevent NaN.
 
-  // Apply/remove CSS effects based on promille
+  // Keep the interface steady and use a semantic level instead of motion/blur effects.
   const outputElement = document.getElementById('output')
-
-  // Shaking Effect
-  if (promille > 1.0) {
-    document.body.classList.add('effect-shake')
-  } else {
-    document.body.classList.remove('effect-shake')
-  }
-
-  // Tilting Effect
-  if (promille > 1.5) {
-    document.body.classList.add('effect-tilt')
-  } else {
-    document.body.classList.remove('effect-tilt')
-  }
-
-  // Wavy Text Effect
-  if (promille > 2.0) {
-    outputElement.classList.add('effect-wavy-text')
-  } else {
-    outputElement.classList.remove('effect-wavy-text')
-  }
+  const bacLevel = promille < 0.3 ? 'low' : promille < 0.5 ? 'watch' : 'high'
+  document.body.dataset.bacLevel = bacLevel
 
   // Get current emoji
   let currentEmoji = '🤔'
@@ -1231,9 +1239,17 @@ function work() {
 
   // Output with emoji
   const formattedPromille = promille.toFixed(2).replace('.', ',')
+  const statusMessage =
+    promille < 0.3
+      ? 'Alles entspannt'
+      : promille < 0.5
+        ? 'Grenze im Blick behalten'
+        : promille < 1
+          ? 'Nicht mehr fahren'
+          : 'Stopp. Wasser und Pause.'
   if (heroMeterValue) heroMeterValue.textContent = `${formattedPromille}‰`
-  outputElement.innerHTML = `<span class="promille-text">${formattedPromille}‰</span><span class="status-emoji">${currentEmoji}</span><span class="meter-note">Locker flockig! 🍻</span>${warningIcons}${peakPrediction}`
-  outputElement.style.filter = `blur(${Math.min(promille, 2)}px)`
+  outputElement.innerHTML = `<span class="promille-text">${formattedPromille}‰</span><span class="status-emoji">${currentEmoji}</span><span class="meter-note">${statusMessage}</span>${warningIcons}${peakPrediction}`
+  outputElement.style.filter = ''
 
   if (drinkCountInfo) drinkCountInfo.textContent = String(drinkHistory.length)
   if (lastDrinkInfo) {
@@ -1265,7 +1281,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
   addBtn.addEventListener('click', (e) => {
     addBtn.style.display = 'none'
-    logoRight.style.display = 'flex'
+    if (logoRight) logoRight.style.display = 'flex'
     deferredPrompt.prompt()
     deferredPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
@@ -1279,7 +1295,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 // Add collapsible functionality to form section
 document.addEventListener('DOMContentLoaded', () => {
   const formSection = document.querySelector('.form-section')
-  const formHeader = formSection.querySelector('h3')
+  const formHeader = formSection.querySelector('.form-toggle')
 
   // Initial form state setup
   updateFormState()
@@ -1301,9 +1317,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formSection.classList.toggle('collapsed')
     const isCollapsed = formSection.classList.contains('collapsed')
     localStorage.setItem('formCollapsed', String(isCollapsed))
-
-    // Update header indicator
-    formHeader.style.opacity = isCollapsed ? '0.7' : '1'
+    formHeader.setAttribute('aria-expanded', String(!isCollapsed))
   })
 
   // Update progression markers and status indicators every minute
