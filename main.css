@@ -1,4 +1,4 @@
-/* Voll-O-Meter — calm utility redesign */
+/* Voll-O-Meter — party utility redesign */
 
 *,
 *::before,
@@ -34,6 +34,9 @@
   --highlight-ink: #182308;
   --warning: #f1bc58;
   --danger: #ff7676;
+  --party-pink: #ff3ea5;
+  --party-cyan: #3ce8ff;
+  --party-yellow: #ffe14d;
 
   --hero-bg: #1a211e;
   --hero-text: #f7faf8;
@@ -98,6 +101,19 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.48;
+  background:
+    radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--party-pink) 22%, transparent), transparent 23rem),
+    radial-gradient(circle at 4% 42%, color-mix(in srgb, var(--party-cyan) 14%, transparent), transparent 25rem),
+    radial-gradient(circle at 70% 82%, color-mix(in srgb, var(--highlight) 10%, transparent), transparent 24rem);
+  pointer-events: none;
+}
+
 button,
 input,
 select {
@@ -151,6 +167,7 @@ select:focus-visible {
   background: var(--header-bg);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--party-pink) 25%, transparent), 0 8px 28px rgba(0, 0, 0, 0.18);
 }
 
 .navbar {
@@ -177,7 +194,8 @@ select:focus-visible {
   width: 48px;
   height: 48px;
   flex: 0 0 auto;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.16));
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 45%, transparent));
+  transform: rotate(-4deg);
 }
 
 .brand-copy {
@@ -187,8 +205,9 @@ select:focus-visible {
 }
 
 .brand-copy strong {
+  font-family: "Bungee", "Inter", sans-serif;
   font-size: 1.08rem;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 .brand-copy small {
@@ -245,6 +264,7 @@ select:focus-visible {
   border-color: transparent;
   background: var(--accent);
   color: var(--accent-ink);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 .utility-btn-primary:hover,
@@ -284,7 +304,7 @@ select:focus-visible {
   color: var(--accent);
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -313,9 +333,28 @@ select:focus-visible {
   justify-content: center;
   color: var(--hero-text);
   background:
-    radial-gradient(circle at 92% 12%, rgba(216, 255, 125, 0.14), transparent 13rem),
-    var(--hero-bg);
-  box-shadow: var(--shadow-lg);
+    linear-gradient(90deg, rgba(6, 7, 9, 0.9) 0%, rgba(6, 7, 9, 0.68) 52%, rgba(6, 7, 9, 0.32) 100%),
+    url("img/generated/vom-party-bg.webp") center / cover;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.34),
+    0 0 40px color-mix(in srgb, var(--party-pink) 12%, transparent);
+}
+
+.output-section::before {
+  content: "●  LIVE";
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: var(--party-yellow);
+  background: rgba(8, 8, 10, 0.46);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  backdrop-filter: blur(10px);
 }
 
 .output-section::after {
@@ -325,7 +364,7 @@ select:focus-visible {
   height: 180px;
   right: -90px;
   bottom: -110px;
-  border: 34px solid rgba(255, 112, 67, 0.13);
+  border: 34px solid color-mix(in srgb, var(--party-pink) 24%, transparent);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -353,12 +392,16 @@ select:focus-visible {
   font-weight: 800;
   line-height: 0.9;
   white-space: nowrap;
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.28),
+    0 0 28px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
 .status-emoji {
   font-size: clamp(2.5rem, 4vw, 4rem);
   line-height: 1;
-  filter: saturate(0.86);
+  filter: saturate(1.12) drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
+  transform: rotate(5deg);
 }
 
 .meter-note {
@@ -382,6 +425,12 @@ select:focus-visible {
   gap: 9px;
   color: rgba(247, 250, 248, 0.58);
   font-size: 0.78rem;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(7, 8, 9, 0.42);
+  backdrop-filter: blur(8px);
 }
 
 .safety-note i {
@@ -390,20 +439,23 @@ select:focus-visible {
 
 body[data-bac-level="watch"] .output-section {
   background:
-    radial-gradient(circle at 92% 12%, rgba(241, 188, 88, 0.17), transparent 13rem),
-    var(--hero-bg);
+    linear-gradient(90deg, rgba(26, 15, 4, 0.92), rgba(13, 9, 6, 0.5)),
+    url("img/generated/vom-party-bg.webp") center / cover;
 }
 
 body[data-bac-level="high"] .output-section {
   background:
-    radial-gradient(circle at 92% 12%, rgba(255, 118, 118, 0.18), transparent 13rem),
-    var(--hero-bg);
+    linear-gradient(90deg, rgba(34, 7, 14, 0.94), rgba(16, 5, 8, 0.56)),
+    url("img/generated/vom-party-bg.webp") center / cover;
 }
 
 .info-panel {
   min-width: 0;
   border-radius: var(--radius-lg);
   padding: 28px;
+  border-top: 3px solid var(--party-cyan);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--party-cyan) 7%, var(--surface)), var(--surface) 48%);
 }
 
 .panel-heading h2,
@@ -413,6 +465,12 @@ body[data-bac-level="high"] .output-section {
   font-size: clamp(1.35rem, 2.6vw, 1.8rem);
   letter-spacing: -0.035em;
   line-height: 1.15;
+}
+
+.section-heading h2 {
+  font-family: "Bungee", "Inter", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .info-panel dl {
@@ -452,6 +510,9 @@ body[data-bac-level="high"] .output-section {
   margin-top: 20px;
   border-radius: var(--radius-lg);
   padding: 10px;
+  border-top: 3px solid var(--party-pink);
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--party-pink) 7%, var(--surface)), var(--surface) 38%);
 }
 
 .form-section h2 {
@@ -669,6 +730,22 @@ body[data-bac-level="high"] .output-section {
   position: relative;
 }
 
+.page::after {
+  content: "PARTY, ABER MIT PLAN ✦";
+  position: absolute;
+  top: -24px;
+  right: 18px;
+  z-index: 2;
+  border-radius: 4px;
+  padding: 5px 10px;
+  color: #181505;
+  background: var(--party-yellow);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  font-family: "Bungee", "Inter", sans-serif;
+  font-size: clamp(0.62rem, 1.1vw, 0.78rem);
+  transform: rotate(-3deg);
+}
+
 .section-heading {
   margin-bottom: 20px;
   display: flex;
@@ -698,20 +775,22 @@ body[data-bac-level="high"] .output-section {
 }
 
 .page:not(.active) .drink-grid {
-  opacity: 0.42;
-  filter: grayscale(0.75);
+  opacity: 0.7;
+  filter: grayscale(0.28);
 }
 
 .drink-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 12px;
+  gap: 16px;
 }
 
 .drink-btn {
   min-width: 0;
   min-height: 164px;
-  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px 12px 22px 14px;
   padding: 14px 10px 12px;
   display: flex;
   flex-direction: column;
@@ -723,11 +802,36 @@ body[data-bac-level="high"] .output-section {
   transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
+.drink-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--party-pink));
+}
+
+.drink-btn:nth-child(2n) {
+  transform: rotate(1deg);
+}
+
+.drink-btn:nth-child(3n) {
+  border-radius: 12px 22px 14px 20px;
+  transform: rotate(-1deg);
+}
+
+.drink-btn:nth-child(3n + 2)::before {
+  background: linear-gradient(90deg, var(--party-cyan), var(--highlight));
+}
+
+.drink-btn:nth-child(3n)::before {
+  background: linear-gradient(90deg, var(--party-yellow), var(--accent));
+}
+
 .drink-btn:hover:not(:disabled) {
   border-color: color-mix(in srgb, var(--accent) 58%, var(--border));
   background: var(--surface-raised);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2), 0 0 24px color-mix(in srgb, var(--party-pink) 11%, transparent);
+  transform: translateY(-5px) rotate(0deg) scale(1.025);
 }
 
 .drink-btn:active:not(:disabled) {
@@ -751,7 +855,7 @@ body[data-bac-level="high"] .output-section {
   max-width: 100%;
   overflow-wrap: anywhere;
   color: var(--text);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 800;
   line-height: 1.2;
   text-align: center;
@@ -772,6 +876,7 @@ body[data-bac-level="high"] .output-section {
   max-height: 450px;
   overflow: auto;
   border-radius: var(--radius-lg);
+  border-top: 3px solid var(--party-yellow);
 }
 
 .drinks-table {
@@ -1216,7 +1321,8 @@ body[data-bac-level="high"] .output-section {
   border-top: 1px solid var(--border);
   padding: 24px;
   color: var(--text-muted);
-  background: var(--surface);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--party-pink) 8%, var(--surface)), var(--surface), color-mix(in srgb, var(--party-cyan) 8%, var(--surface)));
   font-size: 0.72rem;
   text-align: center;
 }
@@ -1358,6 +1464,10 @@ body[data-bac-level="high"] .output-section {
 
   .section-heading > p {
     text-align: left;
+  }
+
+  .page::after {
+    display: none;
   }
 
   .drink-grid {
