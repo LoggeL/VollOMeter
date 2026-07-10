@@ -12,6 +12,12 @@
 
 :root {
   color-scheme: dark;
+  --bac-chaos: 0;
+  --bac-tilt: 0deg;
+  --bac-tilt-neg: 0deg;
+  --bac-shift: 0px;
+  --bac-shift-neg: 0px;
+  --bac-blur: 0px;
 
   --bg: #0e1211;
   --surface: #161b19;
@@ -112,6 +118,41 @@ body::before {
     radial-gradient(circle at 4% 42%, color-mix(in srgb, var(--party-cyan) 14%, transparent), transparent 25rem),
     radial-gradient(circle at 70% 82%, color-mix(in srgb, var(--highlight) 10%, transparent), transparent 24rem);
   pointer-events: none;
+}
+
+.party-chaos {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.party-chaos span {
+  position: absolute;
+  display: block;
+  opacity: 0.18;
+  font-size: clamp(1.4rem, 3vw, 2.7rem);
+  filter: saturate(1.35) drop-shadow(0 0 12px rgba(255, 62, 165, 0.22));
+  animation: confetti-float 8s ease-in-out infinite;
+}
+
+.party-chaos span:nth-child(1) { top: 13%; left: 2%; transform: rotate(-16deg); }
+.party-chaos span:nth-child(2) { top: 26%; right: 2%; animation-delay: -2.1s; transform: rotate(14deg); }
+.party-chaos span:nth-child(3) { top: 61%; left: 1.5%; animation-delay: -4.4s; transform: rotate(9deg); }
+.party-chaos span:nth-child(4) { top: 78%; right: 3%; animation-delay: -1.2s; transform: rotate(-12deg); }
+.party-chaos span:nth-child(5) { top: 45%; right: 1.2%; animation-delay: -5.5s; transform: rotate(18deg); }
+.party-chaos span:nth-child(6) { top: 88%; left: 4%; animation-delay: -3.3s; transform: rotate(-8deg); }
+
+body[data-bac-level="watch"] .party-chaos span {
+  opacity: 0.34;
+  animation-duration: 5.8s;
+}
+
+body[data-bac-level="high"] .party-chaos span,
+body[data-bac-level="very-high"] .party-chaos span {
+  opacity: 0.52;
+  animation-duration: 3.8s;
 }
 
 button,
@@ -286,10 +327,12 @@ select:focus-visible {
   width: min(100%, var(--content-width));
   margin-inline: auto;
   padding: 40px 24px 80px;
+  transform-origin: 50% 8%;
 }
 
 .app-stage {
   min-width: 0;
+  transform-origin: 50% 12%;
 }
 
 .dashboard-grid {
@@ -338,6 +381,8 @@ select:focus-visible {
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.34),
     0 0 40px color-mix(in srgb, var(--party-pink) 12%, transparent);
+  transform: rotate(calc(-0.55deg + var(--bac-tilt-neg))) translateX(var(--bac-shift-neg));
+  transition: transform 380ms ease, filter 380ms ease, box-shadow 380ms ease;
 }
 
 .output-section::before {
@@ -443,7 +488,8 @@ body[data-bac-level="watch"] .output-section {
     url("img/generated/vom-party-bg.webp") center / cover;
 }
 
-body[data-bac-level="high"] .output-section {
+body[data-bac-level="high"] .output-section,
+body[data-bac-level="very-high"] .output-section {
   background:
     linear-gradient(90deg, rgba(34, 7, 14, 0.94), rgba(16, 5, 8, 0.56)),
     url("img/generated/vom-party-bg.webp") center / cover;
@@ -456,6 +502,22 @@ body[data-bac-level="high"] .output-section {
   border-top: 3px solid var(--party-cyan);
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--party-cyan) 7%, var(--surface)), var(--surface) 48%);
+  position: relative;
+  transform: rotate(calc(0.8deg + var(--bac-tilt))) translateY(var(--bac-shift));
+  transition: transform 380ms ease, filter 380ms ease;
+}
+
+.info-panel::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 28%;
+  width: 74px;
+  height: 20px;
+  opacity: 0.75;
+  background: repeating-linear-gradient(135deg, var(--party-cyan) 0 9px, var(--highlight) 9px 18px);
+  clip-path: polygon(4% 10%, 96% 0, 100% 90%, 0 100%);
+  transform: rotate(-3deg);
 }
 
 .panel-heading h2,
@@ -471,6 +533,7 @@ body[data-bac-level="high"] .output-section {
   font-family: "Bungee", "Inter", sans-serif;
   font-weight: 400;
   letter-spacing: 0;
+  text-shadow: 2px 2px 0 color-mix(in srgb, var(--party-pink) 18%, transparent);
 }
 
 .info-panel dl {
@@ -513,6 +576,25 @@ body[data-bac-level="high"] .output-section {
   border-top: 3px solid var(--party-pink);
   background:
     linear-gradient(120deg, color-mix(in srgb, var(--party-pink) 7%, var(--surface)), var(--surface) 38%);
+  position: relative;
+  transform: rotate(calc(-0.28deg + var(--bac-tilt))) translateX(var(--bac-shift));
+  transition: transform 380ms ease, filter 380ms ease;
+}
+
+.form-section::after {
+  content: "WICHTIGER KRAM 😵‍💫";
+  position: absolute;
+  right: 32px;
+  bottom: -12px;
+  z-index: 2;
+  border: 2px solid #111;
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: #111;
+  background: var(--party-pink);
+  font-family: "Bungee", "Inter", sans-serif;
+  font-size: 0.6rem;
+  transform: rotate(3deg);
 }
 
 .form-section h2 {
@@ -728,6 +810,8 @@ body[data-bac-level="high"] .output-section {
 .page {
   margin-top: 48px;
   position: relative;
+  transform: rotate(calc(0.18deg + var(--bac-tilt-neg))) translateX(var(--bac-shift-neg));
+  transition: transform 380ms ease, filter 380ms ease;
 }
 
 .page::after {
@@ -866,6 +950,75 @@ body[data-bac-level="high"] .output-section {
 .table-section {
   margin-top: 56px;
   scroll-margin-top: 96px;
+  position: relative;
+  transform: rotate(calc(-0.2deg + var(--bac-tilt))) translateX(var(--bac-shift));
+  transition: transform 380ms ease, filter 380ms ease;
+}
+
+.table-section::before {
+  content: "WAS GESCHAH?!";
+  position: absolute;
+  top: 30px;
+  left: 48%;
+  z-index: 3;
+  border-radius: 5px;
+  padding: 4px 9px;
+  color: #111;
+  background: var(--party-cyan);
+  font-family: "Bungee", "Inter", sans-serif;
+  font-size: 0.58rem;
+  transform: rotate(-4deg);
+}
+
+/* BAC-driven chaos: a little silly at first, increasingly wonky later. */
+
+body[data-bac-level="watch"] .app-stage {
+  animation: tipsy-sway 5.4s ease-in-out infinite;
+}
+
+body[data-bac-level="watch"] .promille-text {
+  text-shadow:
+    2px 0 0 color-mix(in srgb, var(--party-cyan) 42%, transparent),
+    -2px 0 0 color-mix(in srgb, var(--party-pink) 42%, transparent),
+    0 0 28px var(--accent-soft);
+}
+
+body[data-bac-level="high"] .app-stage,
+body[data-bac-level="very-high"] .app-stage {
+  animation: drunk-drift 3.4s ease-in-out infinite;
+}
+
+body[data-bac-level="high"] .page,
+body[data-bac-level="high"] .table-section,
+body[data-bac-level="very-high"] .page,
+body[data-bac-level="very-high"] .table-section {
+  filter: blur(var(--bac-blur)) saturate(1.18);
+}
+
+body[data-bac-level="high"] .section-heading h2,
+body[data-bac-level="very-high"] .section-heading h2 {
+  text-shadow:
+    3px 0 0 color-mix(in srgb, var(--party-cyan) 66%, transparent),
+    -3px 0 0 color-mix(in srgb, var(--party-pink) 66%, transparent);
+}
+
+body[data-bac-level="high"] .drink-btn:nth-child(odd),
+body[data-bac-level="very-high"] .drink-btn:nth-child(odd) {
+  animation: card-hiccup 2.8s ease-in-out infinite;
+}
+
+body[data-bac-level="very-high"] .promille-text {
+  animation: double-vision 2.1s ease-in-out infinite;
+}
+
+body[data-bac-level="very-high"] .main-content {
+  animation: whole-room-spins 6.4s ease-in-out infinite;
+}
+
+body[data-bac-level="very-high"] .safety-note {
+  color: white;
+  background: rgba(133, 15, 35, 0.82);
+  box-shadow: 0 0 24px rgba(255, 59, 100, 0.42);
 }
 
 .history-heading {
@@ -1199,6 +1352,9 @@ body[data-bac-level="high"] .output-section {
 /* Confirmation animation */
 
 .drink-animation-overlay {
+  --drink-liquid: #ff7043;
+  --drink-light: #ffb199;
+  --drink-glow: rgba(255, 112, 67, 0.42);
   position: fixed;
   inset: 0;
   z-index: 1200;
@@ -1207,8 +1363,10 @@ body[data-bac-level="high"] .output-section {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  background: rgba(5, 8, 7, 0.18);
-  transition: opacity 180ms ease, visibility 180ms ease;
+  background: rgba(5, 8, 7, 0.48);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  transition: opacity 160ms ease, visibility 160ms ease;
 }
 
 .drink-animation-overlay.active {
@@ -1217,42 +1375,74 @@ body[data-bac-level="high"] .output-section {
 }
 
 .drink-animation-container {
-  width: min(300px, calc(100vw - 40px));
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
+  width: min(340px, calc(100vw - 32px));
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--drink-light) 34%, var(--border));
+  border-radius: 28px 18px 30px 20px;
+  padding: 26px 24px 24px;
   position: relative;
   display: grid;
   place-items: center;
   color: var(--text);
-  background: var(--surface-raised);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(8px) scale(0.98);
-  transition: transform 180ms ease;
+  background:
+    radial-gradient(circle at 50% 17%, color-mix(in srgb, var(--drink-liquid) 18%, transparent), transparent 9rem),
+    linear-gradient(150deg, var(--surface-raised), color-mix(in srgb, var(--drink-liquid) 7%, var(--surface)));
+  box-shadow: var(--shadow-lg), 0 0 56px var(--drink-glow);
+  transform: translateY(18px) scale(0.9) rotate(-2deg);
+  transition: transform 160ms ease;
+}
+
+.drink-animation-container::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, var(--party-pink), var(--drink-light), var(--highlight));
+}
+
+.drink-animation-container::after {
+  content: "PROST!";
+  position: absolute;
+  top: 18px;
+  right: -20px;
+  border-radius: 4px;
+  padding: 5px 26px;
+  color: #171706;
+  background: var(--party-yellow);
+  font-family: "Bungee", "Inter", sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  transform: rotate(12deg);
 }
 
 .drink-animation-overlay.active .drink-animation-container {
-  transform: translateY(0) scale(1);
+  transform: translateY(0) scale(1) rotate(0);
+  animation: party-card-pop 500ms cubic-bezier(0.2, 1.35, 0.4, 1) both;
 }
 
 .drink-scene {
-  height: 100px;
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  gap: 8px;
+  width: 230px;
+  height: 154px;
+  position: relative;
 }
 
 .drink-bottle {
-  width: 64px;
-  height: 92px;
-  position: relative;
-  border-radius: 12px;
-  background-color: var(--surface-soft);
-  background-size: contain;
+  width: 78px;
+  height: 106px;
+  position: absolute;
+  top: 8px;
+  left: 17px;
+  z-index: 4;
+  background-size: 120%;
   background-position: center;
   background-repeat: no-repeat;
-  transform: rotate(-12deg);
+  filter: drop-shadow(0 12px 11px rgba(0, 0, 0, 0.28));
+  transform-origin: 85% 78%;
+  transform: rotate(-12deg) translateY(8px);
+}
+
+.drink-animation-overlay.active .drink-bottle {
+  animation: tilt-and-pour 2.35s cubic-bezier(0.4, 0, 0.2, 1) 180ms both;
 }
 
 .bottle-cap {
@@ -1261,42 +1451,175 @@ body[data-bac-level="high"] .output-section {
 
 .drink-stream {
   position: absolute;
-  right: -9px;
-  bottom: 19px;
-  width: 4px;
+  top: 72px;
+  left: 104px;
+  z-index: 3;
+  width: 7px;
   height: 0;
   border-radius: 999px;
-  background: var(--accent);
-  animation: pour-stream 1.2s ease-in-out both;
+  background: linear-gradient(90deg, var(--drink-light), var(--drink-liquid));
+  box-shadow: 0 0 12px var(--drink-glow);
+  opacity: 0;
+  transform: rotate(-24deg);
+  transform-origin: top;
+}
+
+.drink-animation-overlay.active .drink-stream {
+  animation: pour-stream 2s ease-in-out 520ms both;
 }
 
 .drink-glass {
-  width: 50px;
-  height: 64px;
-  position: relative;
+  width: 72px;
+  height: 88px;
+  position: absolute;
+  right: 20px;
+  bottom: 7px;
+  z-index: 2;
   overflow: hidden;
-  border: 2px solid color-mix(in srgb, var(--text) 55%, transparent);
+  border: 3px solid color-mix(in srgb, var(--text) 58%, transparent);
   border-top: 0;
-  border-radius: 4px 4px 12px 12px;
+  border-radius: 5px 5px 16px 16px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 -8px 14px rgba(255, 255, 255, 0.06), 0 14px 22px rgba(0, 0, 0, 0.22);
+  transform: translateY(8px);
+}
+
+.drink-animation-overlay.active .drink-glass {
+  animation: glass-arrives 520ms cubic-bezier(0.2, 1.25, 0.4, 1) 80ms both;
+}
+
+.glass-shine {
+  position: absolute;
+  top: 9px;
+  left: 10px;
+  z-index: 5;
+  width: 7px;
+  height: 48px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  transform: rotate(5deg);
 }
 
 .drink-fill {
   position: absolute;
   inset: auto 3px 3px;
-  height: 48%;
-  border-radius: 2px 2px 8px 8px;
-  background: var(--accent);
-  animation: fill-glass 1.2s ease-out both;
+  z-index: 1;
+  height: 4%;
+  border-radius: 3px 3px 11px 11px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 36%),
+    var(--drink-liquid);
+  box-shadow: inset 0 8px 12px rgba(255, 255, 255, 0.09), 0 0 16px var(--drink-glow);
 }
 
-.drink-bubbles,
+.drink-animation-overlay.active .drink-fill {
+  animation: fill-glass 1.7s cubic-bezier(0.2, 0.7, 0.3, 1) 650ms both;
+}
+
+.drink-foam {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 59px;
+  z-index: 3;
+  height: 7px;
+  border-radius: 50%;
+  opacity: 0;
+  background: color-mix(in srgb, var(--drink-light) 72%, white);
+  box-shadow:
+    -5px -2px 0 -1px color-mix(in srgb, var(--drink-light) 72%, white),
+    7px -3px 0 -1px color-mix(in srgb, var(--drink-light) 72%, white);
+}
+
+.drink-animation-overlay.active .drink-foam {
+  animation: foam-pop 900ms ease-out 1.65s both;
+}
+
+.drink-bubbles {
+  position: absolute;
+  inset: 22px 8px 7px;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.drink-animation-overlay.active .drink-bubbles {
+  animation: bubbles-visible 1.2s ease 1.25s both;
+}
+
+.bubble {
+  position: absolute;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 50%;
+  animation: bubble-up 900ms ease-in infinite;
+}
+
+.bubble:nth-child(1) { left: 12%; animation-delay: 0ms; }
+.bubble:nth-child(2) { left: 38%; width: 7px; height: 7px; animation-delay: 230ms; }
+.bubble:nth-child(3) { left: 64%; animation-delay: 430ms; }
+.bubble:nth-child(4) { left: 82%; width: 4px; height: 4px; animation-delay: 120ms; }
+
 .drink-sparkles {
-  display: none;
+  position: absolute;
+  inset: 25px 32px 78px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  opacity: 0;
+  background: var(--party-yellow);
+  transform: rotate(45deg) scale(0);
+}
+
+.sparkle:nth-child(1) { top: 18%; left: 4%; }
+.sparkle:nth-child(2) { top: 2%; left: 47%; background: var(--party-cyan); }
+.sparkle:nth-child(3) { top: 30%; right: 2%; background: var(--party-pink); }
+.sparkle:nth-child(4) { top: 72%; left: 18%; background: var(--highlight); }
+.sparkle:nth-child(5) { top: 66%; right: 15%; }
+
+.drink-animation-overlay.active .sparkle {
+  animation: sparkle-pop 700ms ease-out both;
+}
+
+.drink-animation-overlay.active .sparkle:nth-child(1) { animation-delay: 1.45s; }
+.drink-animation-overlay.active .sparkle:nth-child(2) { animation-delay: 1.62s; }
+.drink-animation-overlay.active .sparkle:nth-child(3) { animation-delay: 1.78s; }
+.drink-animation-overlay.active .sparkle:nth-child(4) { animation-delay: 1.9s; }
+.drink-animation-overlay.active .sparkle:nth-child(5) { animation-delay: 2.02s; }
+
+.drink-animation-overlay[data-category="bier"] .drink-glass,
+.drink-animation-overlay[data-category="mischbier"] .drink-glass {
+  width: 64px;
+  height: 102px;
+  border-radius: 5px 5px 11px 11px;
+}
+
+.drink-animation-overlay[data-category="shot"] .drink-glass {
+  width: 58px;
+  height: 62px;
+  border-radius: 4px 4px 15px 15px;
+}
+
+.drink-animation-overlay[data-category="shot"] .drink-foam {
+  bottom: 40px;
 }
 
 .drink-animation-text {
-  margin-top: 16px;
-  font-size: 1.05rem;
+  margin-top: 12px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-family: "Bungee", "Inter", sans-serif;
+  font-size: 1.08rem;
+  font-weight: 400;
+  text-align: center;
 }
 
 .drink-animation-subtext {
@@ -1306,13 +1629,93 @@ body[data-bac-level="high"] .output-section {
 }
 
 @keyframes pour-stream {
-  0%, 18%, 100% { height: 0; opacity: 0; }
-  35%, 72% { height: 44px; opacity: 1; }
+  0%, 9%, 91%, 100% { height: 0; opacity: 0; }
+  20%, 78% { height: 78px; opacity: 1; }
 }
 
 @keyframes fill-glass {
-  from { height: 6%; }
-  to { height: 48%; }
+  0%, 10% { height: 4%; }
+  88%, 100% { height: 70%; }
+}
+
+@keyframes tilt-and-pour {
+  0% { transform: rotate(-12deg) translateY(8px); }
+  18%, 76% { transform: translate(18px, 1px) rotate(31deg); }
+  90%, 100% { transform: translate(0, 2px) rotate(-8deg); }
+}
+
+@keyframes glass-arrives {
+  from { opacity: 0; transform: translate(20px, 18px) rotate(6deg); }
+  to { opacity: 1; transform: translate(0) rotate(0); }
+}
+
+@keyframes foam-pop {
+  0% { opacity: 0; transform: scaleX(0.5) translateY(10px); }
+  55% { opacity: 1; transform: scaleX(1.06) translateY(0); }
+  100% { opacity: 0.88; transform: scaleX(1) translateY(0); }
+}
+
+@keyframes bubbles-visible {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bubble-up {
+  from { transform: translateY(12px) scale(0.65); opacity: 0; }
+  25% { opacity: 0.9; }
+  to { transform: translateY(-55px) scale(1); opacity: 0; }
+}
+
+@keyframes sparkle-pop {
+  0% { opacity: 0; transform: rotate(45deg) scale(0); }
+  45% { opacity: 1; transform: rotate(125deg) scale(1.4); }
+  100% { opacity: 0; transform: rotate(180deg) scale(0.2); }
+}
+
+@keyframes party-card-pop {
+  from { transform: translateY(18px) scale(0.9) rotate(-2deg); }
+  to { transform: translateY(0) scale(1) rotate(0); }
+}
+
+@keyframes confetti-float {
+  0%, 100% { translate: 0 0; rotate: -4deg; }
+  35% { translate: 8px -14px; rotate: 8deg; }
+  70% { translate: -5px 9px; rotate: -10deg; }
+}
+
+@keyframes tipsy-sway {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  35% { transform: translateX(var(--bac-shift-neg)) rotate(var(--bac-tilt-neg)); }
+  70% { transform: translateX(var(--bac-shift)) rotate(var(--bac-tilt)); }
+}
+
+@keyframes drunk-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  25% { transform: translate(var(--bac-shift-neg), 2px) rotate(var(--bac-tilt-neg)); }
+  62% { transform: translate(var(--bac-shift), -2px) rotate(var(--bac-tilt)); }
+}
+
+@keyframes card-hiccup {
+  0%, 86%, 100% { translate: 0 0; }
+  90% { translate: 0 -5px; }
+  94% { translate: 0 2px; }
+}
+
+@keyframes double-vision {
+  0%, 100% {
+    filter: blur(0);
+    text-shadow: 3px 0 0 rgba(60, 232, 255, 0.48), -3px 0 0 rgba(255, 62, 165, 0.48);
+  }
+  50% {
+    filter: blur(var(--bac-blur));
+    text-shadow: 8px 1px 0 rgba(60, 232, 255, 0.4), -8px -1px 0 rgba(255, 62, 165, 0.4);
+  }
+}
+
+@keyframes whole-room-spins {
+  0%, 100% { transform: perspective(1200px) rotateZ(0) rotateX(0); }
+  35% { transform: perspective(1200px) rotateZ(var(--bac-tilt-neg)) rotateX(0.7deg); }
+  70% { transform: perspective(1200px) rotateZ(var(--bac-tilt)) rotateX(-0.5deg); }
 }
 
 /* Footer and mobile navigation */
@@ -1468,6 +1871,15 @@ body[data-bac-level="high"] .output-section {
 
   .page::after {
     display: none;
+  }
+
+  .form-section::after,
+  .table-section::before {
+    display: none;
+  }
+
+  .party-chaos span {
+    font-size: 1.45rem;
   }
 
   .drink-grid {
@@ -1640,5 +2052,13 @@ body[data-bac-level="high"] .output-section {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .app-stage,
+  .main-content,
+  .party-chaos span,
+  .promille-text,
+  .drink-btn {
+    animation: none !important;
   }
 }

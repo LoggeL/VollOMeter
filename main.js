@@ -1094,6 +1094,27 @@ function updateProgressionMarkers() {
   })
 }
 
+function updatePartyChaos(promille = 0) {
+  const safePromille = Number.isFinite(promille) ? Math.max(0, promille) : 0
+  const bacLevel =
+    safePromille < 0.3
+      ? 'low'
+      : safePromille < 0.5
+        ? 'watch'
+        : safePromille < 1
+          ? 'high'
+          : 'very-high'
+  const chaos = Math.min(1.35, Math.max(0, (safePromille - 0.15) / 0.85))
+
+  document.body.dataset.bacLevel = bacLevel
+  document.documentElement.style.setProperty('--bac-chaos', chaos.toFixed(3))
+  document.documentElement.style.setProperty('--bac-tilt', `${(chaos * 1.35).toFixed(2)}deg`)
+  document.documentElement.style.setProperty('--bac-tilt-neg', `${(chaos * -1.35).toFixed(2)}deg`)
+  document.documentElement.style.setProperty('--bac-shift', `${(chaos * 8).toFixed(1)}px`)
+  document.documentElement.style.setProperty('--bac-shift-neg', `${(chaos * -8).toFixed(1)}px`)
+  document.documentElement.style.setProperty('--bac-blur', `${(chaos * 0.55).toFixed(2)}px`)
+}
+
 function work() {
   // Get weight and gender
   const weight = inputWeight.value
@@ -1106,6 +1127,7 @@ function work() {
 
   // Validate
   if (!weight || !gender || weight <= 0 || !bodyType || !inputDecayRate.value) {
+    updatePartyChaos(0)
     // Added check for decay rate value
     if (heroMeterValue) heroMeterValue.textContent = '0,00‰'
     const outputElement = document.getElementById('output')
@@ -1196,8 +1218,7 @@ function work() {
 
   // Keep the interface steady and use a semantic level instead of motion/blur effects.
   const outputElement = document.getElementById('output')
-  const bacLevel = promille < 0.3 ? 'low' : promille < 0.5 ? 'watch' : 'high'
-  document.body.dataset.bacLevel = bacLevel
+  updatePartyChaos(promille)
 
   // Get current emoji
   let currentEmoji = '🤔'
@@ -1439,6 +1460,8 @@ function calculateDrinkBAC(
   return bac
 }
 
+let drinkAnimationTimer
+
 // Function to show drink pouring animation
 function showDrinkAnimation(drinkName, drinkCategory, drinkKey) {
   const overlay = document.getElementById('drinkAnimationOverlay')
@@ -1446,9 +1469,23 @@ function showDrinkAnimation(drinkName, drinkCategory, drinkKey) {
   const subtextElement = document.getElementById('drinkAnimationSubtext')
   const bottleElement = overlay.querySelector('.drink-bottle')
 
+  const drinkLooks = {
+    cocktails: { liquid: '#ff3ea5', light: '#ffb2dc', glow: 'rgba(255, 62, 165, 0.42)', emoji: '🍹' },
+    weinschorle: { liquid: '#f3a7bd', light: '#ffe1e9', glow: 'rgba(243, 167, 189, 0.38)', emoji: '🍷' },
+    bier: { liquid: '#e6a51f', light: '#ffe4a0', glow: 'rgba(230, 165, 31, 0.42)', emoji: '🍺' },
+    mischbier: { liquid: '#d6812b', light: '#ffd09a', glow: 'rgba(214, 129, 43, 0.42)', emoji: '🍻' },
+    shot: { liquid: '#3ce8ff', light: '#d6faff', glow: 'rgba(60, 232, 255, 0.4)', emoji: '🥃' },
+    other: { liquid: '#ff7043', light: '#ffc0ad', glow: 'rgba(255, 112, 67, 0.42)', emoji: '🥤' },
+  }
+  const look = drinkLooks[drinkCategory] || drinkLooks.other
+
   // Update text based on drink
-  textElement.textContent = `${drinkName} 🍻`
-  subtextElement.textContent = 'Getränk hinzugefügt'
+  textElement.textContent = `${drinkName} ${look.emoji}`
+  subtextElement.textContent = 'Eingeschenkt & zum Verlauf hinzugefügt'
+  overlay.dataset.category = drinkCategory
+  overlay.style.setProperty('--drink-liquid', look.liquid)
+  overlay.style.setProperty('--drink-light', look.light)
+  overlay.style.setProperty('--drink-glow', look.glow)
 
   // Update bottle to show actual drink image
   const drinkImagePath =
@@ -1456,18 +1493,15 @@ function showDrinkAnimation(drinkName, drinkCategory, drinkKey) {
       ? getGeneratedSprite('other')
       : `img/${drinkCategory}/${drinkKey}.png`
   bottleElement.style.backgroundImage = `url('${drinkImagePath}')`
-  bottleElement.style.backgroundSize = 'contain'
-  bottleElement.style.backgroundPosition = 'center'
-  bottleElement.style.backgroundRepeat = 'no-repeat'
 
-  // Show overlay
+  // Restart the full sequence even when drinks are added quickly in a row.
+  clearTimeout(drinkAnimationTimer)
+  overlay.classList.remove('active')
+  void overlay.offsetWidth
   overlay.classList.add('active')
 
-  // Hide after animation completes
-  setTimeout(() => {
+  drinkAnimationTimer = setTimeout(() => {
     overlay.classList.remove('active')
-    // Reset bottle background
     bottleElement.style.backgroundImage = ''
-    bottleElement.style.background = 'var(--gradient-orange)'
-  }, 3000) // 3 seconds total animation time
+  }, 3400)
 }
