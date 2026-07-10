@@ -3966,3 +3966,248 @@ body::after {
     min-height: calc(100dvh - 82px);
   }
 }
+
+/* ===== THEME & ASSET RELIABILITY FIXES ===== */
+:root {
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Keep transparent drink artwork fully visible in cards and dialogs. */
+.drink-btn img,
+.modal-btn .modal-img {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.modal-grid {
+  min-height: 0;
+}
+
+/* The late design passes above define the dark theme. This final layer restores
+   a real light theme without weakening the default dark styling. */
+:root[data-theme="light"],
+:root[data-theme="light"] body {
+  background-color: #f8f3ee;
+  color: #2d2330;
+}
+
+:root[data-theme="light"] body {
+  background:
+    linear-gradient(rgba(255, 252, 248, 0.88), rgba(248, 243, 238, 0.96)),
+    var(--vom-bg-image) center top / cover fixed no-repeat,
+    #f8f3ee;
+}
+
+:root[data-theme="light"] .navbar {
+  background: rgba(255, 252, 248, 0.91);
+  border-color: rgba(207, 92, 24, 0.5);
+  color: #2d2330;
+  box-shadow: 0 14px 42px rgba(87, 45, 24, 0.12);
+}
+
+:root[data-theme="light"] .nav-title p,
+:root[data-theme="light"] .form-section,
+:root[data-theme="light"] .info-panel,
+:root[data-theme="light"] .output-section h2,
+:root[data-theme="light"] .drink-btn,
+:root[data-theme="light"] .drinks-table,
+:root[data-theme="light"] .modal-content {
+  color: #2d2330;
+}
+
+:root[data-theme="light"] .form-section,
+:root[data-theme="light"] .info-panel,
+:root[data-theme="light"] .output-section h2,
+:root[data-theme="light"] .drink-btn,
+:root[data-theme="light"] .drinks-table,
+:root[data-theme="light"] .modal-content {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 241, 0.89));
+  border-color: rgba(184, 88, 31, 0.28);
+  box-shadow:
+    0 18px 48px rgba(86, 49, 30, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+:root[data-theme="light"] .install-btn {
+  color: #6b314e;
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(184, 88, 31, 0.24);
+}
+
+:root[data-theme="light"] .form-label,
+:root[data-theme="light"] .form-input:not(:placeholder-shown) + .form-label,
+:root[data-theme="light"] .form-input:focus + .form-label,
+:root[data-theme="light"] .form-select:focus + .form-label,
+:root[data-theme="light"] .form-select:valid + .form-label,
+:root[data-theme="light"] .checkbox-label,
+:root[data-theme="light"] .info-panel dt {
+  color: #554755;
+}
+
+:root[data-theme="light"] .form-section h3,
+:root[data-theme="light"] .form-section h3:hover {
+  color: #9b430f;
+}
+
+:root[data-theme="light"] .form-input,
+:root[data-theme="light"] .form-select {
+  color: #2d2330;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(89, 57, 76, 0.2);
+}
+
+:root[data-theme="light"] .form-input:focus,
+:root[data-theme="light"] .form-select:focus {
+  background-color: #fff;
+  border-color: rgba(222, 92, 31, 0.58);
+}
+
+:root[data-theme="light"] .checkbox-group {
+  background: rgba(255, 139, 34, 0.08);
+  border-color: rgba(184, 88, 31, 0.18);
+}
+
+:root[data-theme="light"] .output-section h2,
+:root[data-theme="light"] .promille-text {
+  color: #2d2330 !important;
+  -webkit-text-fill-color: #2d2330 !important;
+  text-shadow: none;
+}
+
+:root[data-theme="light"] .drink-btn span {
+  color: #3a2635 !important;
+  text-shadow: none;
+}
+
+:root[data-theme="light"] .drink-btn:hover {
+  border-color: rgba(222, 92, 31, 0.7);
+  box-shadow: 0 20px 46px rgba(96, 49, 25, 0.16), 0 0 0 2px rgba(255, 139, 34, 0.1);
+}
+
+:root[data-theme="light"] .info-panel dl div,
+:root[data-theme="light"] .drinks-table td {
+  border-color: rgba(89, 57, 76, 0.12);
+}
+
+:root[data-theme="light"] .drinks-table thead {
+  background: rgba(255, 139, 34, 0.1);
+}
+
+:root[data-theme="light"] .drinks-table th {
+  color: #9b430f;
+}
+
+:root[data-theme="light"] .drinks-table td {
+  color: #332936;
+}
+
+:root[data-theme="light"] .drinks-table tbody tr:hover {
+  background: rgba(255, 139, 34, 0.07);
+}
+
+:root[data-theme="light"] .btn-icon {
+  color: #b41569;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+:root[data-theme="light"] .page:not(.active)::before {
+  color: #5b3421;
+  background: rgba(255, 139, 34, 0.11);
+  border-color: rgba(184, 88, 31, 0.22);
+}
+
+:root[data-theme="light"] .modal {
+  background: rgba(45, 31, 40, 0.3);
+}
+
+:root[data-theme="light"] .modal-title {
+  color: #2d2330;
+  text-shadow: none;
+}
+
+:root[data-theme="light"] .modal-btn {
+  color: #2d2330;
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(184, 88, 31, 0.2);
+}
+
+:root[data-theme="light"] .modal-subtext {
+  color: #6b5b67;
+}
+
+:root[data-theme="light"] .modal-actions {
+  background: linear-gradient(180deg, rgba(255, 250, 246, 0), rgba(255, 250, 246, 0.98) 28%);
+  border-color: rgba(184, 88, 31, 0.16);
+}
+
+:root[data-theme="light"] .modal-actions .btn-secondary {
+  color: #4e2f40;
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(184, 88, 31, 0.24);
+  box-shadow: 0 10px 24px rgba(86, 49, 30, 0.1);
+}
+
+:root[data-theme="light"] .footer {
+  color: #655863;
+  background: rgba(255, 252, 248, 0.9);
+  border-top-color: rgba(89, 57, 76, 0.12);
+}
+
+:root[data-theme="light"] .mobile-bottom-nav {
+  background: rgba(255, 252, 248, 0.94);
+  border-top-color: rgba(184, 88, 31, 0.18);
+}
+
+:root[data-theme="light"] .mobile-bottom-nav a {
+  color: #6b5b67;
+}
+
+:root[data-theme="light"] .mobile-bottom-nav a.active {
+  color: #b41569;
+}
+
+@media (max-width: 899px) {
+  .navbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .nav-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #themeToggle {
+    display: inline-flex !important;
+    grid-column: 2;
+    grid-row: 1;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+  }
+
+  #themeToggle .install-icon {
+    margin: 0;
+  }
+
+  :root[data-theme="light"] body {
+    background:
+      linear-gradient(rgba(255, 252, 248, 0.9), rgba(248, 243, 238, 0.97)),
+      var(--vom-bg-image) center top / auto 100% fixed no-repeat,
+      #f8f3ee;
+  }
+
+  :root[data-theme="light"] .info-panel {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 241, 0.89));
+  }
+}

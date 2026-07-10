@@ -14,6 +14,14 @@
   const setLabel = () => {
     const isLight = root.getAttribute('data-theme') === 'light'
     if (label) label.textContent = isLight ? 'Dark' : 'Light'
+    if (btn) {
+      const nextThemeLabel = isLight ? 'Dark Mode aktivieren' : 'Light Mode aktivieren'
+      const icon = btn.querySelector('.install-icon')
+      btn.setAttribute('aria-label', nextThemeLabel)
+      btn.setAttribute('aria-pressed', String(isLight))
+      btn.title = nextThemeLabel
+      if (icon) icon.textContent = isLight ? '🌙' : '☀️'
+    }
   }
   setLabel()
   if (btn) {
@@ -1434,7 +1442,7 @@ function showDrinkAnimation(drinkName, drinkCategory, drinkKey) {
       ? getGeneratedSprite('other')
       : `img/${drinkCategory}/${drinkKey}.png`
   bottleElement.style.backgroundImage = `url('${drinkImagePath}')`
-  bottleElement.style.backgroundSize = 'cover'
+  bottleElement.style.backgroundSize = 'contain'
   bottleElement.style.backgroundPosition = 'center'
   bottleElement.style.backgroundRepeat = 'no-repeat'
 
